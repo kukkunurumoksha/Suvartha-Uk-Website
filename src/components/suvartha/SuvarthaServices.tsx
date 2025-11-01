@@ -1,173 +1,163 @@
 export default function SuvarthaServices() {
-  const services = [
+  const mainServices = [
     {
-      day: "SUN",
       title: "Sunday Fellowship",
       subtitle: "Malayalam/English Service",
-      time: "10:00 AM - 1:00 PM",
-      timezone: "GMT",
-      link: "Join on Zoom",
-      bgColor: "bg-emerald-600",
-      illustration: "church"
+      location: "Pegasus House, 17 Burleys Way, Leicester, LE1 3BH",
+      time: "10:00 AM - 1:00 PM (GMT)",
+      zoom: "Also available on Zoom: 3563832030",
+      icon: "church",
+      iconBg: "bg-blue-500",
+      iconColor: "text-white",
     },
     {
-      day: "TUE", 
       title: "Tuesday Service",
-      subtitle: "Evening Prayer & Fellowship",
-      time: "7:00 PM - 8:30 PM",
-      timezone: "GMT",
-      link: "Join on Zoom",
-      bgColor: "bg-blue-600",
-      illustration: "prayer"
-    }
+      subtitle: "Mid-week Fellowship",
+      location: "United Kingdom (GMT)",
+      time: "7:00 PM - 8:30 PM (GMT)",
+      zoom: "Zoom ID: 3563832030",
+      icon: "calendar",
+      iconBg: "bg-gradient-to-br from-orange-400 to-yellow-500",
+      iconColor: "text-white",
+    },
   ];
 
   const childrenServices = [
     {
-      day: "SAT",
-      title: "Kids Church",
-      subtitle: "Fun & Learning for Children",
-      time: "3:30 PM - 5:00 PM",
-      timezone: "GMT",
-      link: "Join on Zoom",
-      bgColor: "bg-orange-500",
-      illustration: "kids"
+      title: "Saturday Kids Church",
+      timezone: "Time zone- United Kingdom (GMT)",
+      time: "Time- 3:30PM to 5:00PM",
+      icon: "heart",
+      iconBg: "bg-orange-500",
+      iconColor: "text-white",
     },
     {
-      day: "SUN",
-      title: "Kids Bible School", 
-      subtitle: "Bible Stories & Activities",
-      time: "9:00 AM - 10:00 AM",
-      timezone: "GMT",
-      link: "Join on Zoom",
-      bgColor: "bg-purple-500",
-      illustration: "book"
-    }
+      title: "Sunday Kids Bible School",
+      timezone: "Time zone- United Kingdom (GMT)",
+      time: "Time- 9:00AM to 10:00PM",
+      icon: "book",
+      iconBg: "bg-indigo-500",
+      iconColor: "text-white",
+    },
+    {
+      title: "Join Us ",
+      subtitle: "Services available on Zoom",
+      zoom: "ID: 3563832030",
+      icon: "people",
+      iconBg: "bg-blue-200",
+      iconColor: "text-white",
+    },
   ];
 
-  const ChurchIllustration = () => (
-    <svg className="w-32 h-32" viewBox="0 0 200 200" fill="none">
-      <rect x="60" y="120" width="80" height="60" fill="#fef3c7" stroke="#f59e0b" strokeWidth="2"/>
-      <polygon points="50,120 100,80 150,120" fill="#fca5a5" stroke="#dc2626" strokeWidth="2"/>
-      <rect x="90" y="140" width="20" height="40" fill="#92400e"/>
-      <circle cx="85" cy="105" r="3" fill="#fbbf24"/>
-      <circle cx="115" cy="105" r="3" fill="#fbbf24"/>
-      <rect x="95" y="90" width="10" height="15" fill="#92400e"/>
-      <rect x="99" y="85" width="2" height="10" fill="#92400e"/>
-      <rect x="95" y="88" width="10" height="2" fill="#92400e"/>
-    </svg>
-  );
-
-  const PrayerIllustration = () => (
-    <svg className="w-32 h-32" viewBox="0 0 200 200" fill="none">
-      <circle cx="100" cy="80" r="25" fill="#fde68a"/>
-      <rect x="85" y="105" width="30" height="40" fill="#bfdbfe"/>
-      <rect x="75" y="115" width="15" height="30" fill="#fde68a"/>
-      <rect x="110" y="115" width="15" height="30" fill="#fde68a"/>
-      <circle cx="90" cy="75" r="2" fill="#374151"/>
-      <circle cx="110" cy="75" r="2" fill="#374151"/>
-      <path d="M95 85 Q100 90 105 85" stroke="#374151" strokeWidth="2" fill="none"/>
-      <path d="M80 120 Q85 115 90 120" stroke="#374151" strokeWidth="2" fill="none"/>
-      <path d="M110 120 Q115 115 120 120" stroke="#374151" strokeWidth="2" fill="none"/>
-    </svg>
-  );
-
-  const KidsIllustration = () => (
-    <svg className="w-32 h-32" viewBox="0 0 200 200" fill="none">
-      <circle cx="80" cy="70" r="20" fill="#fde68a"/>
-      <circle cx="120" cy="70" r="20" fill="#fde68a"/>
-      <rect x="65" y="90" width="25" height="30" fill="#fca5a5"/>
-      <rect x="110" y="90" width="25" height="30" fill="#a7f3d0"/>
-      <rect x="60" y="100" width="10" height="20" fill="#fde68a"/>
-      <rect x="70" y="100" width="10" height="20" fill="#fde68a"/>
-      <rect x="115" y="100" width="10" height="20" fill="#fde68a"/>
-      <rect x="125" y="100" width="10" height="20" fill="#fde68a"/>
-      <circle cx="75" cy="65" r="2" fill="#374151"/>
-      <circle cx="85" cy="65" r="2" fill="#374151"/>
-      <circle cx="115" cy="65" r="2" fill="#374151"/>
-      <circle cx="125" cy="65" r="2" fill="#374151"/>
-    </svg>
-  );
-
-  const BookIllustration = () => (
-    <svg className="w-32 h-32" viewBox="0 0 200 200" fill="none">
-      <rect x="70" y="80" width="60" height="80" fill="#ddd6fe" stroke="#7c3aed" strokeWidth="2"/>
-      <rect x="75" y="85" width="50" height="70" fill="#ffffff"/>
-      <line x1="80" y1="95" x2="120" y2="95" stroke="#374151" strokeWidth="2"/>
-      <line x1="80" y1="105" x2="115" y2="105" stroke="#374151" strokeWidth="1"/>
-      <line x1="80" y1="115" x2="110" y2="115" stroke="#374151" strokeWidth="1"/>
-      <line x1="80" y1="125" x2="118" y2="125" stroke="#374151" strokeWidth="1"/>
-      <rect x="85" y="135" width="20" height="15" fill="#fbbf24"/>
-    </svg>
-  );
-
-  const renderIllustration = (type: string) => {
-    switch (type) {
-      case 'church': return <ChurchIllustration />;
-      case 'prayer': return <PrayerIllustration />;
-      case 'kids': return <KidsIllustration />;
-      case 'book': return <BookIllustration />;
-      default: return <ChurchIllustration />;
-    }
-  };
-
   return (
-    <section id="services" className="py-24 bg-gradient-to-br from-slate-50 to-blue-50">
-      <div className="container mx-auto px-4">
+    <section id="services" className="py-12 sm:py-16 md:py-20 bg-gray-50">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center mb-20">
-          <h2 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 font-serif">
+        <div className="text-center mb-12 sm:mb-16">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 mb-4 sm:mb-6">
             Our Services
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Join with us to experience God's presence & to taste the living manna
-          </p>
+          <div className="w-24 h-1 bg-emerald-600 mx-auto mb-6"></div>
+          <div className="max-w-4xl mx-auto px-4">
+            <p className="text-lg sm:text-xl text-gray-600 leading-relaxed mb-4">
+              Join with us to experience the God&apos;s presence & to taste the
+              living manna.
+            </p>
+          </div>
         </div>
 
-        {/* Main Services */}
-        <div className="max-w-6xl mx-auto mb-24">
-          {services.map((service, index) => (
-            <div key={index} className="mb-16 last:mb-0">
-              <div className="flex flex-col lg:flex-row items-center gap-12">
-                {/* Illustration */}
-                <div className="flex-shrink-0">
-                  {renderIllustration(service.illustration)}
+        {/* Main Services Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 md:gap-8 max-w-5xl mx-auto mb-12 sm:mb-16 md:mb-20">
+          {mainServices.map((service, index) => (
+            <div
+              key={index}
+              className="bg-white rounded-lg sm:rounded-xl md:rounded-2xl p-4 sm:p-6 md:p-8 shadow-lg hover:shadow-xl transition-all duration-300 border-2 border-black"
+            >
+              <div className="flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-4">
+                {/* Icon */}
+                <div
+                  className={`${service.iconBg} p-3 sm:p-4 rounded-xl sm:rounded-2xl flex-shrink-0 mx-auto sm:mx-0`}
+                >
+                  {service.icon === "church" && (
+                    <img
+                      width="32"
+                      height="32"
+                      alt="christian-prayer"
+                      className="w-8 h-8"
+                      src="https://img.icons8.com/ios-filled/50/ffffff/christian-prayer.png"
+                    />
+                  )}
+                  {service.icon === "calendar" && (
+                    <img
+                      width="32"
+                      height="32"
+                      alt="prayer"
+                      className="w-8 h-8"
+                      src="https://img.icons8.com/ios-filled/50/ffffff/prayer.png"
+                    />
+                  )}
                 </div>
-                
-                {/* Content Block */}
-                <div className="flex-1 w-full">
-                  <div className="flex flex-col md:flex-row overflow-hidden">
-                    {/* Left Color Block */}
-                    <div className={`${service.bgColor} p-8 md:p-12 flex flex-col justify-center items-center md:items-start text-white min-w-[200px]`}>
-                      <div className="text-4xl md:text-5xl font-black mb-2">
-                        {service.day}
-                      </div>
-                      <div className="text-2xl md:text-3xl font-bold">
-                        {service.time}
-                      </div>
-                      <div className="text-sm opacity-90 mt-1">
-                        {service.timezone}
-                      </div>
-                    </div>
-                    
-                    {/* Right Content Block */}
-                    <div className="bg-white p-8 md:p-12 flex-1">
-                      <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 font-serif">
-                        {service.title}
-                      </h3>
-                      <p className="text-lg text-gray-600 mb-6">
-                        {service.subtitle}
-                      </p>
-                      <a 
-                        href="#" 
-                        className="inline-flex items-center text-lg font-semibold text-blue-600 hover:text-blue-800 transition-colors group"
+
+                {/* Content */}
+                <div className="flex-1 text-center sm:text-left">
+                  <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-black mb-2">
+                    {service.title}
+                  </h3>
+                  <p className="text-black mb-3 text-sm sm:text-base">
+                    {service.subtitle}
+                  </p>
+
+                  {/* Location */}
+                  <div className="flex items-center justify-center sm:justify-start text-black mb-2">
+                    <img
+                      width="16"
+                      height="16"
+                      src="https://img.icons8.com/ios/50/marker--v1.png"
+                      alt="marker--v1"
+                      className="w-4 h-4 mr-2 flex-shrink-0 self-start mt-0.5"
+                    />
+                    <span className="text-sm leading-4 text-center sm:text-left">
+                      {service.location}
+                    </span>
+                  </div>
+
+                  {/* Time */}
+                  <div className="flex items-center justify-center sm:justify-start text-black mb-2">
+                    <img
+                      width="16"
+                      height="16"
+                      src="https://img.icons8.com/ios/50/timer.png"
+                      alt="timer"
+                      className="w-4 h-4 mr-2 flex-shrink-0 self-start mt-0.5"
+                    />
+                    <span className="text-sm font-semibold leading-4 text-center sm:text-left">
+                      {service.time}
+                    </span>
+                  </div>
+
+                  {/* Join Online Button */}
+                  <div className="mt-4 flex justify-center sm:justify-start">
+                    <button
+                      onClick={() =>
+                        window.open("https://zoom.us/j/3563832030", "_blank")
+                      }
+                      className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-medium text-sm transition-colors duration-300 flex items-center space-x-2"
+                    >
+                      <svg
+                        className="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
                       >
-                        {service.link}
-                        <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                        </svg>
-                      </a>
-                    </div>
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                        />
+                      </svg>
+                      <span>Join Online</span>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -176,88 +166,133 @@ export default function SuvarthaServices() {
         </div>
 
         {/* Children's Ministry Header */}
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center bg-gradient-to-r from-orange-400 to-pink-400 text-white px-8 py-4 rounded-full shadow-lg">
-            <svg className="w-8 h-8 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center bg-emerald-100 text-emerald-800 px-6 py-3 rounded-full">
+            <svg
+              className="w-6 h-6 mr-2"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+              />
             </svg>
-            <span className="font-bold text-xl">Children's Ministry</span>
+            <span className="font-bold text-lg">Children&apos;s Ministry</span>
           </div>
         </div>
 
-        {/* Children's Services */}
-        <div className="max-w-6xl mx-auto">
+        {/* Children's Services Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-6xl mx-auto">
           {childrenServices.map((service, index) => (
-            <div key={index} className="mb-16 last:mb-0">
-              <div className="flex flex-col lg:flex-row items-center gap-12">
-                {/* Illustration */}
-                <div className="flex-shrink-0 order-2 lg:order-1">
-                  {renderIllustration(service.illustration)}
+            <div
+              key={index}
+              className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 border-2 border-black"
+            >
+              <div className="text-center">
+                {/* Icon */}
+                <div
+                  className={`${
+                    service.iconBg
+                  } w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-2 ${
+                    service.icon === "people" ? "border-2 border-black" : ""
+                  }`}
+                >
+                  {service.icon === "heart" && (
+                    <img
+                      width="32"
+                      height="32"
+                      alt="children--v2"
+                      className="w-8 h-8 filter brightness-0 invert"
+                      src="https://img.icons8.com/ios/50/children--v2.png"
+                    />
+                  )}
+                  {service.icon === "book" && (
+                    <img
+                      width="32"
+                      height="32"
+                      alt="holy-bible"
+                      className="w-8 h-8"
+                      src="https://img.icons8.com/comic/100/ffffff/holy-bible.png"
+                    />
+                  )}
+                  {service.icon === "people" && (
+                    <img
+                      width="32"
+                      height="32"
+                      src="https://img.icons8.com/color/48/zoom.png"
+                      alt="zoom"
+                      className="w-8 h-8"
+                    />
+                  )}
                 </div>
-                
-                {/* Content Block */}
-                <div className="flex-1 w-full order-1 lg:order-2">
-                  <div className="flex flex-col md:flex-row overflow-hidden">
-                    {/* Left Color Block */}
-                    <div className={`${service.bgColor} p-8 md:p-12 flex flex-col justify-center items-center md:items-start text-white min-w-[200px]`}>
-                      <div className="text-4xl md:text-5xl font-black mb-2">
-                        {service.day}
-                      </div>
-                      <div className="text-2xl md:text-3xl font-bold">
-                        {service.time}
-                      </div>
-                      <div className="text-sm opacity-90 mt-1">
-                        {service.timezone}
-                      </div>
+
+                {/* Content */}
+                <h3 className="text-xl font-bold text-gray-800 mb-2">
+                  {service.title}
+                </h3>
+                {service.subtitle && (
+                  <p className="text-gray-600 mb-2">{service.subtitle}</p>
+                )}
+
+                {service.timezone && (
+                  <div className="mb-2">
+                    <div className="flex items-center justify-center text-gray-700 mb-1">
+                      <img
+                        width="16"
+                        height="16"
+                        src="https://img.icons8.com/ios/50/marker--v1.png"
+                        alt="marker--v1"
+                        className="w-4 h-4 mr-2"
+                      />
+                      <span className="font-medium text-base">
+                        United Kingdom (GMT)
+                      </span>
                     </div>
-                    
-                    {/* Right Content Block */}
-                    <div className="bg-white p-8 md:p-12 flex-1">
-                      <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 font-serif">
-                        {service.title}
-                      </h3>
-                      <p className="text-lg text-gray-600 mb-6">
-                        {service.subtitle}
-                      </p>
-                      <a 
-                        href="#" 
-                        className="inline-flex items-center text-lg font-semibold text-blue-600 hover:text-blue-800 transition-colors group"
-                      >
-                        {service.link}
-                        <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                        </svg>
-                      </a>
+                    <div className="flex items-center justify-center text-gray-700">
+                      <img
+                        width="16"
+                        height="16"
+                        src="https://img.icons8.com/ios/50/timer.png"
+                        alt="timer"
+                        className="w-4 h-4 mr-2"
+                      />
+                      <span className="font-medium text-base">
+                        {service.time.replace("Time- ", "")}
+                      </span>
                     </div>
                   </div>
-                </div>
+                )}
+
+                {service.zoom && (
+                  <button
+                    onClick={() =>
+                      window.open("https://zoom.us/j/3563832030", "_blank")
+                    }
+                    className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-medium text-sm transition-colors duration-300 flex items-center space-x-2 mx-auto"
+                  >
+                    <svg
+                      className="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                      />
+                    </svg>
+                    <span>Join Online</span>
+                  </button>
+                )}
               </div>
             </div>
           ))}
-        </div>
-
-        {/* Online Connection Info */}
-        <div className="mt-20 text-center">
-          <div className="bg-gradient-to-r from-emerald-500 to-teal-600 text-white p-8 md:p-12 max-w-4xl mx-auto">
-            <h3 className="text-3xl md:text-4xl font-bold mb-4 font-serif">
-              Join Us Online
-            </h3>
-            <p className="text-xl mb-6 opacity-90">
-              All services are available on Zoom
-            </p>
-            <div className="text-2xl font-bold mb-2">
-              Zoom ID: 356383230
-            </div>
-            <a 
-              href="#" 
-              className="inline-flex items-center bg-white text-emerald-600 px-8 py-4 font-bold text-lg hover:bg-gray-100 transition-colors group"
-            >
-              Join Meeting
-              <svg className="w-6 h-6 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-              </svg>
-            </a>
-          </div>
         </div>
       </div>
     </section>

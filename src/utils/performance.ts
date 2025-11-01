@@ -23,7 +23,7 @@ export function trackWebVitals() {
 
     try {
       observer.observe({ entryTypes: ["measure", "navigation"] });
-    } catch (e) {
+    } catch {
       // Fallback for browsers that don't support observer
       console.log("Performance observer not supported");
     }
