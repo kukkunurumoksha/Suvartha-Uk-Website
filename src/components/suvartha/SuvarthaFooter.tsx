@@ -1,34 +1,27 @@
 export default function SuvarthaFooter() {
   return (
     <footer className="bg-emerald-800 text-white py-12 sm:py-16">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto px-6 sm:px-8 lg:px-12">
         {/* Main Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-12 mb-8 sm:mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-10 lg:gap-12 mb-8 sm:mb-12">
           {/* Logo and Description */}
           <div>
             <div className="mb-4 sm:mb-6">
-              <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-3 sm:space-y-0 sm:space-x-3 text-left">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-pink-400 to-purple-600 rounded-lg flex items-center justify-center shadow-lg">
-                  <span className="text-xl sm:text-2xl font-bold text-white">
-                    S
-                  </span>
-                </div>
-                <div>
-                  <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white">
-                    Suvartha Ministries UK
-                  </h3>
-                  <p className="text-xs sm:text-sm text-white opacity-90">
-                    Est. 1925
-                  </p>
-                </div>
+              <div className="text-left">
+                <h3 className="text-xl font-bold text-white whitespace-nowrap">
+                  Suvartha Ministries UK
+                </h3>
+                <p className="text-xs sm:text-sm text-white opacity-90">
+                  Est. 1925
+                </p>
               </div>
             </div>
-            <p className="text-white leading-relaxed mb-6 text-lg">
+            <p className="text-white leading-relaxed mb-6 text-lg text-justify">
               Spreading the Gospel and building communities of faith across the
               UK since 1925. Join us in our mission to share God&apos;s love and
               hope.
             </p>
-            <div className="flex space-x-4">
+            <div className="flex gap-2 sm:gap-3">
               {/* Google */}
               <a
                 href="https://suvarthaukwebsite.vercel.app/"
@@ -175,8 +168,8 @@ export default function SuvarthaFooter() {
                 </div>
                 <span className="text-white text-lg">+44 7427527524</span>
               </div>
-              <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center">
+              <div className="flex items-start space-x-3">
+                <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
                   <svg
                     className="w-4 h-4 text-white"
                     fill="none"
@@ -191,7 +184,7 @@ export default function SuvarthaFooter() {
                     />
                   </svg>
                 </div>
-                <span className="text-white text-lg">
+                <span className="text-white text-lg break-all">
                   suvarthaministriesuk@gmail.com
                 </span>
               </div>

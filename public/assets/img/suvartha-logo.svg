@@ -45,8 +45,8 @@
   <defs>
     <path id="textCircle" d="M 100,100 m -50,0 a 50,50 0 1,1 100,0 a 50,50 0 1,1 -100,0"/>
   </defs>
-  <text fontSize="12" fill="#10b981" font-family="serif" font-weight="bold">
-    <textPath href="#textCircle" startOffset="25%">
+  <text fontSize="11" fill="#10b981" font-family="serif" font-weight="bold">
+    <textPath href="#textCircle" startOffset="22%">
       SUVARTHA MINISTRIES UK
     </textPath>
   </text>

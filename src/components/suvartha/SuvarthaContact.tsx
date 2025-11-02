@@ -21,7 +21,7 @@ export default function SuvarthaContact() {
   ];
 
   return (
-    <section id="contact" className="py-12 sm:py-16 md:py-20 bg-white">
+    <section id="contact" className="pt-24 pb-12 sm:pt-28 sm:pb-16 md:pt-32 md:pb-20 bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-12 sm:mb-16">

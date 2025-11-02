@@ -42,6 +42,13 @@ export async function generateSEOMetadata(options: SEOOptions = {}): Promise<Met
       index: true,
       follow: true,
     },
+    icons: {
+      icon: [
+        { url: '/favicon.svg', type: 'image/svg+xml' },
+        { url: '/assets/img/favicon.png', type: 'image/png', sizes: '32x32' },
+      ],
+      apple: { url: '/assets/img/suvartha-logo.svg', type: 'image/svg+xml' },
+    },
     openGraph: {
       type: "website",
       locale: "en_GB",

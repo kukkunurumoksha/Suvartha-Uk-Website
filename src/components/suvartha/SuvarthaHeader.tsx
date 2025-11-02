@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import SuvarthaLogo from "./SuvarthaLogo";
 
 export default function SuvarthaHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -14,7 +15,13 @@ export default function SuvarthaHeader() {
       setIsScrolled(window.scrollY > 600);
 
       // Determine active section based on scroll position
-      const sections = ["home", "services", "testimonials", "partnership", "contact"];
+      const sections = [
+        "home",
+        "services",
+        "testimonials",
+        "partnership",
+        "contact",
+      ];
       const scrollPosition = window.scrollY + 100; // Offset for better detection
 
       for (let i = sections.length - 1; i >= 0; i--) {
@@ -40,11 +47,11 @@ export default function SuvarthaHeader() {
         <div className="flex items-center justify-between py-3 w-full">
           {/* Logo */}
           <div className="flex items-center space-x-3 flex-shrink-0">
-            <div className={`w-10 h-10 bg-gradient-to-br from-pink-400 to-purple-600 rounded-lg flex items-center justify-center shadow-lg transition-all duration-300 ${
-              isScrolled ? "shadow-md" : "shadow-lg"
-            }`}>
-              <span className="text-lg font-bold text-white">S</span>
-            </div>
+            <SuvarthaLogo 
+              size="sm" 
+              variant={isScrolled ? "color" : "light"}
+              showText={false}
+            />
             <div>
               <h1
                 className={`text-xl font-bold transition-colors duration-300 ${
@@ -64,7 +71,7 @@ export default function SuvarthaHeader() {
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-2">
+          <nav className="hidden lg:flex space-x-2">
             <Link
               href="#home"
               className={`transition-all duration-300 text-base font-semibold px-6 py-2 rounded-lg ${
@@ -139,7 +146,7 @@ export default function SuvarthaHeader() {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden"
+            className="lg:hidden"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             <svg
@@ -160,7 +167,7 @@ export default function SuvarthaHeader() {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <nav className="md:hidden pb-4">
+          <nav className="lg:hidden pb-4">
             <div className="flex flex-col space-y-2">
               <Link
                 href="#home"

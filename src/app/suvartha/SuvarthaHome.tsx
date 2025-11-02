@@ -10,7 +10,7 @@ import SuvarthaFooter from '@/components/suvartha/SuvarthaFooter';
 
 export default function SuvarthaHome() {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen w-full">
       <SuvarthaHeader />
       <SuvarthaHero />
       <SuvarthaServices />

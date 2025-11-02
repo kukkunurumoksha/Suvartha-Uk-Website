@@ -1,40 +1,40 @@
 <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
   <!-- Outer Circle -->
-  <circle cx="16" cy="16" r="15" fill="#065f46"/>
+  <circle cx="16" cy="16" r="15" fill="#065f46" stroke="#10b981" stroke-width="1"/>
   
   <!-- Cross Symbol -->
   <g transform="translate(16,16)">
     <!-- Vertical bar of cross -->
-    <rect x="-1" y="-8" width="2" height="16" fill="#10b981" rx="1"/>
+    <rect x="-1.5" y="-8" width="3" height="16" fill="#10b981" rx="1.5"/>
     <!-- Horizontal bar of cross -->
-    <rect x="-6" y="-1" width="12" height="2" fill="#10b981" rx="1"/>
+    <rect x="-6" y="-1.5" width="12" height="3" fill="#10b981" rx="1.5"/>
   </g>
   
-  <!-- Decorative Elements - Rays -->
+  <!-- Decorative Elements - Simplified Rays -->
   <g transform="translate(16,16)">
     <g transform="rotate(0)">
-      <rect x="-0.25" y="-12" width="0.5" height="2" fill="#047857" rx="0.25"/>
+      <rect x="-0.5" y="-12" width="1" height="2" fill="#047857" rx="0.5"/>
     </g>
     <g transform="rotate(45)">
-      <rect x="-0.25" y="-12" width="0.5" height="2" fill="#047857" rx="0.25"/>
+      <rect x="-0.5" y="-12" width="1" height="2" fill="#047857" rx="0.5"/>
     </g>
     <g transform="rotate(90)">
-      <rect x="-0.25" y="-12" width="0.5" height="2" fill="#047857" rx="0.25"/>
+      <rect x="-0.5" y="-12" width="1" height="2" fill="#047857" rx="0.5"/>
     </g>
     <g transform="rotate(135)">
-      <rect x="-0.25" y="-12" width="0.5" height="2" fill="#047857" rx="0.25"/>
+      <rect x="-0.5" y="-12" width="1" height="2" fill="#047857" rx="0.5"/>
     </g>
     <g transform="rotate(180)">
-      <rect x="-0.25" y="-12" width="0.5" height="2" fill="#047857" rx="0.25"/>
+      <rect x="-0.5" y="-12" width="1" height="2" fill="#047857" rx="0.5"/>
     </g>
     <g transform="rotate(225)">
-      <rect x="-0.25" y="-12" width="0.5" height="2" fill="#047857" rx="0.25"/>
+      <rect x="-0.5" y="-12" width="1" height="2" fill="#047857" rx="0.5"/>
     </g>
     <g transform="rotate(270)">
-      <rect x="-0.25" y="-12" width="0.5" height="2" fill="#047857" rx="0.25"/>
+      <rect x="-0.5" y="-12" width="1" height="2" fill="#047857" rx="0.5"/>
     </g>
     <g transform="rotate(315)">
-      <rect x="-0.25" y="-12" width="0.5" height="2" fill="#047857" rx="0.25"/>
+      <rect x="-0.5" y="-12" width="1" height="2" fill="#047857" rx="0.5"/>
     </g>
   </g>
 </svg>

@@ -11,19 +11,19 @@ export default function manifest(): MetadataRoute.Manifest {
     theme_color: '#0f766e',
     icons: [
       {
-        src: '/favicon.ico',
+        src: '/favicon.svg',
         sizes: 'any',
-        type: 'image/x-icon',
+        type: 'image/svg+xml',
       },
       {
-        src: '/icon.ico',
+        src: '/assets/img/favicon.png',
+        sizes: '32x32',
+        type: 'image/png',
+      },
+      {
+        src: '/assets/img/suvartha-logo.svg',
         sizes: '192x192',
-        type: 'image/png',
-      },
-      {
-        src: '/apple-icon.ico',
-        sizes: '180x180',
-        type: 'image/png',
+        type: 'image/svg+xml',
       },
     ],
   }
