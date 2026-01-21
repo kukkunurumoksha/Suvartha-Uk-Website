@@ -11,85 +11,90 @@ export default function SuvarthaLogoSimple({
   variant = 'color',
   className = '' 
 }: SuvarthaLogoSimpleProps) {
-  const getColors = () => {
+  const getBackgroundColor = () => {
     switch (variant) {
       case 'light':
-        return {
-          primary: '#ffffff',
-          accent: '#ffffff',
-          secondary: '#f3f4f6'
-        };
+        return '#ffffff';
       case 'dark':
-        return {
-          primary: '#1f2937',
-          accent: '#374151',
-          secondary: '#4b5563'
-        };
-      default: // color
-        return {
-          primary: '#065f46',
-          accent: '#10b981',
-          secondary: '#047857'
-        };
+        return '#1f2937';
+      default:
+        return '#065f46';
     }
   };
 
-  const colors = getColors();
+  const getCrossColor = () => {
+    switch (variant) {
+      case 'light':
+        return '#000000';
+      case 'dark':
+        return '#ffffff';
+      default:
+        return '#ffffff';
+    }
+  };
+
+  const getBorderColor = () => {
+    switch (variant) {
+      case 'light':
+        return '#000000';
+      case 'dark':
+        return '#ffffff';
+      default:
+        return '#10b981';
+    }
+  };
 
   return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 100 100"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={className}
-      style={{ width: `${size}px`, height: `${size}px` }}
+    <div 
+      className={`${className} relative flex items-center justify-center rounded-full`}
+      style={{ 
+        width: `${size}px`, 
+        height: `${size}px`,
+        backgroundColor: getBackgroundColor(),
+        border: `2px solid ${getBorderColor()}`
+      }}
     >
-      {/* Outer Circle */}
-      <circle cx="50" cy="50" r="48" fill={colors.primary} stroke={colors.accent} strokeWidth="3"/>
-      
-      {/* Cross Symbol */}
-      <g transform="translate(50,50)">
-        {/* Vertical bar of cross */}
-        <rect x="-3" y="-22" width="6" height="44" fill={colors.accent} rx="3"/>
-        {/* Horizontal bar of cross */}
-        <rect x="-15" y="-3" width="30" height="6" fill={colors.accent} rx="3"/>
-      </g>
-      
-      {/* Decorative Elements - Rays */}
-      <g transform="translate(50,50)">
-        {[0, 45, 90, 135, 180, 225, 270, 315].map((angle, index) => (
-          <g key={index} transform={`rotate(${angle})`}>
-            <rect
-              x="-1"
-              y="-35"
-              width="2"
-              height="8"
-              fill={colors.secondary}
-              rx="1"
-            />
-          </g>
-        ))}
-      </g>
-      
-      {/* Text Arc - "SUVARTHA" */}
-      <defs>
-        <path
-          id={`textCircle-${size}`}
-          d="M 50,50 m -25,0 a 25,25 0 1,1 50,0 a 25,25 0 1,1 -50,0"
+      {/* Cross using CSS */}
+      <div className="relative">
+        {/* Vertical bar */}
+        <div 
+          style={{
+            width: '3px',
+            height: `${size * 0.6}px`,
+            backgroundColor: getCrossColor(),
+            borderRadius: '2px',
+            position: 'absolute',
+            left: '50%',
+            top: '50%',
+            transform: 'translate(-50%, -50%)'
+          }}
         />
-      </defs>
-      <text
-        fontSize="7"
-        fill={colors.accent}
-        fontFamily="serif"
-        fontWeight="bold"
+        {/* Horizontal bar */}
+        <div 
+          style={{
+            width: `${size * 0.6}px`,
+            height: '3px',
+            backgroundColor: getCrossColor(),
+            borderRadius: '2px',
+            position: 'absolute',
+            left: '50%',
+            top: '50%',
+            transform: 'translate(-50%, -50%)'
+          }}
+        />
+      </div>
+      
+      {/* Small text at bottom */}
+      <div 
+        className="absolute bottom-1 text-xs font-bold"
+        style={{ 
+          color: getCrossColor(),
+          fontSize: `${size * 0.15}px`,
+          fontFamily: 'serif'
+        }}
       >
-        <textPath href={`#textCircle-${size}`} startOffset="25%">
-          SUVARTHA
-        </textPath>
-      </text>
-    </svg>
+        SM
+      </div>
+    </div>
   );
 }
