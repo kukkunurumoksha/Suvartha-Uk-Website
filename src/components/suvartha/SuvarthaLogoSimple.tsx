@@ -16,8 +16,8 @@ export default function SuvarthaLogoSimple({
       case 'light':
         return {
           primary: '#ffffff',
-          accent: '#f3f4f6',
-          secondary: '#e5e7eb'
+          accent: '#ffffff',
+          secondary: '#f3f4f6'
         };
       case 'dark':
         return {
@@ -47,14 +47,14 @@ export default function SuvarthaLogoSimple({
       style={{ width: `${size}px`, height: `${size}px` }}
     >
       {/* Outer Circle */}
-      <circle cx="50" cy="50" r="48" fill={colors.primary} stroke={colors.accent} strokeWidth="2"/>
+      <circle cx="50" cy="50" r="48" fill={colors.primary} stroke={colors.accent} strokeWidth="3"/>
       
       {/* Cross Symbol */}
       <g transform="translate(50,50)">
         {/* Vertical bar of cross */}
-        <rect x="-2" y="-20" width="4" height="40" fill={colors.accent} rx="2"/>
+        <rect x="-3" y="-22" width="6" height="44" fill={colors.accent} rx="3"/>
         {/* Horizontal bar of cross */}
-        <rect x="-12" y="-2" width="24" height="4" fill={colors.accent} rx="2"/>
+        <rect x="-15" y="-3" width="30" height="6" fill={colors.accent} rx="3"/>
       </g>
       
       {/* Decorative Elements - Rays */}
@@ -62,12 +62,12 @@ export default function SuvarthaLogoSimple({
         {[0, 45, 90, 135, 180, 225, 270, 315].map((angle, index) => (
           <g key={index} transform={`rotate(${angle})`}>
             <rect
-              x="-0.5"
-              y="-32"
-              width="1"
-              height="6"
+              x="-1"
+              y="-35"
+              width="2"
+              height="8"
               fill={colors.secondary}
-              rx="0.5"
+              rx="1"
             />
           </g>
         ))}
@@ -81,7 +81,7 @@ export default function SuvarthaLogoSimple({
         />
       </defs>
       <text
-        fontSize="6"
+        fontSize="7"
         fill={colors.accent}
         fontFamily="serif"
         fontWeight="bold"
