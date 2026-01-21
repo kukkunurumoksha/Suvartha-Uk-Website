@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import SuvarthaLogoSimple from './SuvarthaLogoSimple';
 
 export default function SuvarthaServices() {
   const mainServices = [
@@ -81,7 +80,26 @@ export default function SuvarthaServices() {
                 <div
                   className={`${service.iconBg} p-3 sm:p-4 rounded-xl sm:rounded-2xl flex-shrink-0 mx-auto sm:mx-0`}
                 >
-                  <SuvarthaLogoSimple size={32} variant="light" className="w-8 h-8" />
+                  {service.icon === "church" && (
+                    <Image
+                      width={32}
+                      height={32}
+                      alt="christian-prayer"
+                      className="w-8 h-8"
+                      src="https://img.icons8.com/ios-filled/50/ffffff/christian-prayer.png"
+                      unoptimized
+                    />
+                  )}
+                  {service.icon === "calendar" && (
+                    <Image
+                      width={32}
+                      height={32}
+                      alt="prayer"
+                      className="w-8 h-8"
+                      src="https://img.icons8.com/ios-filled/50/ffffff/prayer.png"
+                      unoptimized
+                    />
+                  )}
                 </div>
 
                 {/* Content */}
@@ -187,16 +205,35 @@ export default function SuvarthaServices() {
                     service.icon === "people" ? "border-2 border-black" : ""
                   }`}
                 >
-                  {service.icon === "people" ? (
+                  {service.icon === "heart" && (
+                    <Image
+                      width={32}
+                      height={32}
+                      alt="children--v2"
+                      className="w-8 h-8 filter brightness-0 invert"
+                      src="https://img.icons8.com/ios/50/children--v2.png"
+                      unoptimized
+                    />
+                  )}
+                  {service.icon === "book" && (
+                    <Image
+                      width={32}
+                      height={32}
+                      alt="holy-bible"
+                      className="w-8 h-8"
+                      src="https://img.icons8.com/comic/100/ffffff/holy-bible.png"
+                      unoptimized
+                    />
+                  )}
+                  {service.icon === "people" && (
                     <Image
                       width={32}
                       height={32}
                       src="https://img.icons8.com/color/48/zoom.png"
                       alt="zoom"
                       className="w-8 h-8"
+                      unoptimized
                     />
-                  ) : (
-                    <SuvarthaLogoSimple size={32} variant="light" className="w-8 h-8" />
                   )}
                 </div>
 
