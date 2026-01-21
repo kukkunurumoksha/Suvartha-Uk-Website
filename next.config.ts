@@ -19,20 +19,6 @@ const nextConfig: NextConfig = {
   // Performance optimizations (swcMinify is enabled by default in Next.js 15)
   // swcMinify: true,
   
-  // Bundle analyzer for development
-  ...(process.env.ANALYZE === 'true' && {
-    webpack: (config: any) => {
-      const { BundleAnalyzerPlugin } = require('@next/bundle-analyzer')();
-      config.plugins.push(
-        new BundleAnalyzerPlugin({
-          analyzerMode: 'static',
-          openAnalyzer: false,
-        })
-      );
-      return config;
-    },
-  }),
-  
   // Security headers
   async headers() {
     return [
@@ -90,7 +76,7 @@ const nextConfig: NextConfig = {
   },
   
   // Security-related webpack config
-  webpack: (config, { isServer }) => {
+  webpack: (config) => {
     // Additional security configurations can be added here
     return config;
   },

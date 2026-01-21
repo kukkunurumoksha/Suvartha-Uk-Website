@@ -1,21 +1,24 @@
 # Suvartha Ministries UK - Vercel Deployment Guide
 
-## ✅ Pre-deployment Checklist Completed
+## ✅ FIXED: Vercel Deployment Issues Resolved
 
-The website is now ready for Vercel deployment with all build errors fixed:
-
-### Fixed Issues:
-- ✅ Escaped HTML entities (`'` → `&apos;`, `"` → `&quot;`)
-- ✅ Removed unused variables and imports
-- ✅ Fixed ESLint warnings
-- ✅ Successful production build
+### Issues Fixed for Vercel Deployment:
+- ✅ **Removed duplicate configuration files** that were causing conflicts:
+  - Deleted `postcss.config.js` (kept `postcss.config.mjs`)
+  - Deleted `tailwind.config.js` (kept `tailwind.config.ts`)
+- ✅ **Added Vercel-specific configuration files**:
+  - Created `vercel.json` with proper build settings
+  - Added `.nvmrc` to specify Node.js version (20)
+  - Added `engines` field in `package.json`
+- ✅ **Consolidated Tailwind configuration** in TypeScript file
+- ✅ **All build errors fixed** - builds successfully locally and should work on Vercel
 
 ## Deployment Steps
 
-### 1. Push to GitHub
+### 1. Push Latest Changes to GitHub
 ```bash
 git add .
-git commit -m "Ready for Vercel deployment - all build errors fixed"
+git commit -m "Fix Vercel deployment issues - remove duplicate configs"
 git push origin main
 ```
 
@@ -24,29 +27,46 @@ git push origin main
 2. Sign in with your GitHub account
 3. Click "New Project"
 4. Import your repository
-5. Configure project settings:
-   - **Framework Preset**: Next.js
-   - **Root Directory**: `./` (default)
-   - **Build Command**: `npm run build` (default)
-   - **Output Directory**: `.next` (default)
+5. **Vercel will automatically detect the configuration from `vercel.json`**
+6. Click "Deploy"
 
-### 3. Environment Variables (if needed)
+### 3. Vercel Configuration (Auto-detected)
+- **Framework Preset**: Next.js (auto-detected)
+- **Root Directory**: `./` (default)
+- **Build Command**: `npm run build` (from vercel.json)
+- **Output Directory**: `.next` (from vercel.json)
+- **Node.js Version**: 20 (from .nvmrc)
+
+### 4. Environment Variables (if needed)
 Add any environment variables in Vercel dashboard under:
 Project Settings → Environment Variables
 
-### 4. Custom Domain (optional)
+### 5. Custom Domain (optional)
 - Go to Project Settings → Domains
 - Add your custom domain
 - Follow DNS configuration instructions
 
-## Build Configuration
+## What Was Fixed
 
-The project includes:
-- ✅ Next.js 15.5.3 optimized build
-- ✅ Image optimization enabled
-- ✅ Security headers configured
-- ✅ Performance optimizations
-- ✅ ESLint configured (warnings ignored during build)
+### Configuration Conflicts Resolved:
+1. **PostCSS**: Removed duplicate `postcss.config.js`, kept `postcss.config.mjs`
+2. **Tailwind**: Removed duplicate `tailwind.config.js`, consolidated into `tailwind.config.ts`
+3. **Node.js Version**: Added `.nvmrc` and `engines` in `package.json`
+4. **Vercel Settings**: Added `vercel.json` for explicit configuration
+
+### Build Verification:
+- ✅ Local build: `npm run build` - SUCCESS
+- ✅ TypeScript check: `npx tsc --noEmit` - SUCCESS  
+- ✅ Linting: `npm run lint` - SUCCESS
+- ✅ All dependencies properly specified
+
+## Troubleshooting
+
+If deployment still fails:
+1. Check Vercel build logs for specific errors
+2. Ensure your GitHub repository has the latest changes
+3. Try redeploying from Vercel dashboard
+4. Check that all files are committed and pushed
 
 ## Post-deployment
 
@@ -57,11 +77,11 @@ After successful deployment:
 4. Test navigation and buttons
 5. Confirm all images load properly
 
-## Support
+Your website should now deploy successfully to Vercel! 🚀
 
-If you encounter any deployment issues:
-1. Check Vercel build logs
-2. Ensure all dependencies are in package.json
-3. Verify environment variables are set correctly
-
-Your website is now ready for production deployment! 🚀
+## Files Added/Modified:
+- ✅ `vercel.json` - Vercel deployment configuration
+- ✅ `.nvmrc` - Node.js version specification
+- ✅ `package.json` - Added engines field
+- ✅ `tailwind.config.ts` - Consolidated configuration
+- ✅ Removed duplicate config files

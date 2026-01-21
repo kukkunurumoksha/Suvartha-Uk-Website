@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 export default function SuvarthaServices() {
   const mainServices = [
     {
@@ -79,18 +81,18 @@ export default function SuvarthaServices() {
                   className={`${service.iconBg} p-3 sm:p-4 rounded-xl sm:rounded-2xl flex-shrink-0 mx-auto sm:mx-0`}
                 >
                   {service.icon === "church" && (
-                    <img
-                      width="32"
-                      height="32"
+                    <Image
+                      width={32}
+                      height={32}
                       alt="christian-prayer"
                       className="w-8 h-8"
                       src="https://img.icons8.com/ios-filled/50/ffffff/christian-prayer.png"
                     />
                   )}
                   {service.icon === "calendar" && (
-                    <img
-                      width="32"
-                      height="32"
+                    <Image
+                      width={32}
+                      height={32}
                       alt="prayer"
                       className="w-8 h-8"
                       src="https://img.icons8.com/ios-filled/50/ffffff/prayer.png"
@@ -109,9 +111,9 @@ export default function SuvarthaServices() {
 
                   {/* Location */}
                   <div className="flex items-center justify-center sm:justify-start text-black mb-2">
-                    <img
-                      width="16"
-                      height="16"
+                    <Image
+                      width={16}
+                      height={16}
                       src="https://img.icons8.com/ios/50/marker--v1.png"
                       alt="marker--v1"
                       className="w-4 h-4 mr-2 flex-shrink-0 self-start mt-0.5"
@@ -123,9 +125,9 @@ export default function SuvarthaServices() {
 
                   {/* Time */}
                   <div className="flex items-center justify-center sm:justify-start text-black mb-2">
-                    <img
-                      width="16"
-                      height="16"
+                    <Image
+                      width={16}
+                      height={16}
                       src="https://img.icons8.com/ios/50/timer.png"
                       alt="timer"
                       className="w-4 h-4 mr-2 flex-shrink-0 self-start mt-0.5"
@@ -202,27 +204,27 @@ export default function SuvarthaServices() {
                   }`}
                 >
                   {service.icon === "heart" && (
-                    <img
-                      width="32"
-                      height="32"
+                    <Image
+                      width={32}
+                      height={32}
                       alt="children--v2"
                       className="w-8 h-8 filter brightness-0 invert"
                       src="https://img.icons8.com/ios/50/children--v2.png"
                     />
                   )}
                   {service.icon === "book" && (
-                    <img
-                      width="32"
-                      height="32"
+                    <Image
+                      width={32}
+                      height={32}
                       alt="holy-bible"
                       className="w-8 h-8"
                       src="https://img.icons8.com/comic/100/ffffff/holy-bible.png"
                     />
                   )}
                   {service.icon === "people" && (
-                    <img
-                      width="32"
-                      height="32"
+                    <Image
+                      width={32}
+                      height={32}
                       src="https://img.icons8.com/color/48/zoom.png"
                       alt="zoom"
                       className="w-8 h-8"
@@ -241,9 +243,9 @@ export default function SuvarthaServices() {
                 {service.timezone && (
                   <div className="mb-2">
                     <div className="flex items-center justify-center text-gray-700 mb-1">
-                      <img
-                        width="16"
-                        height="16"
+                      <Image
+                        width={16}
+                        height={16}
                         src="https://img.icons8.com/ios/50/marker--v1.png"
                         alt="marker--v1"
                         className="w-4 h-4 mr-2"
@@ -253,9 +255,9 @@ export default function SuvarthaServices() {
                       </span>
                     </div>
                     <div className="flex items-center justify-center text-gray-700">
-                      <img
-                        width="16"
-                        height="16"
+                      <Image
+                        width={16}
+                        height={16}
                         src="https://img.icons8.com/ios/50/timer.png"
                         alt="timer"
                         className="w-4 h-4 mr-2"

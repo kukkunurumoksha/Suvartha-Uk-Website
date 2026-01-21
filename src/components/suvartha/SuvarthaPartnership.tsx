@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from 'react';
+import Image from 'next/image';
 
 export default function SuvarthaPartnership() {
   const [showDonationModal, setShowDonationModal] = useState(false);
@@ -22,7 +23,7 @@ export default function SuvarthaPartnership() {
             </h2>
             <div className="w-16 sm:w-24 h-1 bg-emerald-600 mx-auto mb-4 sm:mb-6"></div>
             <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed px-4">
-              Your generous support helps us continue our ministry work and reach more lives with God's love
+              Your generous support helps us continue our ministry work and reach more lives with God&apos;s love
             </p>
           </div>
 
@@ -32,9 +33,9 @@ export default function SuvarthaPartnership() {
               {/* Professional Logo */}
               <div className="mb-8">
                 <div className="w-20 h-20 bg-rose-500 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <img 
-                    width="40" 
-                    height="40" 
+                  <Image 
+                    width={40} 
+                    height={40} 
                     src="https://img.icons8.com/ios/50/donate.png" 
                     alt="donate"
                     className="w-10 h-10 filter brightness-0 invert"
