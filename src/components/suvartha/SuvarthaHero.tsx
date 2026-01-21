@@ -1,3 +1,5 @@
+import SuvarthaLogo from '../suvartha/SuvarthaLogo';
+
 export default function SuvarthaHero() {
   return (
     <section id="home" className="bg-gradient-to-br from-emerald-700 to-emerald-900 text-white py-16 sm:py-20 md:py-24 relative overflow-hidden min-h-screen flex items-center">
@@ -9,6 +11,11 @@ export default function SuvarthaHero() {
       </div>
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 w-full">
+        {/* Logo */}
+        <div className="mb-6 sm:mb-8">
+          <SuvarthaLogo size="xl" variant="light" showText={false} className="justify-center" />
+        </div>
+
         {/* Top Badge */}
         <div className="inline-block bg-emerald-600/30 backdrop-blur-sm rounded-full px-4 sm:px-6 py-2 sm:py-3 mb-6 sm:mb-8 border border-emerald-400/50">
           <span className="text-xs sm:text-sm font-medium">2025 - YEAR OF REPLENISHMENT</span>
