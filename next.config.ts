@@ -60,22 +60,23 @@ const nextConfig: NextConfig = {
             key: 'Permissions-Policy',
             value: 'camera=(), microphone=(), geolocation=()'
           },
-          {
-            key: 'Content-Security-Policy',
-            value: [
-              "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com",
-              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-              "font-src 'self' https://fonts.gstatic.com",
-              "img-src 'self' data: https: blob:",
-              "connect-src 'self' https://www.google-analytics.com",
-              "frame-src 'self' https://www.youtube.com https://www.google.com https://maps.google.com https://www.google.com/maps https://maps.googleapis.com",
-              "object-src 'self'",
-              "base-uri 'self'",
-              "form-action 'self'",
-              "upgrade-insecure-requests"
-            ].join('; ')
-          }
+          // {
+          //   key: 'Content-Security-Policy',
+          //   value: [
+          //     "default-src 'self'",
+          //     "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com",
+          //     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+          //     "font-src 'self' https://fonts.gstatic.com",
+          //     "img-src 'self' data: https: blob:",
+          //     "connect-src 'self' https://www.google-analytics.com",
+          //     "frame-src 'self' https://www.youtube.com https://www.google.com https://maps.google.com https://www.google.com/maps https://maps.googleapis.com",
+          //     "object-src 'self' blob:",
+          //     "media-src 'self' blob:",
+          //     "base-uri 'self'",
+          //     "form-action 'self'",
+          //     "upgrade-insecure-requests"
+          //   ].join('; ')
+          // }
         ],
       },
     ];

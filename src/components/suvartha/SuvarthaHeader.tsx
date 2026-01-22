@@ -142,6 +142,16 @@ export default function SuvarthaHeader() {
             >
               Contact
             </Link>
+            <Link
+              href="/policies"
+              className={`transition-all duration-300 text-base font-semibold px-6 py-2 rounded-lg ${
+                isScrolled
+                  ? "text-black hover:bg-emerald-100 hover:text-emerald-700"
+                  : "text-white hover:bg-white/20"
+              }`}
+            >
+              Policies
+            </Link>
           </nav>
 
           {/* Mobile Menu Button */}
@@ -243,6 +253,17 @@ export default function SuvarthaHeader() {
                 }`}
               >
                 Contact
+              </Link>
+              <Link
+                href="/policies"
+                onClick={() => setIsMenuOpen(false)}
+                className={`transition-all duration-300 py-2 text-sm px-3 rounded-lg ${
+                  isScrolled
+                    ? "text-black font-bold hover:text-emerald-600"
+                    : "text-white font-medium hover:text-emerald-200"
+                }`}
+              >
+                Policies
               </Link>
             </div>
           </nav>
