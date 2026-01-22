@@ -5,7 +5,7 @@ export default function LocalBusinessSchema() {
     "name": "Suvartha Ministries UK",
     "description": "Welcome to Suvartha Ministries UK - Spreading the Gospel since 1925",
     "url": "https://suvarthaministries.org.uk",
-    "telephone": "+44-XXX-XXX-XXXX",
+    "telephone": "+44 7427527524",
     "address": {
       "@type": "PostalAddress",
       "addressCountry": "GB",

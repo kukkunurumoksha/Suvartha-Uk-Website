@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect } from 'react';
+import { useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 
-export default function PDFViewerPage() {
+function PDFViewerContent() {
   const searchParams = useSearchParams();
   const file = searchParams.get('file');
 
@@ -126,22 +126,22 @@ export default function PDFViewerPage() {
         WebkitTapHighlightColor: 'transparent',
       } as React.CSSProperties}
     >
-      {/* Simple header */}
-      <div className="bg-emerald-600 text-white p-3 flex items-center justify-between">
+      {/* Compact header for smaller window */}
+      <div className="bg-emerald-600 text-white p-2 flex items-center justify-between">
         <button 
-          onClick={() => window.location.href = '/policies'}
-          className="bg-white text-emerald-600 px-3 py-1 rounded text-sm hover:bg-gray-100"
+          onClick={() => window.close()}
+          className="bg-white text-emerald-600 px-2 py-1 rounded text-xs hover:bg-gray-100"
         >
-          ← Back to Policies
+          ✕ Close
         </button>
-        <h1 className="text-lg font-semibold">Church Policy Document</h1>
-        <div className="w-20"></div>
+        <h1 className="text-sm font-semibold">Church Policy Document</h1>
+        <div className="w-12"></div>
       </div>
 
-      {/* PDF Viewer with hidden controls */}
+      {/* PDF Viewer with hidden controls - optimized for smaller window */}
       <div className="h-screen relative overflow-hidden">
         <iframe
-          src={`${pdfUrl}#toolbar=0&navpanes=0&scrollbar=1&view=FitH&zoom=page-width`}
+          src={`${pdfUrl}#toolbar=0&navpanes=0&scrollbar=1&view=FitH&zoom=page-fit`}
           className="w-full h-full border-0"
           title="Church Policy Document"
           style={{
@@ -154,12 +154,27 @@ export default function PDFViewerPage() {
         
         {/* Overlay to hide any PDF toolbar that might appear */}
         <div 
-          className="absolute top-0 left-0 right-0 h-16 bg-white pointer-events-none z-10"
+          className="absolute top-0 left-0 right-0 h-12 bg-white pointer-events-none z-10"
           style={{ 
-            background: 'linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,0.8) 50%, transparent 100%)' 
+            background: 'linear-gradient(to bottom, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.7) 70%, transparent 100%)' 
           }}
         />
       </div>
     </div>
+  );
+}
+
+export default function PDFViewerPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600 mx-auto mb-4"></div>
+          <p>Loading PDF viewer...</p>
+        </div>
+      </div>
+    }>
+      <PDFViewerContent />
+    </Suspense>
   );
 }

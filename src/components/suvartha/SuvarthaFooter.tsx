@@ -1,6 +1,6 @@
 export default function SuvarthaFooter() {
   return (
-    <footer className="bg-emerald-800 text-white py-12 sm:py-16">
+    <footer className="bg-amber-800 text-white py-12 sm:py-16">
       <div className="container mx-auto px-6 sm:px-8 lg:px-12">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-10 lg:gap-12 mb-8 sm:mb-12">
@@ -106,7 +106,7 @@ export default function SuvarthaFooter() {
               <li>
                 <a
                   href="#home"
-                  className="text-white hover:text-emerald-200 transition-colors text-lg"
+                  className="text-white hover:text-amber-200 transition-colors text-lg"
                 >
                   Home
                 </a>
@@ -114,7 +114,7 @@ export default function SuvarthaFooter() {
               <li>
                 <a
                   href="#services"
-                  className="text-white hover:text-emerald-200 transition-colors text-lg"
+                  className="text-white hover:text-amber-200 transition-colors text-lg"
                 >
                   Services
                 </a>
@@ -122,7 +122,7 @@ export default function SuvarthaFooter() {
               <li>
                 <a
                   href="#testimonials"
-                  className="text-white hover:text-emerald-200 transition-colors text-lg"
+                  className="text-white hover:text-amber-200 transition-colors text-lg"
                 >
                   Testimonials
                 </a>
@@ -130,7 +130,7 @@ export default function SuvarthaFooter() {
               <li>
                 <a
                   href="#partnership"
-                  className="text-white hover:text-emerald-200 transition-colors text-lg"
+                  className="text-white hover:text-amber-200 transition-colors text-lg"
                 >
                   Partnership
                 </a>
@@ -138,7 +138,7 @@ export default function SuvarthaFooter() {
               <li>
                 <a
                   href="#contact"
-                  className="text-white hover:text-emerald-200 transition-colors text-lg"
+                  className="text-white hover:text-amber-200 transition-colors text-lg"
                 >
                   Contact
                 </a>
@@ -220,21 +220,21 @@ export default function SuvarthaFooter() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-emerald-700 pt-8">
+        <div className="border-t border-amber-700 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-white mb-4 md:mb-0 text-sm sm:text-base">
-              © 2025 Suvartha Ministries UK. All rights reserved.
+              © 2026 Suvartha Ministries UK. All rights reserved.
             </p>
             <div className="flex space-x-8">
               <a
                 href="#"
-                className="text-white hover:text-emerald-200 transition-colors text-sm sm:text-base"
+                className="text-white hover:text-amber-200 transition-colors text-sm sm:text-base"
               >
                 Privacy Policy
               </a>
               <a
                 href="#"
-                className="text-white hover:text-emerald-200 transition-colors text-sm sm:text-base"
+                className="text-white hover:text-amber-200 transition-colors text-sm sm:text-base"
               >
                 Terms of Service
               </a>

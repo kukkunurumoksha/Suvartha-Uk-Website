@@ -1,26 +1,26 @@
 {
-  "name": "HOPE IN JESUS APOSTOLIC CHURCH OF CHRIST",
-  "short_name": "HIJBLR",
-  "description": "HOPE IN JESUS APOSTOLIC CHURCH OF CHRIST, HOPE IN JESUS INTERNATIONAL REVIVAL CENTRE, BANGALORE",
+  "name": "Suvartha Ministries UK",
+  "short_name": "Suvartha UK",
+  "description": "Welcome to Suvartha Ministries UK - Spreading the Gospel since 1925",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#1a1a2e",
-  "theme_color": "#16213e",
+  "background_color": "#ffffff",
+  "theme_color": "#0f766e",
   "icons": [
     {
-      "src": "/assets/favicon.ico",
-      "sizes": "48x48",
-      "type": "image/x-icon"
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
     },
     {
-      "src": "/assets/favicon.ico",
+      "src": "/assets/img/favicon.png",
       "sizes": "32x32",
-      "type": "image/x-icon"
+      "type": "image/png"
     },
     {
-      "src": "/assets/favicon.ico", 
-      "sizes": "16x16",
-      "type": "image/x-icon"
+      "src": "/assets/img/suvartha-logo.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
     }
   ]
 }

@@ -3,11 +3,11 @@ import SuvarthaLogo from '../suvartha/SuvarthaLogo';
 export default function SuvarthaHero() {
   return (
     <section id="home" className="relative overflow-hidden min-h-screen flex items-center">
-      {/* Background Image - Put your image file in public/assets/img/hero-background.jpg */}
+      {/* Background Image - Using your new hero-background.jpeg */}
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: "url('/assets/img/hero-background.png')",
+          backgroundImage: "url('/assets/img/hero-background.jpeg')",
         }}
       />
       
@@ -23,11 +23,6 @@ export default function SuvarthaHero() {
           <SuvarthaLogo size="xl" variant="light" showText={false} className="justify-center" />
         </div>
 
-        {/* Top Badge */}
-        <div className="inline-block bg-white/20 backdrop-blur-md rounded-full px-4 sm:px-6 py-2 sm:py-3 mb-6 sm:mb-8 border border-white/30 shadow-lg">
-          <span className="text-xs sm:text-sm font-medium text-white">🙏 GOD HEARS YOUR PRAYERS 🙏</span>
-        </div>
-
         {/* Main Heading */}
         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-6 sm:mb-8 leading-tight px-2 text-white drop-shadow-lg">
           He Replenishes<br />
@@ -39,7 +34,7 @@ export default function SuvarthaHero() {
         {/* Scripture Reference */}
         <div className="mb-4 sm:mb-6">
           <div className="inline-block bg-white/25 backdrop-blur-md px-4 py-2 rounded-lg border border-white/20 shadow-lg">
-            <p className="text-lg sm:text-xl md:text-2xl font-bold text-yellow-200 drop-shadow">Jeremiah 31:25</p>
+            <p className="text-lg sm:text-xl md:text-2xl font-bold text-yellow-200 drop-shadow">Galatians 2:20</p>
           </div>
         </div>
         
@@ -47,13 +42,13 @@ export default function SuvarthaHero() {
         <div className="mb-8 sm:mb-12">
           <div className="max-w-4xl mx-auto bg-white/20 backdrop-blur-md rounded-2xl p-6 sm:p-8 border border-white/20 shadow-xl">
             <p className="text-base sm:text-lg md:text-xl leading-relaxed font-medium px-4 text-white drop-shadow italic">
-              &quot;For I have satiated the weary soul, and I have replenished every sorrowful soul.&quot;
+              &quot;I have been crucified with Christ and I no longer live, but Christ lives in me. The life I now live in the body, I live by faith in the Son of God, who loved me and gave himself for me.&quot;
             </p>
             <div className="mt-4 flex justify-center">
               <div className="w-16 h-1 bg-gradient-to-r from-yellow-300 to-amber-300 rounded-full shadow-lg"></div>
             </div>
             <p className="text-sm sm:text-base text-yellow-200 mt-4 font-light">
-              When you cry out to God with tears of joy, He fills your heart with His love and peace
+              Living by faith in Christ who lives within us - our hope and strength for 2026
             </p>
           </div>
         </div>

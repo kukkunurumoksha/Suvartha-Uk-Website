@@ -6,7 +6,7 @@ interface SEOOptions {
   description?: string;
 }
 
-export async function generateSEOMetadata(options: SEOOptions = {}): Promise<Metadata> {
+export function generateSEOMetadata(options: SEOOptions = {}): Metadata {
   const {
     useDynamicDomain = false,
     title = "Suvartha Ministries UK",

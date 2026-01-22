@@ -29,7 +29,7 @@ const exo = Exo({
 
 import { generateSEOMetadata } from "@/components/SEOHead";
 
-export const metadata = await generateSEOMetadata({
+export const metadata = generateSEOMetadata({
   useDynamicDomain: true,
 });
 

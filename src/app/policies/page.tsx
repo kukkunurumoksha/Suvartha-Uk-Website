@@ -203,7 +203,8 @@ export default function PoliciesPage() {
                       onClick={() => {
                         const filename = 'Data Protection Policy and Procedure.pdf';
                         const url = `/pdf-viewer?file=${encodeURIComponent(filename)}`;
-                        window.location.href = url; // Navigate within same website
+                        // Open in a smaller Chrome-like window
+                        window.open(url, '_blank', 'width=1000,height=700,scrollbars=yes,resizable=yes,toolbar=no,menubar=no,location=no,status=no');
                       }}
                       className={`px-4 py-2 rounded-lg transition-colors ${
                         pdfFiles['data-protection'] 
@@ -252,7 +253,8 @@ export default function PoliciesPage() {
                       onClick={() => {
                         const filename = 'Internal risk management policy and procedures.pdf';
                         const url = `/pdf-viewer?file=${encodeURIComponent(filename)}`;
-                        window.location.href = url; // Navigate within same website
+                        // Open in a smaller Chrome-like window
+                        window.open(url, '_blank', 'width=1000,height=700,scrollbars=yes,resizable=yes,toolbar=no,menubar=no,location=no,status=no');
                       }}
                       className={`px-4 py-2 rounded-lg transition-colors ${
                         pdfFiles['risk-management'] 
@@ -301,7 +303,8 @@ export default function PoliciesPage() {
                       onClick={() => {
                         const filename = 'Safeguarding Policy and Procedures.pdf';
                         const url = `/pdf-viewer?file=${encodeURIComponent(filename)}`;
-                        window.location.href = url; // Navigate within same website
+                        // Open in a smaller Chrome-like window
+                        window.open(url, '_blank', 'width=1000,height=700,scrollbars=yes,resizable=yes,toolbar=no,menubar=no,location=no,status=no');
                       }}
                       className={`px-4 py-2 rounded-lg transition-colors ${
                         pdfFiles['safeguarding'] 
@@ -325,7 +328,7 @@ export default function PoliciesPage() {
               These policies are subject to change. For questions, please contact church leadership.
             </p>
             <p className="text-xs text-gray-400 mt-2">
-              © 2025 Suvartha Ministries UK. All rights reserved. Content protected and confidential.
+              © 2026 Suvartha Ministries UK. All rights reserved. Content protected and confidential.
             </p>
           </div>
         </div>

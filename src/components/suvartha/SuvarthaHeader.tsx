@@ -40,7 +40,7 @@ export default function SuvarthaHeader() {
   return (
     <header
       className={`shadow-lg sticky top-0 z-50 transition-all duration-300 ${
-        isScrolled ? "bg-white text-emerald-800" : "bg-emerald-800 text-white"
+        isScrolled ? "bg-white text-amber-800" : "bg-amber-800 text-white"
       }`}
     >
       <div className="container mx-auto px-4">
@@ -61,11 +61,14 @@ export default function SuvarthaHeader() {
                 Suvartha Ministries UK
               </h1>
               <p
-                className={`text-xs opacity-90 transition-colors duration-300 ${
-                  isScrolled ? "text-black" : "text-white"
+                className={`text-xs font-medium transition-colors duration-300 ${
+                  isScrolled ? "text-amber-700" : "text-yellow-200"
                 }`}
+                style={{
+                  textShadow: isScrolled ? 'none' : '1px 1px 2px rgba(0,0,0,0.5)'
+                }}
               >
-                Year of Replenishment 2025
+                Year of Transformation 2026
               </p>
             </div>
           </div>
@@ -77,10 +80,10 @@ export default function SuvarthaHeader() {
               className={`transition-all duration-300 text-base font-semibold px-6 py-2 rounded-lg ${
                 activeSection === "home"
                   ? isScrolled
-                    ? "bg-emerald-600 text-white"
+                    ? "bg-amber-600 text-white"
                     : "bg-white text-black"
                   : isScrolled
-                  ? "text-black hover:bg-emerald-100 hover:text-emerald-700"
+                  ? "text-black hover:bg-amber-100 hover:text-amber-700"
                   : "text-white hover:bg-white/20"
               }`}
             >
@@ -91,10 +94,10 @@ export default function SuvarthaHeader() {
               className={`transition-all duration-300 text-base font-semibold px-6 py-2 rounded-lg ${
                 activeSection === "services"
                   ? isScrolled
-                    ? "bg-emerald-600 text-white"
+                    ? "bg-amber-600 text-white"
                     : "bg-white text-black"
                   : isScrolled
-                  ? "text-black hover:bg-emerald-100 hover:text-emerald-700"
+                  ? "text-black hover:bg-amber-100 hover:text-amber-700"
                   : "text-white hover:bg-white/20"
               }`}
             >
@@ -105,10 +108,10 @@ export default function SuvarthaHeader() {
               className={`transition-all duration-300 text-base font-semibold px-6 py-2 rounded-lg ${
                 activeSection === "testimonials"
                   ? isScrolled
-                    ? "bg-emerald-600 text-white"
+                    ? "bg-amber-600 text-white"
                     : "bg-white text-black"
                   : isScrolled
-                  ? "text-black hover:bg-emerald-100 hover:text-emerald-700"
+                  ? "text-black hover:bg-amber-100 hover:text-amber-700"
                   : "text-white hover:bg-white/20"
               }`}
             >
@@ -119,10 +122,10 @@ export default function SuvarthaHeader() {
               className={`transition-all duration-300 text-base font-semibold px-6 py-2 rounded-lg ${
                 activeSection === "partnership"
                   ? isScrolled
-                    ? "bg-emerald-600 text-white"
+                    ? "bg-amber-600 text-white"
                     : "bg-white text-black"
                   : isScrolled
-                  ? "text-black hover:bg-emerald-100 hover:text-emerald-700"
+                  ? "text-black hover:bg-amber-100 hover:text-amber-700"
                   : "text-white hover:bg-white/20"
               }`}
             >
@@ -133,10 +136,10 @@ export default function SuvarthaHeader() {
               className={`transition-all duration-300 text-base font-semibold px-6 py-2 rounded-lg ${
                 activeSection === "contact"
                   ? isScrolled
-                    ? "bg-emerald-600 text-white"
+                    ? "bg-amber-600 text-white"
                     : "bg-white text-black"
                   : isScrolled
-                  ? "text-black hover:bg-emerald-100 hover:text-emerald-700"
+                  ? "text-black hover:bg-amber-100 hover:text-amber-700"
                   : "text-white hover:bg-white/20"
               }`}
             >
@@ -146,7 +149,7 @@ export default function SuvarthaHeader() {
               href="/policies"
               className={`transition-all duration-300 text-base font-semibold px-6 py-2 rounded-lg ${
                 isScrolled
-                  ? "text-black hover:bg-emerald-100 hover:text-emerald-700"
+                  ? "text-black hover:bg-amber-100 hover:text-amber-700"
                   : "text-white hover:bg-white/20"
               }`}
             >
@@ -185,11 +188,11 @@ export default function SuvarthaHeader() {
                 className={`transition-all duration-300 py-2 text-sm px-3 rounded-lg ${
                   activeSection === "home"
                     ? isScrolled
-                      ? "bg-emerald-600 text-white font-bold"
+                      ? "bg-amber-600 text-white font-bold"
                       : "bg-white text-black font-bold"
                     : isScrolled
-                    ? "text-black font-bold hover:text-emerald-600"
-                    : "text-white font-medium hover:text-emerald-200"
+                    ? "text-black font-bold hover:text-amber-600"
+                    : "text-white font-medium hover:text-amber-200"
                 }`}
               >
                 Home
@@ -200,11 +203,11 @@ export default function SuvarthaHeader() {
                 className={`transition-all duration-300 py-2 text-sm px-3 rounded-lg ${
                   activeSection === "services"
                     ? isScrolled
-                      ? "bg-emerald-600 text-white font-bold"
+                      ? "bg-amber-600 text-white font-bold"
                       : "bg-white text-black font-bold"
                     : isScrolled
-                    ? "text-black font-bold hover:text-emerald-600"
-                    : "text-white font-medium hover:text-emerald-200"
+                    ? "text-black font-bold hover:text-amber-600"
+                    : "text-white font-medium hover:text-amber-200"
                 }`}
               >
                 Services
@@ -215,11 +218,11 @@ export default function SuvarthaHeader() {
                 className={`transition-all duration-300 py-2 text-sm px-3 rounded-lg ${
                   activeSection === "testimonials"
                     ? isScrolled
-                      ? "bg-emerald-600 text-white font-bold"
+                      ? "bg-amber-600 text-white font-bold"
                       : "bg-white text-black font-bold"
                     : isScrolled
-                    ? "text-black font-bold hover:text-emerald-600"
-                    : "text-white font-medium hover:text-emerald-200"
+                    ? "text-black font-bold hover:text-amber-600"
+                    : "text-white font-medium hover:text-amber-200"
                 }`}
               >
                 Testimonials
@@ -230,11 +233,11 @@ export default function SuvarthaHeader() {
                 className={`transition-all duration-300 py-2 text-sm px-3 rounded-lg ${
                   activeSection === "partnership"
                     ? isScrolled
-                      ? "bg-emerald-600 text-white font-bold"
+                      ? "bg-amber-600 text-white font-bold"
                       : "bg-white text-black font-bold"
                     : isScrolled
-                    ? "text-black font-bold hover:text-emerald-600"
-                    : "text-white font-medium hover:text-emerald-200"
+                    ? "text-black font-bold hover:text-amber-600"
+                    : "text-white font-medium hover:text-amber-200"
                 }`}
               >
                 Partnership
@@ -245,11 +248,11 @@ export default function SuvarthaHeader() {
                 className={`transition-all duration-300 py-2 text-sm px-3 rounded-lg ${
                   activeSection === "contact"
                     ? isScrolled
-                      ? "bg-emerald-600 text-white font-bold"
+                      ? "bg-amber-600 text-white font-bold"
                       : "bg-white text-black font-bold"
                     : isScrolled
-                    ? "text-black font-bold hover:text-emerald-600"
-                    : "text-white font-medium hover:text-emerald-200"
+                    ? "text-black font-bold hover:text-amber-600"
+                    : "text-white font-medium hover:text-amber-200"
                 }`}
               >
                 Contact
@@ -259,8 +262,8 @@ export default function SuvarthaHeader() {
                 onClick={() => setIsMenuOpen(false)}
                 className={`transition-all duration-300 py-2 text-sm px-3 rounded-lg ${
                   isScrolled
-                    ? "text-black font-bold hover:text-emerald-600"
-                    : "text-white font-medium hover:text-emerald-200"
+                    ? "text-black font-bold hover:text-amber-600"
+                    : "text-white font-medium hover:text-amber-200"
                 }`}
               >
                 Policies
