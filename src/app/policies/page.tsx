@@ -79,7 +79,7 @@ export default function PoliciesPage() {
         <main className="pt-24 pb-16">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             {/* Back button */}
-            <div className="mb-6">
+            <div className="mb-6 flex items-center justify-between">
               <button
                 onClick={closePdf}
                 className="flex items-center text-emerald-600 hover:text-emerald-700 font-medium"
@@ -89,19 +89,36 @@ export default function PoliciesPage() {
                 </svg>
                 Back to Policies
               </button>
+              
+              {/* Test direct link */}
+              <a
+                href={pdfUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 hover:text-blue-700 text-sm underline"
+              >
+                Open PDF in new tab (test)
+              </a>
             </div>
 
             {/* PDF Viewer */}
             <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-              <div className="bg-emerald-600 text-white p-4">
+              <div className="bg-emerald-600 text-white p-4 flex items-center justify-between">
                 <h2 className="text-xl font-bold">Church Policy Document</h2>
+                <button
+                  onClick={closePdf}
+                  className="text-white hover:text-gray-200 font-bold text-xl"
+                >
+                  ✕
+                </button>
               </div>
               
               <div className="relative" style={{ height: '80vh' }}>
                 <iframe
-                  src={`${pdfUrl}#toolbar=0&navpanes=0&scrollbar=1&view=FitH&zoom=page-fit`}
+                  src={pdfUrl}
                   className="w-full h-full border-0"
                   title="Church Policy Document"
+                  allow="fullscreen"
                   style={{
                     userSelect: 'none',
                     WebkitUserSelect: 'none',
@@ -110,13 +127,13 @@ export default function PoliciesPage() {
                   } as React.CSSProperties}
                 />
                 
-                {/* Overlay to hide PDF toolbar */}
-                <div 
-                  className="absolute top-0 left-0 right-0 h-12 bg-white pointer-events-none z-10"
-                  style={{ 
-                    background: 'linear-gradient(to bottom, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.7) 70%, transparent 100%)' 
-                  }}
-                />
+                {/* Loading fallback */}
+                <div className="absolute inset-0 flex items-center justify-center bg-gray-50 pointer-events-none">
+                  <div className="text-center">
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600 mx-auto mb-4"></div>
+                    <p className="text-gray-600">Loading PDF document...</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
