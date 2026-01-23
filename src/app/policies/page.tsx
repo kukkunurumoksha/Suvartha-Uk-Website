@@ -5,7 +5,6 @@ import SuvarthaHeader from '../../components/suvartha/SuvarthaHeader';
 import SuvarthaFooter from '../../components/suvartha/SuvarthaFooter';
 
 export default function PoliciesPage() {
-  const [isBlurred, setIsBlurred] = useState(false);
   const [selectedPdf, setSelectedPdf] = useState<string | null>(null);
   const [pdfFiles, setPdfFiles] = useState({
     'data-protection': true,
@@ -70,10 +69,10 @@ export default function PoliciesPage() {
     return (
       <div className="min-h-screen bg-white">
         {/* Minimal header bar */}
-        <div className="bg-emerald-600 text-white p-3 flex items-center justify-between">
+        <div className="bg-amber-600 text-white p-3 flex items-center justify-between">
           <button
             onClick={closePdf}
-            className="flex items-center text-white hover:text-gray-200 font-medium"
+            className="flex items-center text-white hover:text-amber-200 font-medium"
           >
             <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -83,49 +82,28 @@ export default function PoliciesPage() {
           
           <h2 className="text-lg font-bold">Church Policy Document</h2>
           
-          <div className="flex items-center space-x-2">
-            <a
-              href={pdfUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white hover:text-gray-200 text-sm underline"
-            >
-              Test
-            </a>
-            <button
-              onClick={closePdf}
-              className="text-white hover:text-gray-200 font-bold text-xl w-8 h-8 flex items-center justify-center"
-            >
-              ✕
-            </button>
-          </div>
-        </div>
-
-        {/* Debug info */}
-        <div className="bg-gray-100 p-2 text-sm">
-          <p><strong>File:</strong> {selectedPdf}</p>
-          <p><strong>URL:</strong> {pdfUrl}</p>
+          <button
+            onClick={closePdf}
+            className="text-white hover:text-amber-200 font-bold text-xl w-8 h-8 flex items-center justify-center"
+          >
+            ✕
+          </button>
         </div>
 
         {/* Full-screen PDF viewer with Chrome's native controls */}
-        <div className="relative" style={{ height: 'calc(100vh - 120px)' }}>
+        <div className="relative" style={{ height: 'calc(100vh - 60px)' }}>
           <iframe
             src={pdfUrl}
             className="w-full h-full border-0"
             title="Church Policy Document"
             allow="fullscreen"
-            onLoad={() => console.log('PDF loaded successfully')}
-            onError={() => console.error('PDF failed to load')}
+            style={{
+              userSelect: 'none',
+              WebkitUserSelect: 'none',
+              MozUserSelect: 'none',
+              msUserSelect: 'none',
+            } as React.CSSProperties}
           />
-          
-          {/* Loading overlay */}
-          <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-90">
-            <div className="text-center">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600 mx-auto mb-4"></div>
-              <p className="text-gray-700 font-medium">Loading PDF document...</p>
-              <p className="text-gray-500 text-sm mt-2">If this takes too long, click "Test" above</p>
-            </div>
-          </div>
         </div>
       </div>
     );
@@ -142,7 +120,7 @@ export default function PoliciesPage() {
             <h1 className="text-4xl sm:text-5xl font-bold text-gray-800 mb-4">
               Church Policies
             </h1>
-            <div className="w-24 h-1 bg-emerald-600 mx-auto mb-6"></div>
+            <div className="w-24 h-1 bg-amber-600 mx-auto mb-6"></div>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               Our church policies and guidelines for members and visitors
             </p>
@@ -150,7 +128,7 @@ export default function PoliciesPage() {
 
           {/* Policies Content */}
           <div 
-            className={`bg-white rounded-lg shadow-lg p-8 ${isBlurred ? 'blur-sm' : ''}`}
+            className="bg-white rounded-lg shadow-lg p-8"
             style={{
               userSelect: 'none',
               WebkitUserSelect: 'none',
@@ -181,7 +159,7 @@ export default function PoliciesPage() {
             {/* Policy 1 - Data Protection */}
             <section className="mb-8 relative z-10">
               <h2 className="text-2xl font-bold text-gray-800 mb-4 flex items-center">
-                <span className="bg-emerald-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm mr-3">1</span>
+                <span className="bg-amber-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm mr-3">1</span>
                 Data Protection Policy and Procedure
               </h2>
               <div className="pl-11 text-gray-700 leading-relaxed">
@@ -211,7 +189,7 @@ export default function PoliciesPage() {
                       onClick={() => openPdf('Data Protection Policy and Procedure.pdf')}
                       className={`px-4 py-2 rounded-lg transition-colors ${
                         pdfFiles['data-protection'] 
-                          ? 'bg-emerald-600 text-white hover:bg-emerald-700' 
+                          ? 'bg-amber-600 text-white hover:bg-amber-700' 
                           : 'bg-gray-400 text-white cursor-not-allowed'
                       }`}
                       disabled={!pdfFiles['data-protection']}
@@ -226,7 +204,7 @@ export default function PoliciesPage() {
             {/* Policy 2 - Risk Management */}
             <section className="mb-8 relative z-10">
               <h2 className="text-2xl font-bold text-gray-800 mb-4 flex items-center">
-                <span className="bg-emerald-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm mr-3">2</span>
+                <span className="bg-amber-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm mr-3">2</span>
                 Internal Risk Management Policy and Procedures
               </h2>
               <div className="pl-11 text-gray-700 leading-relaxed">
@@ -256,7 +234,7 @@ export default function PoliciesPage() {
                       onClick={() => openPdf('Internal risk management policy and procedures.pdf')}
                       className={`px-4 py-2 rounded-lg transition-colors ${
                         pdfFiles['risk-management'] 
-                          ? 'bg-emerald-600 text-white hover:bg-emerald-700' 
+                          ? 'bg-amber-600 text-white hover:bg-amber-700' 
                           : 'bg-gray-400 text-white cursor-not-allowed'
                       }`}
                       disabled={!pdfFiles['risk-management']}
@@ -271,7 +249,7 @@ export default function PoliciesPage() {
             {/* Policy 3 - Safeguarding */}
             <section className="mb-8 relative z-10">
               <h2 className="text-2xl font-bold text-gray-800 mb-4 flex items-center">
-                <span className="bg-emerald-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm mr-3">3</span>
+                <span className="bg-amber-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm mr-3">3</span>
                 Safeguarding Policy and Procedures
               </h2>
               <div className="pl-11 text-gray-700 leading-relaxed">
@@ -301,7 +279,7 @@ export default function PoliciesPage() {
                       onClick={() => openPdf('Safeguarding Policy and Procedures.pdf')}
                       className={`px-4 py-2 rounded-lg transition-colors ${
                         pdfFiles['safeguarding'] 
-                          ? 'bg-emerald-600 text-white hover:bg-emerald-700' 
+                          ? 'bg-amber-600 text-white hover:bg-amber-700' 
                           : 'bg-gray-400 text-white cursor-not-allowed'
                       }`}
                       disabled={!pdfFiles['safeguarding']}
