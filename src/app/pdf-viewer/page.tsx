@@ -8,7 +8,7 @@ function PDFViewerContent() {
   const file = searchParams.get('file');
 
   useEffect(() => {
-    // Silently disable all protection features
+    // Advanced copy protection system
     const handleContextMenu = (e: MouseEvent) => {
       e.preventDefault();
       e.stopPropagation();
@@ -21,17 +21,34 @@ function PDFViewerContent() {
         e.key === 'F12' ||
         e.key === 'PrintScreen' ||
         e.key === 'F5' ||
-        (e.ctrlKey && (e.key === 's' || e.key === 'S')) ||
-        (e.ctrlKey && (e.key === 'a' || e.key === 'A')) ||
-        (e.ctrlKey && (e.key === 'c' || e.key === 'C')) ||
-        (e.ctrlKey && (e.key === 'v' || e.key === 'V')) ||
-        (e.ctrlKey && (e.key === 'p' || e.key === 'P')) ||
-        (e.ctrlKey && (e.key === 'u' || e.key === 'U')) ||
-        (e.ctrlKey && (e.key === 'x' || e.key === 'X')) ||
-        (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i')) ||
-        (e.ctrlKey && e.shiftKey && (e.key === 'J' || e.key === 'j')) ||
-        (e.ctrlKey && e.shiftKey && (e.key === 'C' || e.key === 'c')) ||
-        (e.altKey && e.key === 'F4')
+        e.key === 'F11' || // Fullscreen
+        (e.ctrlKey && (e.key === 's' || e.key === 'S')) || // Save
+        (e.ctrlKey && (e.key === 'a' || e.key === 'A')) || // Select All
+        (e.ctrlKey && (e.key === 'c' || e.key === 'C')) || // Copy
+        (e.ctrlKey && (e.key === 'v' || e.key === 'V')) || // Paste
+        (e.ctrlKey && (e.key === 'p' || e.key === 'P')) || // Print
+        (e.ctrlKey && (e.key === 'u' || e.key === 'U')) || // View Source
+        (e.ctrlKey && (e.key === 'x' || e.key === 'X')) || // Cut
+        (e.ctrlKey && (e.key === 'z' || e.key === 'Z')) || // Undo
+        (e.ctrlKey && (e.key === 'y' || e.key === 'Y')) || // Redo
+        (e.ctrlKey && (e.key === 'f' || e.key === 'F')) || // Find
+        (e.ctrlKey && (e.key === 'h' || e.key === 'H')) || // History
+        (e.ctrlKey && (e.key === 'j' || e.key === 'J')) || // Downloads
+        (e.ctrlKey && (e.key === 'k' || e.key === 'K')) || // Search
+        (e.ctrlKey && (e.key === 'l' || e.key === 'L')) || // Address bar
+        (e.ctrlKey && (e.key === 'n' || e.key === 'N')) || // New window
+        (e.ctrlKey && (e.key === 'r' || e.key === 'R')) || // Refresh
+        (e.ctrlKey && (e.key === 't' || e.key === 'T')) || // New tab
+        (e.ctrlKey && (e.key === 'w' || e.key === 'W')) || // Close tab
+        (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i')) || // Dev Tools
+        (e.ctrlKey && e.shiftKey && (e.key === 'J' || e.key === 'j')) || // Console
+        (e.ctrlKey && e.shiftKey && (e.key === 'C' || e.key === 'c')) || // Inspect
+        (e.ctrlKey && e.shiftKey && (e.key === 'K' || e.key === 'k')) || // Console
+        (e.ctrlKey && e.shiftKey && (e.key === 'R' || e.key === 'r')) || // Hard refresh
+        (e.ctrlKey && e.shiftKey && (e.key === 'Delete')) || // Clear data
+        (e.altKey && e.key === 'F4') || // Close window
+        (e.altKey && (e.key === 'Tab')) || // Alt+Tab
+        (e.key === 'Meta') // Windows/Cmd key
       ) {
         e.preventDefault();
         e.stopPropagation();
@@ -60,29 +77,84 @@ function PDFViewerContent() {
     const handleCopy = (e: ClipboardEvent) => {
       e.preventDefault();
       e.stopPropagation();
+      e.clipboardData?.clearData();
       return false;
     };
 
     const handleCut = (e: ClipboardEvent) => {
       e.preventDefault();
       e.stopPropagation();
+      e.clipboardData?.clearData();
       return false;
     };
 
-    // Add all protection silently
+    const handlePaste = (e: ClipboardEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    };
+
+    // Disable screenshot on focus loss (when user tries to take screenshot)
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        // Clear clipboard when window loses focus
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText('').catch(() => {});
+        }
+      }
+    };
+
+    const handleBlur = () => {
+      // Clear clipboard when window loses focus
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText('').catch(() => {});
+      }
+    };
+
+    // Prevent drag and drop of the entire page
+    const handleDrop = (e: DragEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    };
+
+    const handleDragOver = (e: DragEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    };
+
+    // Add all protection silently with capture phase
     document.addEventListener('contextmenu', handleContextMenu, true);
     document.addEventListener('keydown', handleKeyDown, true);
     document.addEventListener('selectstart', handleSelectStart, true);
     document.addEventListener('dragstart', handleDragStart, true);
     document.addEventListener('copy', handleCopy, true);
     document.addEventListener('cut', handleCut, true);
+    document.addEventListener('paste', handlePaste, true);
+    document.addEventListener('drop', handleDrop, true);
+    document.addEventListener('dragover', handleDragOver, true);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
     window.addEventListener('beforeprint', handleBeforePrint, true);
+    window.addEventListener('blur', handleBlur);
 
-    // Disable text selection
+    // Disable text selection completely
     document.body.style.userSelect = 'none';
     (document.body.style as any).webkitUserSelect = 'none';
     (document.body.style as any).mozUserSelect = 'none';
     (document.body.style as any).msUserSelect = 'none';
+    (document.body.style as any).webkitTouchCallout = 'none';
+    (document.body.style as any).webkitTapHighlightColor = 'transparent';
+
+    // Disable pointer events on selection
+    document.body.style.pointerEvents = 'auto';
+
+    // Clear clipboard periodically
+    const clearClipboard = setInterval(() => {
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText('').catch(() => {});
+      }
+    }, 1000);
 
     // Cleanup
     return () => {
@@ -92,7 +164,13 @@ function PDFViewerContent() {
       document.removeEventListener('dragstart', handleDragStart, true);
       document.removeEventListener('copy', handleCopy, true);
       document.removeEventListener('cut', handleCut, true);
+      document.removeEventListener('paste', handlePaste, true);
+      document.removeEventListener('drop', handleDrop, true);
+      document.removeEventListener('dragover', handleDragOver, true);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
       window.removeEventListener('beforeprint', handleBeforePrint, true);
+      window.removeEventListener('blur', handleBlur);
+      clearInterval(clearClipboard);
     };
   }, []);
 
@@ -141,14 +219,16 @@ function PDFViewerContent() {
       {/* PDF Viewer with hidden controls - optimized for smaller window */}
       <div className="h-screen relative overflow-hidden">
         <iframe
-          src={`${pdfUrl}#toolbar=0&navpanes=0&scrollbar=1&view=FitH&zoom=page-fit`}
+          src={`${pdfUrl}#toolbar=0&navpanes=0&scrollbar=1&view=FitH&zoom=page-fit&statusbar=0&messages=0&printable=0`}
           className="w-full h-full border-0"
           title="Church Policy Document"
+          sandbox="allow-same-origin"
           style={{
             userSelect: 'none',
             WebkitUserSelect: 'none',
             MozUserSelect: 'none',
             msUserSelect: 'none',
+            pointerEvents: 'auto',
           } as React.CSSProperties}
         />
         

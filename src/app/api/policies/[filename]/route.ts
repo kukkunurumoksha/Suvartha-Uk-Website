@@ -37,9 +37,14 @@ export async function GET(
         'X-XSS-Protection': '1; mode=block',
         'Referrer-Policy': 'no-referrer',
         // Additional protection headers
-        'X-Permitted-Cross-Domain-Policies': 'none',
+        'X-Permitted-Cross-Domain-Policies': 'master-only',
         'X-Download-Options': 'noopen',
         'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
+        // Prevent caching and downloading
+        'Content-Security-Policy': "default-src 'self'; script-src 'none'; object-src 'none';",
+        'X-Robots-Tag': 'noindex, nofollow, nosnippet, noarchive, noimageindex',
+        // Additional copy protection headers
+        'X-Content-Options': 'noopen',
       },
     });
   } catch (error) {
