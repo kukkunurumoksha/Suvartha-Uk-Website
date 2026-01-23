@@ -23,22 +23,18 @@ export async function GET(
     const fileBuffer = await readFile(filePath);
     console.log('API Route - File read successfully, size:', fileBuffer.length, 'bytes');
     
-    // Return the PDF with protection headers
+    // Return the PDF with headers that allow Chrome's native viewer
     return new NextResponse(fileBuffer as any, {
       status: 200,
       headers: {
         'Content-Type': 'application/pdf',
-        'Content-Disposition': 'inline; filename="Protected_Church_Policy.pdf"',
+        'Content-Disposition': 'inline',
         'Cache-Control': 'no-cache, no-store, must-revalidate, private',
         'Pragma': 'no-cache',
         'Expires': '0',
         'X-Content-Type-Options': 'nosniff',
         'X-Frame-Options': 'SAMEORIGIN',
-        'X-XSS-Protection': '1; mode=block',
         'Referrer-Policy': 'no-referrer',
-        'X-Permitted-Cross-Domain-Policies': 'master-only',
-        'X-Download-Options': 'noopen',
-        'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
         'X-Robots-Tag': 'noindex, nofollow, nosnippet, noarchive, noimageindex',
       },
     });

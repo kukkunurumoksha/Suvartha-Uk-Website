@@ -21,21 +21,23 @@ export default function PoliciesPage() {
       'safeguarding': true
     });
 
-    // Copy protection when PDF is displayed
+    // Copy protection when PDF is displayed (less aggressive to allow Chrome PDF controls)
     if (selectedPdf) {
       const handleContextMenu = (e: MouseEvent) => {
-        e.preventDefault();
-        return false;
+        // Only block right-click on the document content, not PDF controls
+        const target = e.target as HTMLElement;
+        if (target && !target.closest('iframe')) {
+          e.preventDefault();
+          return false;
+        }
       };
 
       const handleKeyDown = (e: KeyboardEvent) => {
-        // Block copy, save, print shortcuts
+        // Block only the most critical shortcuts, allow PDF navigation
         if (
           (e.ctrlKey && (e.key === 'c' || e.key === 'C')) ||
           (e.ctrlKey && (e.key === 'a' || e.key === 'A')) ||
           (e.ctrlKey && (e.key === 's' || e.key === 'S')) ||
-          (e.ctrlKey && (e.key === 'p' || e.key === 'P')) ||
-          e.key === 'F12' ||
           e.key === 'PrintScreen'
         ) {
           e.preventDefault();
@@ -43,19 +45,12 @@ export default function PoliciesPage() {
         }
       };
 
-      const handleSelectStart = (e: Event) => {
-        e.preventDefault();
-        return false;
-      };
-
       document.addEventListener('contextmenu', handleContextMenu);
       document.addEventListener('keydown', handleKeyDown);
-      document.addEventListener('selectstart', handleSelectStart);
 
       return () => {
         document.removeEventListener('contextmenu', handleContextMenu);
         document.removeEventListener('keydown', handleKeyDown);
-        document.removeEventListener('selectstart', handleSelectStart);
       };
     }
   }, [selectedPdf]);
@@ -96,28 +91,14 @@ export default function PoliciesPage() {
           </button>
         </div>
 
-        {/* Full-screen PDF viewer */}
+        {/* Full-screen PDF viewer with Chrome's native controls */}
         <div className="relative" style={{ height: 'calc(100vh - 60px)' }}>
           <iframe
             src={pdfUrl}
             className="w-full h-full border-0"
             title="Church Policy Document"
             allow="fullscreen"
-            style={{
-              userSelect: 'none',
-              WebkitUserSelect: 'none',
-              MozUserSelect: 'none',
-              msUserSelect: 'none',
-            } as React.CSSProperties}
           />
-          
-          {/* Loading fallback */}
-          <div className="absolute inset-0 flex items-center justify-center bg-gray-50 pointer-events-none">
-            <div className="text-center">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600 mx-auto mb-4"></div>
-              <p className="text-gray-600">Loading PDF document...</p>
-            </div>
-          </div>
         </div>
       </div>
     );
