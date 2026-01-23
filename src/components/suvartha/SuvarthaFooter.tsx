@@ -143,6 +143,14 @@ export default function SuvarthaFooter() {
                   Contact
                 </a>
               </li>
+              <li>
+                <a
+                  href="/policies"
+                  className="text-white hover:text-amber-200 transition-colors text-lg"
+                >
+                  Policies
+                </a>
+              </li>
             </ul>
           </div>
 
