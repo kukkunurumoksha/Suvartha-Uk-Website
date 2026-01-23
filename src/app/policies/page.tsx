@@ -6,6 +6,7 @@ import SuvarthaFooter from '../../components/suvartha/SuvarthaFooter';
 
 export default function PoliciesPage() {
   const [isBlurred, setIsBlurred] = useState(false);
+  const [selectedPdf, setSelectedPdf] = useState<string | null>(null);
   const [pdfFiles, setPdfFiles] = useState({
     'data-protection': true,
     'risk-management': true,
@@ -14,114 +15,117 @@ export default function PoliciesPage() {
 
   useEffect(() => {
     // Since we know the files exist, we'll set them as available
-    // You can add actual file checking later if needed
     setPdfFiles({
       'data-protection': true,
       'risk-management': true,
       'safeguarding': true
     });
-    // Disable right-click context menu
-    const handleContextMenu = (e: MouseEvent) => {
-      e.preventDefault();
-      return false;
-    };
 
-    // Disable keyboard shortcuts for screenshots and saving
-    const handleKeyDown = (e: KeyboardEvent) => {
-      // Disable F12 (Developer Tools)
-      if (e.key === 'F12') {
+    // Copy protection when PDF is displayed
+    if (selectedPdf) {
+      const handleContextMenu = (e: MouseEvent) => {
         e.preventDefault();
         return false;
-      }
-      
-      // Disable Ctrl+Shift+I (Developer Tools)
-      if (e.ctrlKey && e.shiftKey && e.key === 'I') {
+      };
+
+      const handleKeyDown = (e: KeyboardEvent) => {
+        // Block copy, save, print shortcuts
+        if (
+          (e.ctrlKey && (e.key === 'c' || e.key === 'C')) ||
+          (e.ctrlKey && (e.key === 'a' || e.key === 'A')) ||
+          (e.ctrlKey && (e.key === 's' || e.key === 'S')) ||
+          (e.ctrlKey && (e.key === 'p' || e.key === 'P')) ||
+          e.key === 'F12' ||
+          e.key === 'PrintScreen'
+        ) {
+          e.preventDefault();
+          return false;
+        }
+      };
+
+      const handleSelectStart = (e: Event) => {
         e.preventDefault();
         return false;
-      }
-      
-      // Disable Ctrl+Shift+J (Console)
-      if (e.ctrlKey && e.shiftKey && e.key === 'J') {
-        e.preventDefault();
-        return false;
-      }
-      
-      // Disable Ctrl+U (View Source)
-      if (e.ctrlKey && e.key === 'u') {
-        e.preventDefault();
-        return false;
-      }
-      
-      // Disable Ctrl+S (Save Page)
-      if (e.ctrlKey && e.key === 's') {
-        e.preventDefault();
-        return false;
-      }
-      
-      // Disable Ctrl+A (Select All)
-      if (e.ctrlKey && e.key === 'a') {
-        e.preventDefault();
-        return false;
-      }
-      
-      // Disable Ctrl+P (Print)
-      if (e.ctrlKey && e.key === 'p') {
-        e.preventDefault();
-        return false;
-      }
-      
-      // Disable Print Screen
-      if (e.key === 'PrintScreen') {
-        e.preventDefault();
-        return false;
-      }
-    };
+      };
 
-    // Disable text selection
-    const handleSelectStart = (e: Event) => {
-      e.preventDefault();
-      return false;
-    };
+      document.addEventListener('contextmenu', handleContextMenu);
+      document.addEventListener('keydown', handleKeyDown);
+      document.addEventListener('selectstart', handleSelectStart);
 
-    // Disable drag and drop
-    const handleDragStart = (e: DragEvent) => {
-      e.preventDefault();
-      return false;
-    };
+      return () => {
+        document.removeEventListener('contextmenu', handleContextMenu);
+        document.removeEventListener('keydown', handleKeyDown);
+        document.removeEventListener('selectstart', handleSelectStart);
+      };
+    }
+  }, [selectedPdf]);
 
-    // Blur content when window loses focus (screenshot protection)
-    const handleVisibilityChange = () => {
-      setIsBlurred(document.hidden);
-    };
+  const openPdf = (filename: string) => {
+    setSelectedPdf(filename);
+  };
 
-    const handleBlur = () => {
-      setIsBlurred(true);
-    };
+  const closePdf = () => {
+    setSelectedPdf(null);
+  };
 
-    const handleFocus = () => {
-      setIsBlurred(false);
-    };
+  // If PDF is selected, show PDF viewer
+  if (selectedPdf) {
+    const pdfUrl = `/api/policies/${encodeURIComponent(selectedPdf)}`;
+    
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <SuvarthaHeader />
+        
+        <main className="pt-24 pb-16">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            {/* Back button */}
+            <div className="mb-6">
+              <button
+                onClick={closePdf}
+                className="flex items-center text-emerald-600 hover:text-emerald-700 font-medium"
+              >
+                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+                Back to Policies
+              </button>
+            </div>
 
-    // Add event listeners
-    document.addEventListener('contextmenu', handleContextMenu);
-    document.addEventListener('keydown', handleKeyDown);
-    document.addEventListener('selectstart', handleSelectStart);
-    document.addEventListener('dragstart', handleDragStart);
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    window.addEventListener('blur', handleBlur);
-    window.addEventListener('focus', handleFocus);
+            {/* PDF Viewer */}
+            <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+              <div className="bg-emerald-600 text-white p-4">
+                <h2 className="text-xl font-bold">Church Policy Document</h2>
+              </div>
+              
+              <div className="relative" style={{ height: '80vh' }}>
+                <iframe
+                  src={`${pdfUrl}#toolbar=0&navpanes=0&scrollbar=1&view=FitH&zoom=page-fit`}
+                  className="w-full h-full border-0"
+                  title="Church Policy Document"
+                  style={{
+                    userSelect: 'none',
+                    WebkitUserSelect: 'none',
+                    MozUserSelect: 'none',
+                    msUserSelect: 'none',
+                  } as React.CSSProperties}
+                />
+                
+                {/* Overlay to hide PDF toolbar */}
+                <div 
+                  className="absolute top-0 left-0 right-0 h-12 bg-white pointer-events-none z-10"
+                  style={{ 
+                    background: 'linear-gradient(to bottom, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.7) 70%, transparent 100%)' 
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+        </main>
 
-    // Cleanup event listeners
-    return () => {
-      document.removeEventListener('contextmenu', handleContextMenu);
-      document.removeEventListener('keydown', handleKeyDown);
-      document.removeEventListener('selectstart', handleSelectStart);
-      document.removeEventListener('dragstart', handleDragStart);
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-      window.removeEventListener('blur', handleBlur);
-      window.removeEventListener('focus', handleFocus);
-    };
-  }, []);
+        <SuvarthaFooter />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -200,12 +204,7 @@ export default function PoliciesPage() {
                       📄 <strong>Data Protection Policy and Procedure.pdf</strong>
                     </p>
                     <button 
-                      onClick={() => {
-                        const filename = 'Data Protection Policy and Procedure.pdf';
-                        const url = `/pdf-viewer?file=${encodeURIComponent(filename)}`;
-                        // Open in a smaller Chrome-like window
-                        window.open(url, '_blank', 'width=1000,height=700,scrollbars=yes,resizable=yes,toolbar=no,menubar=no,location=no,status=no');
-                      }}
+                      onClick={() => openPdf('Data Protection Policy and Procedure.pdf')}
                       className={`px-4 py-2 rounded-lg transition-colors ${
                         pdfFiles['data-protection'] 
                           ? 'bg-emerald-600 text-white hover:bg-emerald-700' 
@@ -250,12 +249,7 @@ export default function PoliciesPage() {
                       📄 <strong>Internal risk management policy and procedures.pdf</strong>
                     </p>
                     <button 
-                      onClick={() => {
-                        const filename = 'Internal risk management policy and procedures.pdf';
-                        const url = `/pdf-viewer?file=${encodeURIComponent(filename)}`;
-                        // Open in a smaller Chrome-like window
-                        window.open(url, '_blank', 'width=1000,height=700,scrollbars=yes,resizable=yes,toolbar=no,menubar=no,location=no,status=no');
-                      }}
+                      onClick={() => openPdf('Internal risk management policy and procedures.pdf')}
                       className={`px-4 py-2 rounded-lg transition-colors ${
                         pdfFiles['risk-management'] 
                           ? 'bg-emerald-600 text-white hover:bg-emerald-700' 
@@ -300,12 +294,7 @@ export default function PoliciesPage() {
                       📄 <strong>Safeguarding Policy and Procedures.pdf</strong>
                     </p>
                     <button 
-                      onClick={() => {
-                        const filename = 'Safeguarding Policy and Procedures.pdf';
-                        const url = `/pdf-viewer?file=${encodeURIComponent(filename)}`;
-                        // Open in a smaller Chrome-like window
-                        window.open(url, '_blank', 'width=1000,height=700,scrollbars=yes,resizable=yes,toolbar=no,menubar=no,location=no,status=no');
-                      }}
+                      onClick={() => openPdf('Safeguarding Policy and Procedures.pdf')}
                       className={`px-4 py-2 rounded-lg transition-colors ${
                         pdfFiles['safeguarding'] 
                           ? 'bg-emerald-600 text-white hover:bg-emerald-700' 
