@@ -122,7 +122,7 @@ export default function PoliciesPage() {
             </h1>
             <div className="w-24 h-1 bg-amber-600 mx-auto mb-6"></div>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Our church policies and guidelines for members and visitors
+              Our church policies and guidelines for members and visitors. Updated January 2026.
             </p>
           </div>
 
