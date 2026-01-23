@@ -18,14 +18,21 @@ export async function GET(
     const filePath = join(process.cwd(), 'public', 'policies', filename);
     const fileBuffer = await readFile(filePath);
     
-    // Return the PDF with minimal headers
+    // Return the PDF with copy protection headers
     return new NextResponse(fileBuffer as any, {
       status: 200,
       headers: {
         'Content-Type': 'application/pdf',
-        'Content-Disposition': 'inline',
-        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Content-Disposition': 'inline; filename="protected-document.pdf"',
+        'Cache-Control': 'no-cache, no-store, must-revalidate, private',
+        'Pragma': 'no-cache',
+        'Expires': '0',
         'X-Frame-Options': 'SAMEORIGIN',
+        'X-Content-Type-Options': 'nosniff',
+        'Referrer-Policy': 'no-referrer',
+        'X-Robots-Tag': 'noindex, nofollow, nosnippet, noarchive, noimageindex',
+        'Feature-Policy': 'clipboard-read=(), clipboard-write=()',
+        'Permissions-Policy': 'clipboard-read=(), clipboard-write=()',
       },
     });
   } catch (error) {

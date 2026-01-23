@@ -20,33 +20,126 @@ export default function PoliciesPage() {
       'safeguarding': true
     });
 
-    // Copy protection when PDF is displayed
+    // Enhanced copy protection when PDF is displayed
     if (selectedPdf) {
       const handleContextMenu = (e: MouseEvent) => {
         e.preventDefault();
+        e.stopPropagation();
         return false;
       };
 
       const handleKeyDown = (e: KeyboardEvent) => {
-        // Block key shortcuts for copying, printing, saving
+        // Block all copy, print, save, and developer shortcuts
         if (
           (e.ctrlKey && (e.key === 'c' || e.key === 'C')) ||
           (e.ctrlKey && (e.key === 'a' || e.key === 'A')) ||
           (e.ctrlKey && (e.key === 's' || e.key === 'S')) ||
           (e.ctrlKey && (e.key === 'p' || e.key === 'P')) ||
-          e.key === 'PrintScreen'
+          (e.ctrlKey && (e.key === 'u' || e.key === 'U')) ||
+          (e.ctrlKey && (e.key === 'x' || e.key === 'X')) ||
+          (e.ctrlKey && (e.key === 'v' || e.key === 'V')) ||
+          (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i')) ||
+          (e.ctrlKey && e.shiftKey && (e.key === 'J' || e.key === 'j')) ||
+          (e.ctrlKey && e.shiftKey && (e.key === 'C' || e.key === 'c')) ||
+          e.key === 'PrintScreen' ||
+          e.key === 'F12' ||
+          e.key === 'F5' ||
+          (e.ctrlKey && e.key === 'r') ||
+          (e.ctrlKey && e.key === 'R')
         ) {
           e.preventDefault();
+          e.stopPropagation();
           return false;
         }
       };
 
-      document.addEventListener('contextmenu', handleContextMenu);
-      document.addEventListener('keydown', handleKeyDown);
+      const handleSelectStart = (e: Event) => {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      };
+
+      const handleCopy = (e: ClipboardEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+        e.clipboardData?.setData('text/plain', '');
+        return false;
+      };
+
+      const handleCut = (e: ClipboardEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      };
+
+      const handlePaste = (e: ClipboardEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      };
+
+      // Add comprehensive protection
+      document.addEventListener('contextmenu', handleContextMenu, true);
+      document.addEventListener('keydown', handleKeyDown, true);
+      document.addEventListener('selectstart', handleSelectStart, true);
+      document.addEventListener('copy', handleCopy, true);
+      document.addEventListener('cut', handleCut, true);
+      document.addEventListener('paste', handlePaste, true);
+
+      // Disable text selection globally
+      document.body.style.userSelect = 'none';
+      (document.body.style as any).webkitUserSelect = 'none';
+      (document.body.style as any).mozUserSelect = 'none';
+      (document.body.style as any).msUserSelect = 'none';
+      (document.body.style as any).webkitTouchCallout = 'none';
+
+      // Clear clipboard periodically
+      const clearClipboard = setInterval(() => {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText('').catch(() => {});
+        }
+      }, 500);
+
+      // Add CSS to disable selection in iframe
+      const style = document.createElement('style');
+      style.textContent = `
+        iframe, iframe * {
+          user-select: none !important;
+          -webkit-user-select: none !important;
+          -moz-user-select: none !important;
+          -ms-user-select: none !important;
+          -webkit-touch-callout: none !important;
+        }
+        
+        /* Disable drag and drop */
+        iframe {
+          -webkit-user-drag: none !important;
+          -khtml-user-drag: none !important;
+          -moz-user-drag: none !important;
+          -o-user-drag: none !important;
+          user-drag: none !important;
+        }
+      `;
+      document.head.appendChild(style);
 
       return () => {
-        document.removeEventListener('contextmenu', handleContextMenu);
-        document.removeEventListener('keydown', handleKeyDown);
+        document.removeEventListener('contextmenu', handleContextMenu, true);
+        document.removeEventListener('keydown', handleKeyDown, true);
+        document.removeEventListener('selectstart', handleSelectStart, true);
+        document.removeEventListener('copy', handleCopy, true);
+        document.removeEventListener('cut', handleCut, true);
+        document.removeEventListener('paste', handlePaste, true);
+        clearInterval(clearClipboard);
+        if (style.parentNode) {
+          document.head.removeChild(style);
+        }
+        
+        // Reset body styles
+        document.body.style.userSelect = '';
+        (document.body.style as any).webkitUserSelect = '';
+        (document.body.style as any).mozUserSelect = '';
+        (document.body.style as any).msUserSelect = '';
+        (document.body.style as any).webkitTouchCallout = '';
       };
     }
   }, [selectedPdf]);
@@ -87,8 +180,18 @@ export default function PoliciesPage() {
           </button>
         </div>
 
-        {/* Simple PDF viewer */}
-        <div className="w-full" style={{ height: 'calc(100vh - 60px)' }}>
+        {/* Protected PDF viewer */}
+        <div 
+          className="w-full" 
+          style={{ 
+            height: 'calc(100vh - 60px)',
+            userSelect: 'none',
+            WebkitUserSelect: 'none',
+            MozUserSelect: 'none',
+            msUserSelect: 'none',
+            WebkitTouchCallout: 'none',
+          } as React.CSSProperties}
+        >
           <iframe
             src={pdfUrl}
             className="w-full h-full border-0"
@@ -98,7 +201,25 @@ export default function PoliciesPage() {
               WebkitUserSelect: 'none',
               MozUserSelect: 'none',
               msUserSelect: 'none',
+              WebkitTouchCallout: 'none',
+              pointerEvents: 'auto',
             } as React.CSSProperties}
+            onLoad={() => {
+              // Additional protection when iframe loads
+              const iframe = document.querySelector('iframe');
+              if (iframe) {
+                try {
+                  const iframeDoc = iframe.contentDocument || iframe.contentWindow?.document;
+                  if (iframeDoc) {
+                    iframeDoc.addEventListener('contextmenu', (e) => e.preventDefault());
+                    iframeDoc.addEventListener('selectstart', (e) => e.preventDefault());
+                    iframeDoc.addEventListener('copy', (e) => e.preventDefault());
+                  }
+                } catch (e) {
+                  // Cross-origin restrictions - expected
+                }
+              }
+            }}
           />
         </div>
       </div>
