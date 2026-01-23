@@ -142,11 +142,20 @@ export default function SuvarthaLogo({
             Suvartha Ministries UK
           </h1>
           {size !== 'sm' && (
-            <p className={`text-xs sm:text-sm font-semibold ${colors.text}`} style={{
-              textShadow: variant === 'light' ? '2px 2px 4px rgba(0,0,0,0.8)' : 'none',
-              fontWeight: '600'
+            <p className={`text-sm font-bold ${colors.text} leading-tight`} style={{
+              textShadow: variant === 'light' ? '3px 3px 6px rgba(0,0,0,0.9), 1px 1px 2px rgba(0,0,0,0.8)' : '1px 1px 2px rgba(0,0,0,0.3)',
+              fontWeight: '700',
+              letterSpacing: '0.5px',
+              marginTop: '2px'
             }}>
-              Year of Transformation 2026
+              <span>Year of Transformation </span>
+              <span className={variant === 'light' ? 'text-yellow-100' : 'text-amber-600'} style={{
+                fontWeight: '800',
+                fontSize: '1.1em',
+                textShadow: variant === 'light' ? '3px 3px 6px rgba(0,0,0,0.9), 1px 1px 2px rgba(0,0,0,0.8)' : '1px 1px 2px rgba(0,0,0,0.3)'
+              }}>
+                2026
+              </span>
             </p>
           )}
         </div>

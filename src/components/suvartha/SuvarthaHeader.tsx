@@ -61,15 +61,24 @@ export default function SuvarthaHeader() {
                 Suvartha Ministries UK
               </h1>
               <p
-                className={`text-xs font-semibold transition-colors duration-300 ${
-                  isScrolled ? "text-amber-700" : "text-yellow-200"
+                className={`text-sm font-bold transition-colors duration-300 leading-tight ${
+                  isScrolled ? "text-amber-700" : "text-yellow-100"
                 }`}
                 style={{
-                  textShadow: isScrolled ? 'none' : '2px 2px 4px rgba(0,0,0,0.8)',
-                  fontWeight: '600'
+                  textShadow: isScrolled ? '1px 1px 2px rgba(0,0,0,0.3)' : '3px 3px 6px rgba(0,0,0,0.9), 1px 1px 2px rgba(0,0,0,0.8)',
+                  fontWeight: '700',
+                  letterSpacing: '0.5px',
+                  marginTop: '2px'
                 }}
               >
-                Year of Transformation 2026
+                <span>Year of Transformation </span>
+                <span className={isScrolled ? 'text-amber-600' : 'text-yellow-100'} style={{
+                  fontWeight: '800',
+                  fontSize: '1.1em',
+                  textShadow: isScrolled ? '1px 1px 2px rgba(0,0,0,0.3)' : '3px 3px 6px rgba(0,0,0,0.9), 1px 1px 2px rgba(0,0,0,0.8)'
+                }}>
+                  2026
+                </span>
               </p>
             </div>
           </div>
