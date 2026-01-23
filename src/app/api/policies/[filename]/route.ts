@@ -18,12 +18,12 @@ export async function GET(
     const filePath = join(process.cwd(), 'public', 'policies', filename);
     const fileBuffer = await readFile(filePath);
     
-    // Return the PDF with headers that allow Chrome's native viewer
+    // Return the PDF with headers that prevent downloading and printing
     return new NextResponse(fileBuffer as any, {
       status: 200,
       headers: {
         'Content-Type': 'application/pdf',
-        'Content-Disposition': 'inline',
+        'Content-Disposition': 'inline; filename="protected-document.pdf"',
         'Cache-Control': 'no-cache, no-store, must-revalidate, private',
         'Pragma': 'no-cache',
         'Expires': '0',
@@ -31,6 +31,9 @@ export async function GET(
         'X-Frame-Options': 'SAMEORIGIN',
         'Referrer-Policy': 'no-referrer',
         'X-Robots-Tag': 'noindex, nofollow, nosnippet, noarchive, noimageindex',
+        'Content-Security-Policy': "default-src 'self'; script-src 'none'; object-src 'none';",
+        'X-Download-Options': 'noopen',
+        'X-Permitted-Cross-Domain-Policies': 'none',
       },
     });
   } catch (error) {
