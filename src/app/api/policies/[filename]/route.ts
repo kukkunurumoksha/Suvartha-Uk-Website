@@ -8,20 +8,22 @@ export async function GET(
 ) {
   try {
     const { filename } = await params;
-    console.log('API Route - Requested filename:', filename);
+    console.log('=== PDF API ROUTE CALLED ===');
+    console.log('Requested filename:', filename);
+    console.log('Request URL:', request.url);
     
     // Security check - only allow PDF files
     if (!filename.endsWith('.pdf')) {
-      console.log('API Route - Rejected non-PDF file:', filename);
+      console.log('REJECTED: Not a PDF file:', filename);
       return new NextResponse('Not Found', { status: 404 });
     }
     
     // Read the PDF file from public/policies directory
     const filePath = join(process.cwd(), 'public', 'policies', filename);
-    console.log('API Route - File path:', filePath);
+    console.log('File path:', filePath);
     
     const fileBuffer = await readFile(filePath);
-    console.log('API Route - File read successfully, size:', fileBuffer.length, 'bytes');
+    console.log('SUCCESS: File read, size:', fileBuffer.length, 'bytes');
     
     // Return the PDF with headers that allow Chrome's native viewer
     return new NextResponse(fileBuffer as any, {
@@ -39,7 +41,8 @@ export async function GET(
       },
     });
   } catch (error) {
-    console.error('API Route - Error serving PDF:', error);
+    console.error('=== PDF API ERROR ===');
+    console.error('Error details:', error);
     return new NextResponse('PDF not found', { status: 404 });
   }
 }

@@ -83,22 +83,49 @@ export default function PoliciesPage() {
           
           <h2 className="text-lg font-bold">Church Policy Document</h2>
           
-          <button
-            onClick={closePdf}
-            className="text-white hover:text-gray-200 font-bold text-xl w-8 h-8 flex items-center justify-center"
-          >
-            ✕
-          </button>
+          <div className="flex items-center space-x-2">
+            <a
+              href={pdfUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white hover:text-gray-200 text-sm underline"
+            >
+              Test
+            </a>
+            <button
+              onClick={closePdf}
+              className="text-white hover:text-gray-200 font-bold text-xl w-8 h-8 flex items-center justify-center"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+
+        {/* Debug info */}
+        <div className="bg-gray-100 p-2 text-sm">
+          <p><strong>File:</strong> {selectedPdf}</p>
+          <p><strong>URL:</strong> {pdfUrl}</p>
         </div>
 
         {/* Full-screen PDF viewer with Chrome's native controls */}
-        <div className="relative" style={{ height: 'calc(100vh - 60px)' }}>
+        <div className="relative" style={{ height: 'calc(100vh - 120px)' }}>
           <iframe
             src={pdfUrl}
             className="w-full h-full border-0"
             title="Church Policy Document"
             allow="fullscreen"
+            onLoad={() => console.log('PDF loaded successfully')}
+            onError={() => console.error('PDF failed to load')}
           />
+          
+          {/* Loading overlay */}
+          <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-90">
+            <div className="text-center">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600 mx-auto mb-4"></div>
+              <p className="text-gray-700 font-medium">Loading PDF document...</p>
+              <p className="text-gray-500 text-sm mt-2">If this takes too long, click "Test" above</p>
+            </div>
+          </div>
         </div>
       </div>
     );
