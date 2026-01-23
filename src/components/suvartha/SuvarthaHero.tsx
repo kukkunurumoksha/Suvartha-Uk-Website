@@ -86,9 +86,9 @@ export default function SuvarthaHero() {
         </div>
 
         {/* Bottom section - CTA Buttons and scroll indicator */}
-        <div className="pb-6 sm:pb-8">
-          {/* CTA Buttons - moved down more */}
-          <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center mb-12 sm:mb-16 px-4 pt-8 sm:pt-12">
+        <div className="pb-4 sm:pb-6">
+          {/* CTA Buttons - moved down even more */}
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center mb-16 sm:mb-20 px-4 pt-12 sm:pt-16 lg:pt-20">
             <button 
               onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
               className="bg-white/90 text-amber-800 px-6 sm:px-8 md:px-10 py-3 sm:py-4 rounded-full font-semibold text-sm sm:text-base md:text-lg hover:bg-white transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center space-x-2 w-full sm:w-auto justify-center backdrop-blur-sm"

@@ -142,8 +142,9 @@ export default function SuvarthaLogo({
             Suvartha Ministries UK
           </h1>
           {size !== 'sm' && (
-            <p className={`text-xs font-medium ${colors.text}`} style={{
-              textShadow: variant === 'light' ? '1px 1px 2px rgba(0,0,0,0.5)' : 'none'
+            <p className={`text-xs sm:text-sm font-semibold ${colors.text}`} style={{
+              textShadow: variant === 'light' ? '2px 2px 4px rgba(0,0,0,0.8)' : 'none',
+              fontWeight: '600'
             }}>
               Year of Transformation 2026
             </p>

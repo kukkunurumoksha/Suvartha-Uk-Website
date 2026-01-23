@@ -61,11 +61,12 @@ export default function SuvarthaHeader() {
                 Suvartha Ministries UK
               </h1>
               <p
-                className={`text-xs font-medium transition-colors duration-300 ${
+                className={`text-xs font-semibold transition-colors duration-300 ${
                   isScrolled ? "text-amber-700" : "text-yellow-200"
                 }`}
                 style={{
-                  textShadow: isScrolled ? 'none' : '1px 1px 2px rgba(0,0,0,0.5)'
+                  textShadow: isScrolled ? 'none' : '2px 2px 4px rgba(0,0,0,0.8)',
+                  fontWeight: '600'
                 }}
               >
                 Year of Transformation 2026
