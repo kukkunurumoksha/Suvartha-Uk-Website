@@ -73,73 +73,52 @@ export default function PoliciesPage() {
     const pdfUrl = `/api/policies/${encodeURIComponent(selectedPdf)}`;
     
     return (
-      <div className="min-h-screen bg-gray-50">
-        <SuvarthaHeader />
-        
-        <main className="pt-24 pb-16">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            {/* Back button */}
-            <div className="mb-6 flex items-center justify-between">
-              <button
-                onClick={closePdf}
-                className="flex items-center text-emerald-600 hover:text-emerald-700 font-medium"
-              >
-                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-                Back to Policies
-              </button>
-              
-              {/* Test direct link */}
-              <a
-                href={pdfUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-600 hover:text-blue-700 text-sm underline"
-              >
-                Open PDF in new tab (test)
-              </a>
-            </div>
+      <div className="min-h-screen bg-white">
+        {/* Minimal header bar */}
+        <div className="bg-emerald-600 text-white p-3 flex items-center justify-between">
+          <button
+            onClick={closePdf}
+            className="flex items-center text-white hover:text-gray-200 font-medium"
+          >
+            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+            Back to Policies
+          </button>
+          
+          <h2 className="text-lg font-bold">Church Policy Document</h2>
+          
+          <button
+            onClick={closePdf}
+            className="text-white hover:text-gray-200 font-bold text-xl w-8 h-8 flex items-center justify-center"
+          >
+            ✕
+          </button>
+        </div>
 
-            {/* PDF Viewer */}
-            <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-              <div className="bg-emerald-600 text-white p-4 flex items-center justify-between">
-                <h2 className="text-xl font-bold">Church Policy Document</h2>
-                <button
-                  onClick={closePdf}
-                  className="text-white hover:text-gray-200 font-bold text-xl"
-                >
-                  ✕
-                </button>
-              </div>
-              
-              <div className="relative" style={{ height: '80vh' }}>
-                <iframe
-                  src={pdfUrl}
-                  className="w-full h-full border-0"
-                  title="Church Policy Document"
-                  allow="fullscreen"
-                  style={{
-                    userSelect: 'none',
-                    WebkitUserSelect: 'none',
-                    MozUserSelect: 'none',
-                    msUserSelect: 'none',
-                  } as React.CSSProperties}
-                />
-                
-                {/* Loading fallback */}
-                <div className="absolute inset-0 flex items-center justify-center bg-gray-50 pointer-events-none">
-                  <div className="text-center">
-                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600 mx-auto mb-4"></div>
-                    <p className="text-gray-600">Loading PDF document...</p>
-                  </div>
-                </div>
-              </div>
+        {/* Full-screen PDF viewer */}
+        <div className="relative" style={{ height: 'calc(100vh - 60px)' }}>
+          <iframe
+            src={pdfUrl}
+            className="w-full h-full border-0"
+            title="Church Policy Document"
+            allow="fullscreen"
+            style={{
+              userSelect: 'none',
+              WebkitUserSelect: 'none',
+              MozUserSelect: 'none',
+              msUserSelect: 'none',
+            } as React.CSSProperties}
+          />
+          
+          {/* Loading fallback */}
+          <div className="absolute inset-0 flex items-center justify-center bg-gray-50 pointer-events-none">
+            <div className="text-center">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600 mx-auto mb-4"></div>
+              <p className="text-gray-600">Loading PDF document...</p>
             </div>
           </div>
-        </main>
-
-        <SuvarthaFooter />
+        </div>
       </div>
     );
   }
