@@ -149,12 +149,50 @@ function PDFViewerContent() {
     // Disable pointer events on selection
     document.body.style.pointerEvents = 'auto';
 
-    // Clear clipboard periodically
+    // Clear clipboard periodically and monitor for copy attempts
     const clearClipboard = setInterval(() => {
       if (navigator.clipboard) {
         navigator.clipboard.writeText('').catch(() => {});
       }
-    }, 1000);
+      // Also try to clear selection
+      if (window.getSelection) {
+        const selection = window.getSelection();
+        if (selection) {
+          selection.removeAllRanges();
+        }
+      }
+    }, 500); // More frequent clearing
+
+    // Monitor for any text selection and clear it immediately
+    const clearSelection = setInterval(() => {
+      if (document.getSelection) {
+        const selection = document.getSelection();
+        if (selection && selection.rangeCount > 0) {
+          selection.removeAllRanges();
+        }
+      }
+      if (window.getSelection) {
+        const selection = window.getSelection();
+        if (selection && selection.rangeCount > 0) {
+          selection.removeAllRanges();
+        }
+      }
+    }, 100); // Very frequent selection clearing
+
+    // Override clipboard API completely
+    if (navigator.clipboard) {
+      const originalWriteText = navigator.clipboard.writeText;
+      navigator.clipboard.writeText = () => Promise.resolve();
+      
+      const originalWrite = navigator.clipboard.write;
+      navigator.clipboard.write = () => Promise.resolve();
+      
+      const originalReadText = navigator.clipboard.readText;
+      navigator.clipboard.readText = () => Promise.resolve('');
+      
+      const originalRead = navigator.clipboard.read;
+      navigator.clipboard.read = () => Promise.resolve([]);
+    }
 
     // Cleanup
     return () => {
@@ -171,6 +209,7 @@ function PDFViewerContent() {
       window.removeEventListener('beforeprint', handleBeforePrint, true);
       window.removeEventListener('blur', handleBlur);
       clearInterval(clearClipboard);
+      clearInterval(clearSelection);
     };
   }, []);
 
@@ -204,6 +243,36 @@ function PDFViewerContent() {
         WebkitTapHighlightColor: 'transparent',
       } as React.CSSProperties}
     >
+      {/* Add CSS to hide PDF controls */}
+      <style jsx>{`
+        iframe {
+          -webkit-user-select: none !important;
+          -moz-user-select: none !important;
+          -ms-user-select: none !important;
+          user-select: none !important;
+        }
+        
+        /* Hide any PDF viewer controls */
+        iframe::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          pointer-events: none;
+          z-index: 999;
+        }
+        
+        /* Disable text selection in PDF */
+        iframe * {
+          -webkit-user-select: none !important;
+          -moz-user-select: none !important;
+          -ms-user-select: none !important;
+          user-select: none !important;
+          -webkit-touch-callout: none !important;
+        }
+      `}</style>
       {/* Compact header for smaller window */}
       <div className="bg-emerald-600 text-white p-2 flex items-center justify-between">
         <button 
@@ -219,10 +288,10 @@ function PDFViewerContent() {
       {/* PDF Viewer with hidden controls - optimized for smaller window */}
       <div className="h-screen relative overflow-hidden">
         <iframe
-          src={`${pdfUrl}#toolbar=0&navpanes=0&scrollbar=1&view=FitH&zoom=page-fit&statusbar=0&messages=0&printable=0`}
+          src={`${pdfUrl}#toolbar=0&navpanes=0&scrollbar=1&view=FitH&zoom=page-fit&statusbar=0&messages=0&printable=0&copy=0&select=0&search=0`}
           className="w-full h-full border-0"
           title="Church Policy Document"
-          sandbox="allow-same-origin"
+          sandbox="allow-same-origin allow-scripts"
           style={{
             userSelect: 'none',
             WebkitUserSelect: 'none',
@@ -234,9 +303,46 @@ function PDFViewerContent() {
         
         {/* Overlay to hide any PDF toolbar that might appear */}
         <div 
-          className="absolute top-0 left-0 right-0 h-12 bg-white pointer-events-none z-10"
+          className="absolute top-0 left-0 right-0 h-16 bg-white pointer-events-none z-10"
           style={{ 
-            background: 'linear-gradient(to bottom, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.7) 70%, transparent 100%)' 
+            background: 'linear-gradient(to bottom, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.9) 70%, transparent 100%)' 
+          }}
+        />
+        
+        {/* Bottom overlay to hide any PDF controls */}
+        <div 
+          className="absolute bottom-0 left-0 right-0 h-16 bg-white pointer-events-none z-10"
+          style={{ 
+            background: 'linear-gradient(to top, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.9) 70%, transparent 100%)' 
+          }}
+        />
+        
+        {/* Left overlay to hide any side controls */}
+        <div 
+          className="absolute top-0 bottom-0 left-0 w-8 bg-white pointer-events-none z-10"
+          style={{ 
+            background: 'linear-gradient(to right, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.9) 70%, transparent 100%)' 
+          }}
+        />
+        
+        {/* Right overlay to hide any side controls */}
+        <div 
+          className="absolute top-0 bottom-0 right-0 w-8 bg-white pointer-events-none z-10"
+          style={{ 
+            background: 'linear-gradient(to left, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.9) 70%, transparent 100%)' 
+          }}
+        />
+        
+        {/* Invisible overlay to capture and block any clicks on PDF controls */}
+        <div 
+          className="absolute inset-0 z-5"
+          style={{
+            pointerEvents: 'none',
+          }}
+          onContextMenu={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
           }}
         />
       </div>
