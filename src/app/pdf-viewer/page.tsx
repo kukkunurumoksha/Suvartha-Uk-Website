@@ -97,6 +97,9 @@ function PDFViewerContent() {
   }
 
   const pdfUrl = `/api/policies/${encodeURIComponent(file)}`;
+  
+  console.log('PDF Viewer - File:', file);
+  console.log('PDF Viewer - URL:', pdfUrl);
 
   return (
     <div 
@@ -122,12 +125,23 @@ function PDFViewerContent() {
         <div className="w-12"></div>
       </div>
 
+      {/* Debug info */}
+      <div className="bg-gray-100 p-2 text-xs">
+        <p>File: {file}</p>
+        <p>URL: {pdfUrl}</p>
+        <a href={pdfUrl} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
+          Test direct PDF link
+        </a>
+      </div>
+
       {/* PDF Viewer */}
-      <div className="h-screen relative overflow-hidden">
+      <div className="relative" style={{ height: 'calc(100vh - 80px)' }}>
         <iframe
           src={`${pdfUrl}#toolbar=0&navpanes=0&scrollbar=1&view=FitH&zoom=page-fit`}
           className="w-full h-full border-0"
           title="Church Policy Document"
+          onLoad={() => console.log('PDF iframe loaded successfully')}
+          onError={() => console.error('PDF iframe failed to load')}
           style={{
             userSelect: 'none',
             WebkitUserSelect: 'none',
@@ -143,6 +157,15 @@ function PDFViewerContent() {
             background: 'linear-gradient(to bottom, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.7) 70%, transparent 100%)' 
           }}
         />
+        
+        {/* Fallback message */}
+        <div className="absolute inset-0 flex items-center justify-center bg-gray-50 z-0">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600 mx-auto mb-4"></div>
+            <p className="text-gray-600">Loading PDF document...</p>
+            <p className="text-xs text-gray-400 mt-2">If this takes too long, please refresh the page</p>
+          </div>
+        </div>
       </div>
     </div>
   );
