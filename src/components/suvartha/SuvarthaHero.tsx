@@ -35,25 +35,25 @@ export default function SuvarthaHero() {
           </h1>
         </div>
 
-        {/* Middle section - Scripture verse on the right */}
-        <div className="flex-1 flex items-center justify-end pr-0 lg:pr-8 xl:pr-16">
-          <div className="hidden lg:block max-w-md xl:max-w-lg">
+        {/* Middle section - Scripture verse on the far right */}
+        <div className="flex-1 flex items-center justify-end pr-4 lg:pr-12 xl:pr-20 2xl:pr-24">
+          <div className="hidden lg:block max-w-sm xl:max-w-md ml-auto">
             {/* Scripture Reference */}
             <div className="mb-4 sm:mb-6 text-center">
               <div className="inline-block bg-white/25 backdrop-blur-md px-4 py-2 rounded-lg border border-white/20 shadow-lg">
-                <p className="text-lg sm:text-xl md:text-2xl font-bold text-yellow-200 drop-shadow">Galatians 2:20</p>
+                <p className="text-lg sm:text-xl font-bold text-yellow-200 drop-shadow">Galatians 2:20</p>
               </div>
             </div>
             
             {/* Scripture Quote */}
-            <div className="bg-white/20 backdrop-blur-md rounded-2xl p-6 sm:p-8 border border-white/20 shadow-xl">
-              <p className="text-base sm:text-lg leading-relaxed font-medium text-white drop-shadow italic text-center">
+            <div className="bg-white/20 backdrop-blur-md rounded-2xl p-5 sm:p-6 border border-white/20 shadow-xl">
+              <p className="text-sm sm:text-base leading-relaxed font-medium text-white drop-shadow italic text-center">
                 &quot;I have been crucified with Christ and I no longer live, but Christ lives in me. The life I now live in the body, I live by faith in the Son of God, who loved me and gave himself for me.&quot;
               </p>
               <div className="mt-4 flex justify-center">
-                <div className="w-16 h-1 bg-gradient-to-r from-yellow-300 to-amber-300 rounded-full shadow-lg"></div>
+                <div className="w-12 h-1 bg-gradient-to-r from-yellow-300 to-amber-300 rounded-full shadow-lg"></div>
               </div>
-              <p className="text-sm sm:text-base text-yellow-200 mt-4 font-light text-center">
+              <p className="text-xs sm:text-sm text-yellow-200 mt-3 font-light text-center">
                 Living by faith in Christ who lives within us - our hope and strength for 2026
               </p>
             </div>
@@ -86,9 +86,9 @@ export default function SuvarthaHero() {
         </div>
 
         {/* Bottom section - CTA Buttons and scroll indicator */}
-        <div className="pb-8 sm:pb-12">
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center mb-8 sm:mb-12 px-4">
+        <div className="pb-6 sm:pb-8">
+          {/* CTA Buttons - moved down more */}
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center mb-12 sm:mb-16 px-4 pt-8 sm:pt-12">
             <button 
               onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
               className="bg-white/90 text-amber-800 px-6 sm:px-8 md:px-10 py-3 sm:py-4 rounded-full font-semibold text-sm sm:text-base md:text-lg hover:bg-white transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center space-x-2 w-full sm:w-auto justify-center backdrop-blur-sm"
