@@ -18,19 +18,14 @@ export async function GET(
     const filePath = join(process.cwd(), 'public', 'policies', filename);
     const fileBuffer = await readFile(filePath);
     
-    // Return the PDF with headers that prevent downloading but allow viewing
+    // Return the PDF with minimal headers
     return new NextResponse(fileBuffer as any, {
       status: 200,
       headers: {
         'Content-Type': 'application/pdf',
-        'Content-Disposition': 'inline; filename="church-policy.pdf"',
-        'Cache-Control': 'no-cache, no-store, must-revalidate, private',
-        'Pragma': 'no-cache',
-        'Expires': '0',
-        'X-Content-Type-Options': 'nosniff',
+        'Content-Disposition': 'inline',
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
         'X-Frame-Options': 'SAMEORIGIN',
-        'Referrer-Policy': 'no-referrer',
-        'X-Robots-Tag': 'noindex, nofollow, nosnippet, noarchive, noimageindex',
       },
     });
   } catch (error) {

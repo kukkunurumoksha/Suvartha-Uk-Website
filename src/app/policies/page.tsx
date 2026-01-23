@@ -87,29 +87,18 @@ export default function PoliciesPage() {
           </button>
         </div>
 
-        {/* PDF viewer with hidden toolbar */}
-        <div className="relative overflow-hidden" style={{ height: 'calc(100vh - 60px)' }}>
+        {/* Simple PDF viewer */}
+        <div className="w-full" style={{ height: 'calc(100vh - 60px)' }}>
           <iframe
-            src={`${pdfUrl}#toolbar=0&navpanes=0&scrollbar=1&view=FitH`}
-            className="w-full border-0"
-            style={{ 
-              height: 'calc(100% + 40px)',
-              marginTop: '-40px',
+            src={pdfUrl}
+            className="w-full h-full border-0"
+            title="Church Policy Document"
+            style={{
               userSelect: 'none',
               WebkitUserSelect: 'none',
               MozUserSelect: 'none',
               msUserSelect: 'none',
             } as React.CSSProperties}
-            title="Church Policy Document"
-          />
-          
-          {/* Simple toolbar blocker */}
-          <div 
-            className="absolute top-0 left-0 right-0 h-10 bg-white pointer-events-none z-50"
-            style={{ 
-              background: 'white',
-              borderBottom: '1px solid #e5e7eb'
-            }}
           />
         </div>
       </div>
