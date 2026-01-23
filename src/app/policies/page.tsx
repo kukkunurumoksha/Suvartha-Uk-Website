@@ -20,7 +20,7 @@ export default function PoliciesPage() {
       'safeguarding': true
     });
 
-    // Enhanced copy protection when PDF is displayed
+    // Copy protection when PDF is displayed
     if (selectedPdf) {
       const handleContextMenu = (e: MouseEvent) => {
         e.preventDefault();
@@ -28,39 +28,18 @@ export default function PoliciesPage() {
       };
 
       const handleKeyDown = (e: KeyboardEvent) => {
-        // Block printing, downloading, and copying shortcuts
+        // Block key shortcuts for copying, printing, saving
         if (
           (e.ctrlKey && (e.key === 'c' || e.key === 'C')) ||
           (e.ctrlKey && (e.key === 'a' || e.key === 'A')) ||
           (e.ctrlKey && (e.key === 's' || e.key === 'S')) ||
           (e.ctrlKey && (e.key === 'p' || e.key === 'P')) ||
-          (e.ctrlKey && (e.key === 'u' || e.key === 'U')) ||
-          (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i')) ||
-          e.key === 'PrintScreen' ||
-          e.key === 'F12'
+          e.key === 'PrintScreen'
         ) {
           e.preventDefault();
           return false;
         }
       };
-
-      // Add CSS to hide PDF toolbar
-      const style = document.createElement('style');
-      style.textContent = `
-        iframe[src*="pdf"] {
-          pointer-events: auto !important;
-        }
-        /* Hide PDF toolbar elements */
-        .pdf-toolbar,
-        .toolbar,
-        #toolbar,
-        [class*="toolbar"],
-        [id*="toolbar"] {
-          display: none !important;
-          visibility: hidden !important;
-        }
-      `;
-      document.head.appendChild(style);
 
       document.addEventListener('contextmenu', handleContextMenu);
       document.addEventListener('keydown', handleKeyDown);
@@ -68,7 +47,6 @@ export default function PoliciesPage() {
       return () => {
         document.removeEventListener('contextmenu', handleContextMenu);
         document.removeEventListener('keydown', handleKeyDown);
-        document.head.removeChild(style);
       };
     }
   }, [selectedPdf]);
@@ -109,44 +87,29 @@ export default function PoliciesPage() {
           </button>
         </div>
 
-        {/* Full-screen PDF viewer without toolbar */}
+        {/* PDF viewer with hidden toolbar */}
         <div className="relative overflow-hidden" style={{ height: 'calc(100vh - 60px)' }}>
           <iframe
-            src={`${pdfUrl}#toolbar=0&navpanes=0&scrollbar=1&view=FitH&zoom=page-fit&statusbar=0&messages=0&scrollbar=0`}
+            src={`${pdfUrl}#toolbar=0&navpanes=0&scrollbar=1&view=FitH`}
             className="w-full border-0"
             style={{ 
-              height: 'calc(100% + 60px)',
-              marginTop: '-60px',
+              height: 'calc(100% + 40px)',
+              marginTop: '-40px',
               userSelect: 'none',
               WebkitUserSelect: 'none',
               MozUserSelect: 'none',
               msUserSelect: 'none',
             } as React.CSSProperties}
             title="Church Policy Document"
-            sandbox="allow-same-origin"
           />
           
-          {/* Complete toolbar blocker */}
+          {/* Simple toolbar blocker */}
           <div 
-            className="absolute top-0 left-0 right-0 h-16 bg-white pointer-events-none z-50"
+            className="absolute top-0 left-0 right-0 h-10 bg-white pointer-events-none z-50"
             style={{ 
               background: 'white',
               borderBottom: '1px solid #e5e7eb'
             }}
-          />
-          
-          {/* Bottom toolbar blocker */}
-          <div 
-            className="absolute bottom-0 left-0 right-0 h-12 bg-white pointer-events-none z-50"
-            style={{ 
-              background: 'white',
-              borderTop: '1px solid #e5e7eb'
-            }}
-          />
-          
-          {/* Side panel blocker */}
-          <div 
-            className="absolute top-0 left-0 w-8 h-full bg-white pointer-events-none z-50"
           />
         </div>
       </div>
