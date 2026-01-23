@@ -23,28 +23,23 @@ export async function GET(
     const fileBuffer = await readFile(filePath);
     console.log('API Route - File read successfully, size:', fileBuffer.length, 'bytes');
     
-    // Return the PDF with maximum protection headers
+    // Return the PDF with protection headers
     return new NextResponse(fileBuffer as any, {
       status: 200,
       headers: {
         'Content-Type': 'application/pdf',
-        'Content-Disposition': 'inline; filename="Protected_Church_Policy.pdf"', // Generic name to prevent easy identification
+        'Content-Disposition': 'inline; filename="Protected_Church_Policy.pdf"',
         'Cache-Control': 'no-cache, no-store, must-revalidate, private',
         'Pragma': 'no-cache',
         'Expires': '0',
         'X-Content-Type-Options': 'nosniff',
-        'X-Frame-Options': 'SAMEORIGIN', // Changed from DENY to SAMEORIGIN to allow iframe
+        'X-Frame-Options': 'SAMEORIGIN',
         'X-XSS-Protection': '1; mode=block',
         'Referrer-Policy': 'no-referrer',
-        // Additional protection headers
         'X-Permitted-Cross-Domain-Policies': 'master-only',
         'X-Download-Options': 'noopen',
         'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
-        // Prevent caching and downloading
-        'Content-Security-Policy': "default-src 'self'; script-src 'none'; object-src 'none';",
         'X-Robots-Tag': 'noindex, nofollow, nosnippet, noarchive, noimageindex',
-        // Additional copy protection headers
-        'X-Content-Options': 'noopen',
       },
     });
   } catch (error) {
