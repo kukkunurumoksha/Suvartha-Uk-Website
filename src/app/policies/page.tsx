@@ -272,7 +272,7 @@ function PoliciesContent() {
           </button>
         </div>
 
-        {/* Protected PDF viewer */}
+        {/* PDF viewer as images - maximum security */}
         <div 
           className="w-full" 
           style={{ 
@@ -284,35 +284,112 @@ function PoliciesContent() {
             WebkitTouchCallout: 'none',
           } as React.CSSProperties}
         >
-          <iframe
-            src={pdfUrl}
-            className="w-full h-full border-0"
-            title="Church Policy Document"
-            style={{
-              userSelect: 'none',
-              WebkitUserSelect: 'none',
-              MozUserSelect: 'none',
-              msUserSelect: 'none',
-              WebkitTouchCallout: 'none',
-              pointerEvents: 'auto',
-            } as React.CSSProperties}
-            onLoad={() => {
-              // Additional protection when iframe loads
-              const iframe = document.querySelector('iframe');
-              if (iframe) {
-                try {
-                  const iframeDoc = iframe.contentDocument || iframe.contentWindow?.document;
-                  if (iframeDoc) {
-                    iframeDoc.addEventListener('contextmenu', (e) => e.preventDefault());
-                    iframeDoc.addEventListener('selectstart', (e) => e.preventDefault());
-                    iframeDoc.addEventListener('copy', (e) => e.preventDefault());
-                  }
-                } catch (e) {
-                  // Cross-origin restrictions - expected
-                }
-              }
-            }}
-          />
+          {/* Security Notice */}
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4 text-center">
+            <strong>Protected Document:</strong> This document is for reading only. Copying, downloading, and screenshots are strictly prohibited.
+          </div>
+          
+          {/* PDF Content as Protected Images */}
+          <div className="bg-white rounded-lg shadow-lg p-4 h-full overflow-y-auto">
+            <div className="text-center mb-4">
+              <h3 className="text-xl font-bold text-gray-800">Church Policy Document</h3>
+              <p className="text-gray-600">Read-Only Mode</p>
+            </div>
+            
+          {/* PDF Content as Protected Images */}
+          <div className="bg-white rounded-lg shadow-lg p-4 h-full overflow-y-auto">
+            <div className="text-center mb-4">
+              <h3 className="text-xl font-bold text-gray-800">Church Policy Document</h3>
+              <p className="text-gray-600">Read-Only Mode - Maximum Security</p>
+            </div>
+            
+            {/* PDF Pages as Images */}
+            <div className="space-y-6">
+              {/* Page 1 */}
+              <div className="border rounded-lg overflow-hidden shadow-md">
+                <img 
+                  src={`/api/pdf-images/${encodeURIComponent(selectedPdf)}?page=1`}
+                  alt="Document Page 1"
+                  className="w-full h-auto"
+                  style={{
+                    userSelect: 'none',
+                    WebkitUserSelect: 'none',
+                    MozUserSelect: 'none',
+                    msUserSelect: 'none',
+                    WebkitTouchCallout: 'none',
+                    pointerEvents: 'none',
+                    WebkitUserDrag: 'none',
+                    KhtmlUserDrag: 'none',
+                    MozUserDrag: 'none',
+                    OUserDrag: 'none',
+                    userDrag: 'none',
+                  } as React.CSSProperties}
+                  onContextMenu={(e) => e.preventDefault()}
+                  onDragStart={(e) => e.preventDefault()}
+                />
+              </div>
+              
+              {/* Page 2 */}
+              <div className="border rounded-lg overflow-hidden shadow-md">
+                <img 
+                  src={`/api/pdf-images/${encodeURIComponent(selectedPdf)}?page=2`}
+                  alt="Document Page 2"
+                  className="w-full h-auto"
+                  style={{
+                    userSelect: 'none',
+                    WebkitUserSelect: 'none',
+                    MozUserSelect: 'none',
+                    msUserSelect: 'none',
+                    WebkitTouchCallout: 'none',
+                    pointerEvents: 'none',
+                    WebkitUserDrag: 'none',
+                    KhtmlUserDrag: 'none',
+                    MozUserDrag: 'none',
+                    OUserDrag: 'none',
+                    userDrag: 'none',
+                  } as React.CSSProperties}
+                  onContextMenu={(e) => e.preventDefault()}
+                  onDragStart={(e) => e.preventDefault()}
+                />
+              </div>
+              
+              {/* Page 3 */}
+              <div className="border rounded-lg overflow-hidden shadow-md">
+                <img 
+                  src={`/api/pdf-images/${encodeURIComponent(selectedPdf)}?page=3`}
+                  alt="Document Page 3"
+                  className="w-full h-auto"
+                  style={{
+                    userSelect: 'none',
+                    WebkitUserSelect: 'none',
+                    MozUserSelect: 'none',
+                    msUserSelect: 'none',
+                    WebkitTouchCallout: 'none',
+                    pointerEvents: 'none',
+                    WebkitUserDrag: 'none',
+                    KhtmlUserDrag: 'none',
+                    MozUserDrag: 'none',
+                    OUserDrag: 'none',
+                    userDrag: 'none',
+                  } as React.CSSProperties}
+                  onContextMenu={(e) => e.preventDefault()}
+                  onDragStart={(e) => e.preventDefault()}
+                />
+              </div>
+              
+              {/* Security Footer */}
+              <div className="text-center text-red-600 bg-red-50 p-4 rounded-lg border border-red-200">
+                <div className="text-2xl mb-2">🔒</div>
+                <p className="font-semibold">Maximum Security Mode Active</p>
+                <p className="text-sm mt-2">
+                  This document has been converted to protected images.<br/>
+                  No download, copy, print, or screenshot functionality is available.<br/>
+                  Content is for reading purposes only.
+                </p>
+              </div>
+            </div>
+          </div>
+          </div>
         </div>
       </div>
     );
