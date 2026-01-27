@@ -272,9 +272,9 @@ function PoliciesContent() {
           </button>
         </div>
 
-        {/* Secure PDF Viewer - Images with Watermarks */}
+        {/* Protected PDF viewer */}
         <div 
-          className="w-full bg-gray-100" 
+          className="w-full" 
           style={{ 
             height: 'calc(100vh - 60px)',
             userSelect: 'none',
@@ -284,133 +284,35 @@ function PoliciesContent() {
             WebkitTouchCallout: 'none',
           } as React.CSSProperties}
         >
-          {/* Security Header */}
-          <div className="bg-red-600 text-white px-4 py-2 text-center text-sm font-semibold">
-            🔒 PROTECTED DOCUMENT - READ ONLY MODE - NO DOWNLOAD AVAILABLE
-          </div>
-          
-          {/* Document Viewer */}
-          <div className="h-full overflow-y-auto p-4">
-            <div className="max-w-4xl mx-auto space-y-6">
-              
-              {/* Document Header */}
-              <div className="bg-white rounded-lg shadow-lg p-4 text-center border-l-4 border-amber-600">
-                <h3 className="text-xl font-bold text-gray-800 mb-2">{selectedPdf}</h3>
-                <p className="text-gray-600">Suvartha Ministries UK - Official Policy Document</p>
-                <div className="mt-2 inline-flex items-center bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm">
-                  <span className="mr-1">🔒</span>
-                  Confidential & Protected
-                </div>
-              </div>
-              
-              {/* Page 1 */}
-              <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-                <div className="bg-gray-50 px-4 py-2 border-b flex justify-between items-center">
-                  <span className="text-sm font-medium text-gray-700">Page 1 of 3</span>
-                  <span className="text-xs text-red-600">🚫 No Download • No Copy • No Print</span>
-                </div>
-                <div className="p-4">
-                  <img 
-                    src={`/api/pdf-to-image/${encodeURIComponent(selectedPdf)}?page=1`}
-                    alt="Document Page 1"
-                    className="w-full h-auto mx-auto shadow-md rounded"
-                    style={{
-                      userSelect: 'none',
-                      WebkitUserSelect: 'none',
-                      MozUserSelect: 'none',
-                      msUserSelect: 'none',
-                      WebkitTouchCallout: 'none',
-                      pointerEvents: 'none',
-                      WebkitUserDrag: 'none',
-                      KhtmlUserDrag: 'none',
-                      MozUserDrag: 'none',
-                      OUserDrag: 'none',
-                      userDrag: 'none',
-                    } as React.CSSProperties}
-                    onContextMenu={(e) => e.preventDefault()}
-                    onDragStart={(e) => e.preventDefault()}
-                  />
-                </div>
-              </div>
-              
-              {/* Page 2 */}
-              <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-                <div className="bg-gray-50 px-4 py-2 border-b flex justify-between items-center">
-                  <span className="text-sm font-medium text-gray-700">Page 2 of 3</span>
-                  <span className="text-xs text-red-600">🚫 No Download • No Copy • No Print</span>
-                </div>
-                <div className="p-4">
-                  <img 
-                    src={`/api/pdf-to-image/${encodeURIComponent(selectedPdf)}?page=2`}
-                    alt="Document Page 2"
-                    className="w-full h-auto mx-auto shadow-md rounded"
-                    style={{
-                      userSelect: 'none',
-                      WebkitUserSelect: 'none',
-                      MozUserSelect: 'none',
-                      msUserSelect: 'none',
-                      WebkitTouchCallout: 'none',
-                      pointerEvents: 'none',
-                      WebkitUserDrag: 'none',
-                      KhtmlUserDrag: 'none',
-                      MozUserDrag: 'none',
-                      OUserDrag: 'none',
-                      userDrag: 'none',
-                    } as React.CSSProperties}
-                    onContextMenu={(e) => e.preventDefault()}
-                    onDragStart={(e) => e.preventDefault()}
-                  />
-                </div>
-              </div>
-              
-              {/* Page 3 */}
-              <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-                <div className="bg-gray-50 px-4 py-2 border-b flex justify-between items-center">
-                  <span className="text-sm font-medium text-gray-700">Page 3 of 3</span>
-                  <span className="text-xs text-red-600">🚫 No Download • No Copy • No Print</span>
-                </div>
-                <div className="p-4">
-                  <img 
-                    src={`/api/pdf-to-image/${encodeURIComponent(selectedPdf)}?page=3`}
-                    alt="Document Page 3"
-                    className="w-full h-auto mx-auto shadow-md rounded"
-                    style={{
-                      userSelect: 'none',
-                      WebkitUserSelect: 'none',
-                      MozUserSelect: 'none',
-                      msUserSelect: 'none',
-                      WebkitTouchCallout: 'none',
-                      pointerEvents: 'none',
-                      WebkitUserDrag: 'none',
-                      KhtmlUserDrag: 'none',
-                      MozUserDrag: 'none',
-                      OUserDrag: 'none',
-                      userDrag: 'none',
-                    } as React.CSSProperties}
-                    onContextMenu={(e) => e.preventDefault()}
-                    onDragStart={(e) => e.preventDefault()}
-                  />
-                </div>
-              </div>
-              
-              {/* Security Footer */}
-              <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
-                <div className="text-3xl mb-3">🔐</div>
-                <h4 className="text-lg font-bold text-red-800 mb-2">Maximum Security Protection Active</h4>
-                <div className="text-sm text-red-700 space-y-1">
-                  <p>✅ Original PDF file is never exposed to browser</p>
-                  <p>✅ Content converted to watermarked images</p>
-                  <p>✅ Right-click, copy, and print disabled</p>
-                  <p>✅ No download buttons or options available</p>
-                  <p>✅ Document is for authorized viewing only</p>
-                </div>
-                <div className="mt-4 text-xs text-gray-600">
-                  © 2026 Suvartha Ministries UK - All rights reserved
-                </div>
-              </div>
-              
-            </div>
-          </div>
+          <iframe
+            src={pdfUrl}
+            className="w-full h-full border-0"
+            title="Church Policy Document"
+            style={{
+              userSelect: 'none',
+              WebkitUserSelect: 'none',
+              MozUserSelect: 'none',
+              msUserSelect: 'none',
+              WebkitTouchCallout: 'none',
+              pointerEvents: 'auto',
+            } as React.CSSProperties}
+            onLoad={() => {
+              // Additional protection when iframe loads
+              const iframe = document.querySelector('iframe');
+              if (iframe) {
+                try {
+                  const iframeDoc = iframe.contentDocument || iframe.contentWindow?.document;
+                  if (iframeDoc) {
+                    iframeDoc.addEventListener('contextmenu', (e) => e.preventDefault());
+                    iframeDoc.addEventListener('selectstart', (e) => e.preventDefault());
+                    iframeDoc.addEventListener('copy', (e) => e.preventDefault());
+                  }
+                } catch (e) {
+                  // Cross-origin restrictions - expected
+                }
+              }
+            }}
+          />
         </div>
       </div>
     );
