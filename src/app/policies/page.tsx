@@ -28,32 +28,45 @@ function PoliciesContent() {
       'safeguarding': true
     });
 
-    // Enhanced copy protection when PDF is displayed
+    // Maximum security protection when PDF is displayed
     if (selectedPdf) {
+      // Disable right-click completely
       const handleContextMenu = (e: MouseEvent) => {
         e.preventDefault();
         e.stopPropagation();
         return false;
       };
 
+      // Block ALL keyboard shortcuts and function keys
       const handleKeyDown = (e: KeyboardEvent) => {
-        // Block all copy, print, save, and developer shortcuts
+        // Block ALL function keys
+        if (e.key.startsWith('F') && e.key.length <= 3) {
+          e.preventDefault();
+          e.stopPropagation();
+          return false;
+        }
+        
+        // Block ALL Ctrl combinations
+        if (e.ctrlKey) {
+          e.preventDefault();
+          e.stopPropagation();
+          return false;
+        }
+        
+        // Block ALL Alt combinations
+        if (e.altKey) {
+          e.preventDefault();
+          e.stopPropagation();
+          return false;
+        }
+        
+        // Block specific dangerous keys
         if (
-          (e.ctrlKey && (e.key === 'c' || e.key === 'C')) ||
-          (e.ctrlKey && (e.key === 'a' || e.key === 'A')) ||
-          (e.ctrlKey && (e.key === 's' || e.key === 'S')) ||
-          (e.ctrlKey && (e.key === 'p' || e.key === 'P')) ||
-          (e.ctrlKey && (e.key === 'u' || e.key === 'U')) ||
-          (e.ctrlKey && (e.key === 'x' || e.key === 'X')) ||
-          (e.ctrlKey && (e.key === 'v' || e.key === 'V')) ||
-          (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i')) ||
-          (e.ctrlKey && e.shiftKey && (e.key === 'J' || e.key === 'j')) ||
-          (e.ctrlKey && e.shiftKey && (e.key === 'C' || e.key === 'c')) ||
           e.key === 'PrintScreen' ||
-          e.key === 'F12' ||
-          e.key === 'F5' ||
-          (e.ctrlKey && e.key === 'r') ||
-          (e.ctrlKey && e.key === 'R')
+          e.key === 'Insert' ||
+          e.key === 'Delete' ||
+          (e.shiftKey && e.key === 'Insert') ||
+          e.key === 'Meta' // Windows key
         ) {
           e.preventDefault();
           e.stopPropagation();
@@ -61,38 +74,56 @@ function PoliciesContent() {
         }
       };
 
+      // Prevent text selection completely
       const handleSelectStart = (e: Event) => {
         e.preventDefault();
         e.stopPropagation();
         return false;
       };
 
-      const handleCopy = (e: ClipboardEvent) => {
+      // Block clipboard operations
+      const handleClipboard = (e: ClipboardEvent) => {
         e.preventDefault();
         e.stopPropagation();
         e.clipboardData?.setData('text/plain', '');
         return false;
       };
 
-      const handleCut = (e: ClipboardEvent) => {
+      // Prevent drag operations
+      const handleDragStart = (e: DragEvent) => {
         e.preventDefault();
         e.stopPropagation();
         return false;
       };
 
-      const handlePaste = (e: ClipboardEvent) => {
-        e.preventDefault();
-        e.stopPropagation();
-        return false;
+      // Block mouse selection
+      const handleMouseDown = (e: MouseEvent) => {
+        if (e.detail > 1) { // Prevent double/triple click selection
+          e.preventDefault();
+          e.stopPropagation();
+          return false;
+        }
       };
 
-      // Add comprehensive protection
+      // Prevent focus on iframe (blocks some shortcuts)
+      const handleFocus = (e: FocusEvent) => {
+        const target = e.target as HTMLElement;
+        if (target.tagName === 'IFRAME') {
+          target.blur();
+        }
+      };
+
+      // Add all event listeners with capture phase
       document.addEventListener('contextmenu', handleContextMenu, true);
       document.addEventListener('keydown', handleKeyDown, true);
+      document.addEventListener('keyup', handleKeyDown, true);
       document.addEventListener('selectstart', handleSelectStart, true);
-      document.addEventListener('copy', handleCopy, true);
-      document.addEventListener('cut', handleCut, true);
-      document.addEventListener('paste', handlePaste, true);
+      document.addEventListener('copy', handleClipboard, true);
+      document.addEventListener('cut', handleClipboard, true);
+      document.addEventListener('paste', handleClipboard, true);
+      document.addEventListener('dragstart', handleDragStart, true);
+      document.addEventListener('mousedown', handleMouseDown, true);
+      document.addEventListener('focus', handleFocus, true);
 
       // Disable text selection globally
       document.body.style.userSelect = 'none';
@@ -101,43 +132,96 @@ function PoliciesContent() {
       (document.body.style as any).msUserSelect = 'none';
       (document.body.style as any).webkitTouchCallout = 'none';
 
-      // Clear clipboard periodically
+      // Aggressive clipboard clearing
       const clearClipboard = setInterval(() => {
         if (navigator.clipboard && navigator.clipboard.writeText) {
           navigator.clipboard.writeText('').catch(() => {});
         }
-      }, 500);
+        // Also try to clear selection
+        if (window.getSelection) {
+          window.getSelection()?.removeAllRanges();
+        }
+      }, 100); // Every 100ms
 
-      // Add CSS to disable selection in iframe
+      // Add comprehensive CSS protection
       const style = document.createElement('style');
       style.textContent = `
-        iframe, iframe * {
+        /* Disable all selection and interaction */
+        *, *::before, *::after {
           user-select: none !important;
           -webkit-user-select: none !important;
           -moz-user-select: none !important;
           -ms-user-select: none !important;
           -webkit-touch-callout: none !important;
+          -webkit-tap-highlight-color: transparent !important;
         }
         
         /* Disable drag and drop */
-        iframe {
+        * {
           -webkit-user-drag: none !important;
           -khtml-user-drag: none !important;
           -moz-user-drag: none !important;
           -o-user-drag: none !important;
           user-drag: none !important;
         }
+        
+        /* Hide scrollbars to prevent interaction */
+        iframe::-webkit-scrollbar {
+          display: none !important;
+        }
+        
+        /* Disable pointer events on certain elements */
+        iframe {
+          pointer-events: auto !important;
+          -webkit-user-select: none !important;
+          -moz-user-select: none !important;
+          user-select: none !important;
+        }
+        
+        /* Prevent highlighting */
+        ::selection {
+          background: transparent !important;
+        }
+        ::-moz-selection {
+          background: transparent !important;
+        }
+        
+        /* Disable print styles */
+        @media print {
+          * {
+            display: none !important;
+          }
+        }
       `;
       document.head.appendChild(style);
 
+      // Disable developer tools detection (basic)
+      const detectDevTools = () => {
+        const threshold = 160;
+        if (window.outerHeight - window.innerHeight > threshold || 
+            window.outerWidth - window.innerWidth > threshold) {
+          document.body.innerHTML = '<div style="display:flex;justify-content:center;align-items:center;height:100vh;font-size:24px;color:red;">Access Denied</div>';
+        }
+      };
+      
+      const devToolsInterval = setInterval(detectDevTools, 1000);
+
+      // Cleanup function
       return () => {
         document.removeEventListener('contextmenu', handleContextMenu, true);
         document.removeEventListener('keydown', handleKeyDown, true);
+        document.removeEventListener('keyup', handleKeyDown, true);
         document.removeEventListener('selectstart', handleSelectStart, true);
-        document.removeEventListener('copy', handleCopy, true);
-        document.removeEventListener('cut', handleCut, true);
-        document.removeEventListener('paste', handlePaste, true);
+        document.removeEventListener('copy', handleClipboard, true);
+        document.removeEventListener('cut', handleClipboard, true);
+        document.removeEventListener('paste', handleClipboard, true);
+        document.removeEventListener('dragstart', handleDragStart, true);
+        document.removeEventListener('mousedown', handleMouseDown, true);
+        document.removeEventListener('focus', handleFocus, true);
+        
         clearInterval(clearClipboard);
+        clearInterval(devToolsInterval);
+        
         if (style.parentNode) {
           document.head.removeChild(style);
         }
