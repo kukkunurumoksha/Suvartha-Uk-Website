@@ -1,10 +1,12 @@
 "use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
 import SuvarthaHeader from '../../components/suvartha/SuvarthaHeader';
 import SuvarthaFooter from '../../components/suvartha/SuvarthaFooter';
 
-export default function PoliciesPage() {
+function PoliciesContent() {
+  const searchParams = useSearchParams();
   const [selectedPdf, setSelectedPdf] = useState<string | null>(null);
   const [pdfFiles, setPdfFiles] = useState({
     'data-protection': true,
@@ -13,6 +15,12 @@ export default function PoliciesPage() {
   });
 
   useEffect(() => {
+    // Check if a specific PDF is requested via URL parameter
+    const pdfParam = searchParams.get('pdf');
+    if (pdfParam) {
+      setSelectedPdf(pdfParam);
+    }
+
     // Since we know the files exist, we'll set them as available
     setPdfFiles({
       'data-protection': true,
@@ -424,5 +432,20 @@ export default function PoliciesPage() {
 
       <SuvarthaFooter />
     </div>
+  );
+}
+
+export default function PoliciesPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-amber-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading policies...</p>
+        </div>
+      </div>
+    }>
+      <PoliciesContent />
+    </Suspense>
   );
 }
