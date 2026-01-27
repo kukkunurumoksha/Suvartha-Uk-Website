@@ -2,34 +2,76 @@
 
 import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
+import Image from 'next/image';
 import SuvarthaHeader from '../../components/suvartha/SuvarthaHeader';
 import SuvarthaFooter from '../../components/suvartha/SuvarthaFooter';
 
 function PoliciesContent() {
   const searchParams = useSearchParams();
-  const [selectedPdf, setSelectedPdf] = useState<string | null>(null);
-  const [pdfFiles, setPdfFiles] = useState({
+  const [selectedPolicy, setSelectedPolicy] = useState<string | null>(null);
+  const [policyImages, setPolicyImages] = useState<{[key: string]: string[]}>({});
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [policyFiles, setPolicyFiles] = useState({
     'data-protection': true,
-    'risk-management': true,
-    'safeguarding': true
+    'risk-management': false,
+    'safeguarding': false
   });
 
   useEffect(() => {
-    // Check if a specific PDF is requested via URL parameter
-    const pdfParam = searchParams.get('pdf');
-    if (pdfParam) {
-      setSelectedPdf(pdfParam);
+    // Check if a specific policy is requested via URL parameter
+    const policyParam = searchParams.get('policy');
+    const pdfParam = searchParams.get('pdf'); // Keep backward compatibility
+    
+    if (policyParam) {
+      setSelectedPolicy(policyParam);
+    } else if (pdfParam) {
+      // Map PDF names to policy keys for backward compatibility
+      if (pdfParam.includes('Data Protection')) {
+        setSelectedPolicy('data-protection');
+      } else if (pdfParam.includes('risk management')) {
+        setSelectedPolicy('risk-management');
+      } else if (pdfParam.includes('Safeguarding')) {
+        setSelectedPolicy('safeguarding');
+      }
     }
 
-    // Since we know the files exist, we'll set them as available
-    setPdfFiles({
-      'data-protection': true,
-      'risk-management': true,
-      'safeguarding': true
+    // Load policy images
+    setPolicyImages({
+      'data-protection': [
+        '/policy-images/Data protection/page-1.jpg',
+        '/policy-images/Data protection/page-2.jpg',
+        '/policy-images/Data protection/page-3.jpg',
+        '/policy-images/Data protection/page-4.jpg',
+        '/policy-images/Data protection/page-5.jpg',
+        '/policy-images/Data protection/page-6.jpg',
+        '/policy-images/Data protection/page-7.jpg',
+        '/policy-images/Data protection/page-8.jpg',
+        '/policy-images/Data protection/page-9.jpg',
+        '/policy-images/Data protection/page-10.jpg',
+        '/policy-images/Data protection/page-11.jpg',
+        '/policy-images/Data protection/page-12.jpg'
+      ],
+      'risk-management': [
+        '/policy-images/risk-management/page-1.png',
+        '/policy-images/risk-management/page-2.png',
+        // Add more pages as needed when uploaded
+      ],
+      'safeguarding': [
+        '/policy-images/safeguarding/page-1.png',
+        '/policy-images/safeguarding/page-2.png',
+        // Add more pages as needed when uploaded
+      ]
     });
 
-    // Maximum security protection when PDF is displayed
-    if (selectedPdf) {
+    // Set policy availability - only data-protection has images uploaded
+    setPolicyFiles({
+      'data-protection': true,
+      'risk-management': false, // Will be enabled when images are uploaded
+      'safeguarding': false     // Will be enabled when images are uploaded
+    });
+
+    // Maximum security protection when policy is displayed
+    if (selectedPolicy) {
       // Disable right-click completely
       const handleContextMenu = (e: MouseEvent) => {
         e.preventDefault();
@@ -132,21 +174,17 @@ function PoliciesContent() {
       (document.body.style as any).msUserSelect = 'none';
       (document.body.style as any).webkitTouchCallout = 'none';
 
-      // Aggressive clipboard clearing
-      const clearClipboard = setInterval(() => {
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText('').catch(() => {});
-        }
-        // Also try to clear selection
+      // Clear selection periodically (no clipboard access needed)
+      const clearSelection = setInterval(() => {
         if (window.getSelection) {
           window.getSelection()?.removeAllRanges();
         }
-      }, 100); // Every 100ms
+      }, 500); // Every 500ms
 
       // Add comprehensive CSS protection
       const style = document.createElement('style');
       style.textContent = `
-        /* Disable all selection and interaction */
+        /* Enhanced protection styles */
         *, *::before, *::after {
           user-select: none !important;
           -webkit-user-select: none !important;
@@ -165,19 +203,6 @@ function PoliciesContent() {
           user-drag: none !important;
         }
         
-        /* Hide scrollbars to prevent interaction */
-        iframe::-webkit-scrollbar {
-          display: none !important;
-        }
-        
-        /* Disable pointer events on certain elements */
-        iframe {
-          pointer-events: auto !important;
-          -webkit-user-select: none !important;
-          -moz-user-select: none !important;
-          user-select: none !important;
-        }
-        
         /* Prevent highlighting */
         ::selection {
           background: transparent !important;
@@ -186,31 +211,92 @@ function PoliciesContent() {
           background: transparent !important;
         }
         
-        /* Disable print styles */
+        /* Hide content during print */
         @media print {
           * {
             display: none !important;
+          }
+          body::after {
+            content: "This document cannot be printed. Contact church administration for authorized copies." !important;
+            display: block !important;
+            font-size: 24px !important;
+            text-align: center !important;
+            margin-top: 200px !important;
           }
         }
       `;
       document.head.appendChild(style);
 
-      // Disable developer tools detection (basic)
-      const detectDevTools = () => {
-        const threshold = 160;
-        if (window.outerHeight - window.innerHeight > threshold || 
-            window.outerWidth - window.innerWidth > threshold) {
-          document.body.innerHTML = '<div style="display:flex;justify-content:center;align-items:center;height:100vh;font-size:24px;color:red;">Access Denied</div>';
+      // Enhanced screenshot protection with blur
+      const preventScreenshot = () => {
+        // Immediately blur content when Print Screen is detected
+        const policyContent = document.querySelector('.policy-content') as HTMLElement;
+        if (policyContent) {
+          policyContent.style.filter = 'blur(20px)';
+          policyContent.style.transition = 'filter 0.1s ease';
+          setTimeout(() => {
+            policyContent.style.filter = 'none';
+          }, 1000); // Keep blurred for 1 second
         }
       };
-      
-      const devToolsInterval = setInterval(detectDevTools, 1000);
+
+      // Detect Print Screen key and other screenshot methods
+      const handleKeyUp = (e: KeyboardEvent) => {
+        if (e.key === 'PrintScreen' || e.key === 'F12') {
+          preventScreenshot();
+        }
+      };
+
+      const handleScreenshotKeyDown = (e: KeyboardEvent) => {
+        // Also detect on keydown for faster response
+        if (e.key === 'PrintScreen') {
+          preventScreenshot();
+        }
+      };
+
+      // Blur when window loses focus (potential screenshot app)
+      let blurTimeout: NodeJS.Timeout;
+      const handleVisibilityChange = () => {
+        const policyContent = document.querySelector('.policy-content') as HTMLElement;
+        if (document.hidden && policyContent) {
+          // Immediately blur when window loses focus
+          policyContent.style.filter = 'blur(15px)';
+          policyContent.style.transition = 'filter 0.1s ease';
+        } else if (policyContent) {
+          // Clear blur when window regains focus
+          clearTimeout(blurTimeout);
+          blurTimeout = setTimeout(() => {
+            policyContent.style.filter = 'none';
+          }, 500); // Small delay to ensure user is back
+        }
+      };
+
+      // Detect window resize (potential screenshot tool)
+      const handleResize = () => {
+        const policyContent = document.querySelector('.policy-content') as HTMLElement;
+        if (policyContent) {
+          policyContent.style.filter = 'blur(10px)';
+          setTimeout(() => {
+            policyContent.style.filter = 'none';
+          }, 500);
+        }
+      };
+
+      // Add all screenshot protection listeners
+      document.addEventListener('keyup', handleKeyUp, true);
+      document.addEventListener('keydown', handleScreenshotKeyDown, true);
+      document.addEventListener('visibilitychange', handleVisibilityChange, true);
+      window.addEventListener('resize', handleResize, true);
 
       // Cleanup function
       return () => {
         document.removeEventListener('contextmenu', handleContextMenu, true);
         document.removeEventListener('keydown', handleKeyDown, true);
         document.removeEventListener('keyup', handleKeyDown, true);
+        document.removeEventListener('keydown', handleScreenshotKeyDown, true);
+        document.removeEventListener('keyup', handleKeyUp, true);
+        document.removeEventListener('visibilitychange', handleVisibilityChange, true);
+        window.removeEventListener('resize', handleResize, true);
         document.removeEventListener('selectstart', handleSelectStart, true);
         document.removeEventListener('copy', handleClipboard, true);
         document.removeEventListener('cut', handleClipboard, true);
@@ -219,8 +305,8 @@ function PoliciesContent() {
         document.removeEventListener('mousedown', handleMouseDown, true);
         document.removeEventListener('focus', handleFocus, true);
         
-        clearInterval(clearClipboard);
-        clearInterval(devToolsInterval);
+        clearInterval(clearSelection);
+        if (blurTimeout) clearTimeout(blurTimeout);
         
         if (style.parentNode) {
           document.head.removeChild(style);
@@ -228,32 +314,56 @@ function PoliciesContent() {
         
         // Reset body styles
         document.body.style.userSelect = '';
+        document.body.style.visibility = '';
         (document.body.style as any).webkitUserSelect = '';
         (document.body.style as any).mozUserSelect = '';
         (document.body.style as any).msUserSelect = '';
         (document.body.style as any).webkitTouchCallout = '';
+        
+        // Reset policy content styles
+        const policyContent = document.querySelector('.policy-content') as HTMLElement;
+        if (policyContent) {
+          policyContent.style.filter = '';
+          policyContent.style.visibility = '';
+          policyContent.style.transition = '';
+        }
       };
     }
-  }, [selectedPdf]);
+  }, [selectedPolicy]);
 
-  const openPdf = (filename: string) => {
-    setSelectedPdf(filename);
+  const openPolicy = (policyKey: string) => {
+    setSelectedPolicy(policyKey);
+    setCurrentImageIndex(0);
   };
 
-  const closePdf = () => {
-    setSelectedPdf(null);
+  const closePolicy = () => {
+    setSelectedPolicy(null);
+    setCurrentImageIndex(0);
   };
 
-  // If PDF is selected, show PDF viewer
-  if (selectedPdf) {
-    const pdfUrl = `/api/policies/${encodeURIComponent(selectedPdf)}`;
+  const nextImage = () => {
+    if (selectedPolicy && policyImages[selectedPolicy]) {
+      setCurrentImageIndex((prev) => 
+        prev < policyImages[selectedPolicy].length - 1 ? prev + 1 : prev
+      );
+    }
+  };
+
+  const prevImage = () => {
+    setCurrentImageIndex((prev) => prev > 0 ? prev - 1 : 0);
+  };
+
+  // If policy is selected, show image viewer
+  if (selectedPolicy && policyImages[selectedPolicy]) {
+    const images = policyImages[selectedPolicy];
+    const currentImage = images[currentImageIndex];
     
     return (
       <div className="min-h-screen bg-white">
         {/* Minimal header bar */}
         <div className="bg-amber-600 text-white p-3 flex items-center justify-between">
           <button
-            onClick={closePdf}
+            onClick={closePolicy}
             className="flex items-center text-white hover:text-amber-200 font-medium"
           >
             <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -262,19 +372,53 @@ function PoliciesContent() {
             Back to Policies
           </button>
           
-          <h2 className="text-lg font-bold">Church Policy Document</h2>
+          <div className="flex items-center space-x-4">
+            <h2 className="text-lg font-bold">Church Policy Document</h2>
+            <div className="flex items-center space-x-2">
+              <button
+                onClick={prevImage}
+                disabled={currentImageIndex === 0}
+                className={`px-3 py-1 rounded ${
+                  currentImageIndex === 0 
+                    ? 'bg-gray-400 cursor-not-allowed' 
+                    : 'bg-amber-700 hover:bg-amber-800'
+                } text-white text-sm`}
+              >
+                Previous
+              </button>
+              <span className="text-sm">
+                {currentImageIndex + 1} / {images.length}
+              </span>
+              <button
+                onClick={nextImage}
+                disabled={currentImageIndex === images.length - 1}
+                className={`px-3 py-1 rounded ${
+                  currentImageIndex === images.length - 1 
+                    ? 'bg-gray-400 cursor-not-allowed' 
+                    : 'bg-amber-700 hover:bg-amber-800'
+                } text-white text-sm`}
+              >
+                Next
+              </button>
+            </div>
+          </div>
           
-          <button
-            onClick={closePdf}
-            className="text-white hover:text-amber-200 font-bold text-xl w-8 h-8 flex items-center justify-center"
-          >
-            ✕
-          </button>
+          <div className="flex items-center space-x-3">
+            <span className="text-xs bg-amber-700 px-2 py-1 rounded">
+              🔒 Protected Document
+            </span>
+            <button
+              onClick={closePolicy}
+              className="text-white hover:text-amber-200 font-bold text-xl w-8 h-8 flex items-center justify-center"
+            >
+              ✕
+            </button>
+          </div>
         </div>
 
-        {/* Protected PDF viewer */}
+        {/* Protected image viewer with A4 sizing */}
         <div 
-          className="w-full" 
+          className="w-full bg-white overflow-auto" 
           style={{ 
             height: 'calc(100vh - 60px)',
             userSelect: 'none',
@@ -284,35 +428,50 @@ function PoliciesContent() {
             WebkitTouchCallout: 'none',
           } as React.CSSProperties}
         >
-          <iframe
-            src={pdfUrl}
-            className="w-full h-full border-0"
-            title="Church Policy Document"
-            style={{
-              userSelect: 'none',
-              WebkitUserSelect: 'none',
-              MozUserSelect: 'none',
-              msUserSelect: 'none',
-              WebkitTouchCallout: 'none',
-              pointerEvents: 'auto',
-            } as React.CSSProperties}
-            onLoad={() => {
-              // Additional protection when iframe loads
-              const iframe = document.querySelector('iframe');
-              if (iframe) {
-                try {
-                  const iframeDoc = iframe.contentDocument || iframe.contentWindow?.document;
-                  if (iframeDoc) {
-                    iframeDoc.addEventListener('contextmenu', (e) => e.preventDefault());
-                    iframeDoc.addEventListener('selectstart', (e) => e.preventDefault());
-                    iframeDoc.addEventListener('copy', (e) => e.preventDefault());
-                  }
-                } catch (e) {
-                  // Cross-origin restrictions - expected
-                }
-              }
-            }}
-          />
+          {/* Policy image at A4 size with minimal watermark */}
+          <div className="relative flex justify-center py-4 policy-content">
+            <div className="relative" style={{ width: '794px', height: '1123px' }}>
+              {/* Document image */}
+              <Image
+                src={currentImage}
+                alt={`Policy document page ${currentImageIndex + 1}`}
+                width={794}
+                height={1123}
+                className="shadow-lg border border-gray-200"
+                style={{
+                  userSelect: 'none',
+                  WebkitUserSelect: 'none',
+                  MozUserSelect: 'none',
+                  msUserSelect: 'none',
+                  WebkitTouchCallout: 'none',
+                  pointerEvents: 'none',
+                  width: '794px',
+                  height: '1123px',
+                } as React.CSSProperties}
+                unoptimized
+                priority
+              />
+              
+              {/* Very subtle watermark overlay - barely visible */}
+              <div 
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  background: `repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 120px,
+                    rgba(255, 193, 7, 0.02) 120px,
+                    rgba(255, 193, 7, 0.02) 240px
+                  )`
+                }}
+              >
+                {/* Very subtle watermark text - almost invisible */}
+                <div className="absolute bottom-4 right-4 text-xs font-light opacity-5 text-amber-600 whitespace-nowrap">
+                  © 2026 Suvartha Ministries UK
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -395,15 +554,15 @@ function PoliciesContent() {
                       📄 <strong>Data Protection Policy and Procedure.pdf</strong>
                     </p>
                     <button 
-                      onClick={() => openPdf('Data Protection Policy and Procedure.pdf')}
+                      onClick={() => openPolicy('data-protection')}
                       className={`px-4 py-2 rounded-lg transition-colors ${
-                        pdfFiles['data-protection'] 
+                        policyFiles['data-protection'] 
                           ? 'bg-amber-600 text-white hover:bg-amber-700' 
                           : 'bg-gray-400 text-white cursor-not-allowed'
                       }`}
-                      disabled={!pdfFiles['data-protection']}
+                      disabled={!policyFiles['data-protection']}
                     >
-                      {pdfFiles['data-protection'] ? 'View PDF Document' : 'PDF Not Available'}
+                      {policyFiles['data-protection'] ? 'View Policy Document (12 pages)' : 'Document Not Available'}
                     </button>
                   </div>
                 </div>
@@ -440,15 +599,15 @@ function PoliciesContent() {
                       📄 <strong>Internal risk management policy and procedures.pdf</strong>
                     </p>
                     <button 
-                      onClick={() => openPdf('Internal risk management policy and procedures.pdf')}
+                      onClick={() => openPolicy('risk-management')}
                       className={`px-4 py-2 rounded-lg transition-colors ${
-                        pdfFiles['risk-management'] 
+                        policyFiles['risk-management'] 
                           ? 'bg-amber-600 text-white hover:bg-amber-700' 
                           : 'bg-gray-400 text-white cursor-not-allowed'
                       }`}
-                      disabled={!pdfFiles['risk-management']}
+                      disabled={!policyFiles['risk-management']}
                     >
-                      {pdfFiles['risk-management'] ? 'View PDF Document' : 'PDF Not Available'}
+                      {policyFiles['risk-management'] ? 'View Policy Document' : 'Coming Soon - Upload in Progress'}
                     </button>
                   </div>
                 </div>
@@ -485,15 +644,15 @@ function PoliciesContent() {
                       📄 <strong>Safeguarding Policy and Procedures.pdf</strong>
                     </p>
                     <button 
-                      onClick={() => openPdf('Safeguarding Policy and Procedures.pdf')}
+                      onClick={() => openPolicy('safeguarding')}
                       className={`px-4 py-2 rounded-lg transition-colors ${
-                        pdfFiles['safeguarding'] 
+                        policyFiles['safeguarding'] 
                           ? 'bg-amber-600 text-white hover:bg-amber-700' 
                           : 'bg-gray-400 text-white cursor-not-allowed'
                       }`}
-                      disabled={!pdfFiles['safeguarding']}
+                      disabled={!policyFiles['safeguarding']}
                     >
-                      {pdfFiles['safeguarding'] ? 'View PDF Document' : 'PDF Not Available'}
+                      {policyFiles['safeguarding'] ? 'View Policy Document' : 'Coming Soon - Upload in Progress'}
                     </button>
                   </div>
                 </div>
