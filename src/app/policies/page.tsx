@@ -360,63 +360,68 @@ function PoliciesContent() {
     
     return (
       <div className="min-h-screen bg-white">
-        {/* Minimal header bar */}
-        <div className="bg-amber-600 text-white p-3 flex items-center justify-between">
+        {/* Responsive header bar */}
+        <div className="bg-amber-600 text-white p-3 flex items-center justify-between flex-wrap gap-2">
           <button
             onClick={closePolicy}
-            className="flex items-center text-white hover:text-amber-200 font-medium"
+            className="flex items-center text-white hover:text-amber-200 font-medium text-sm sm:text-base"
           >
-            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
             Back to Policies
           </button>
           
-          <div className="flex items-center space-x-4">
-            <h2 className="text-lg font-bold">Church Policy Document</h2>
-            <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2 sm:space-x-4 flex-wrap">
+            <h2 className="text-sm sm:text-lg font-bold hidden sm:block">Church Policy Document</h2>
+            <h2 className="text-sm font-bold sm:hidden">Policy Document</h2>
+            
+            <div className="flex items-center space-x-1 sm:space-x-2">
               <button
                 onClick={prevImage}
                 disabled={currentImageIndex === 0}
-                className={`px-3 py-1 rounded ${
+                className={`px-2 py-1 sm:px-3 sm:py-1 rounded text-xs sm:text-sm ${
                   currentImageIndex === 0 
                     ? 'bg-gray-400 cursor-not-allowed' 
                     : 'bg-amber-700 hover:bg-amber-800'
-                } text-white text-sm`}
+                } text-white`}
               >
-                Previous
+                Prev
               </button>
-              <span className="text-sm">
-                {currentImageIndex + 1} / {images.length}
+              <span className="text-xs sm:text-sm px-1">
+                {currentImageIndex + 1}/{images.length}
               </span>
               <button
                 onClick={nextImage}
                 disabled={currentImageIndex === images.length - 1}
-                className={`px-3 py-1 rounded ${
+                className={`px-2 py-1 sm:px-3 sm:py-1 rounded text-xs sm:text-sm ${
                   currentImageIndex === images.length - 1 
                     ? 'bg-gray-400 cursor-not-allowed' 
                     : 'bg-amber-700 hover:bg-amber-800'
-                } text-white text-sm`}
+                } text-white`}
               >
                 Next
               </button>
             </div>
           </div>
           
-          <div className="flex items-center space-x-3">
-            <span className="text-xs bg-amber-700 px-2 py-1 rounded">
+          <div className="flex items-center space-x-2 sm:space-x-3">
+            <span className="text-xs bg-amber-700 px-2 py-1 rounded hidden sm:inline">
               🔒 Protected Document
+            </span>
+            <span className="text-xs bg-amber-700 px-1 py-1 rounded sm:hidden">
+              🔒
             </span>
             <button
               onClick={closePolicy}
-              className="text-white hover:text-amber-200 font-bold text-xl w-8 h-8 flex items-center justify-center"
+              className="text-white hover:text-amber-200 font-bold text-lg sm:text-xl w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center"
             >
               ✕
             </button>
           </div>
         </div>
 
-        {/* Protected image viewer with A4 sizing */}
+        {/* Protected image viewer with responsive sizing */}
         <div 
           className="w-full bg-white overflow-auto" 
           style={{ 
@@ -428,16 +433,16 @@ function PoliciesContent() {
             WebkitTouchCallout: 'none',
           } as React.CSSProperties}
         >
-          {/* Policy image at A4 size with minimal watermark */}
-          <div className="relative flex justify-center py-4 policy-content">
-            <div className="relative" style={{ width: '794px', height: '1123px' }}>
-              {/* Document image */}
+          {/* Policy image with responsive sizing */}
+          <div className="relative flex justify-center py-4 px-4 policy-content">
+            <div className="relative w-full max-w-4xl">
+              {/* Document image - responsive */}
               <Image
                 src={currentImage}
                 alt={`Policy document page ${currentImageIndex + 1}`}
                 width={794}
                 height={1123}
-                className="shadow-lg border border-gray-200"
+                className="w-full h-auto shadow-lg border border-gray-200 rounded-sm"
                 style={{
                   userSelect: 'none',
                   WebkitUserSelect: 'none',
@@ -445,28 +450,28 @@ function PoliciesContent() {
                   msUserSelect: 'none',
                   WebkitTouchCallout: 'none',
                   pointerEvents: 'none',
-                  width: '794px',
-                  height: '1123px',
+                  maxWidth: '100%',
+                  height: 'auto',
                 } as React.CSSProperties}
                 unoptimized
                 priority
               />
               
-              {/* Very subtle watermark overlay - barely visible */}
+              {/* Responsive watermark overlay */}
               <div 
-                className="absolute inset-0 pointer-events-none"
+                className="absolute inset-0 pointer-events-none rounded-sm"
                 style={{
                   background: `repeating-linear-gradient(
                     45deg,
                     transparent,
-                    transparent 120px,
-                    rgba(255, 193, 7, 0.02) 120px,
-                    rgba(255, 193, 7, 0.02) 240px
+                    transparent 60px,
+                    rgba(255, 193, 7, 0.02) 60px,
+                    rgba(255, 193, 7, 0.02) 120px
                   )`
                 }}
               >
-                {/* Very subtle watermark text - almost invisible */}
-                <div className="absolute bottom-4 right-4 text-xs font-light opacity-5 text-amber-600 whitespace-nowrap">
+                {/* Responsive watermark text */}
+                <div className="absolute bottom-2 right-2 text-xs sm:text-sm font-light opacity-5 text-amber-600 whitespace-nowrap">
                   © 2026 Suvartha Ministries UK
                 </div>
               </div>
