@@ -9,8 +9,10 @@ export default function SuvarthaServices() {
       time: "10:00 AM - 1:00 PM (GMT)",
       zoom: "Also available on Zoom: 3563832030",
       icon: "church",
-      iconBg: "bg-blue-500",
+      iconBg: "bg-gradient-to-br from-blue-500 to-blue-600",
       iconColor: "text-white",
+      cardBg: "bg-gradient-to-br from-blue-50 to-blue-100",
+      borderColor: "border-blue-200",
     },
     {
       title: "Tuesday Service",
@@ -19,8 +21,10 @@ export default function SuvarthaServices() {
       time: "7:00 PM - 8:30 PM (GMT)",
       zoom: "Zoom ID: 3563832030",
       icon: "calendar",
-      iconBg: "bg-gradient-to-br from-orange-400 to-yellow-500",
+      iconBg: "bg-gradient-to-br from-orange-500 to-red-500",
       iconColor: "text-white",
+      cardBg: "bg-gradient-to-br from-orange-50 to-red-50",
+      borderColor: "border-orange-200",
     },
   ];
 
@@ -30,36 +34,42 @@ export default function SuvarthaServices() {
       timezone: "Time zone- United Kingdom (GMT)",
       time: "Time- 3:30PM to 5:00PM",
       icon: "heart",
-      iconBg: "bg-orange-500",
+      iconBg: "bg-gradient-to-br from-pink-500 to-rose-500",
       iconColor: "text-white",
+      cardBg: "bg-gradient-to-br from-pink-50 to-rose-50",
+      borderColor: "border-pink-200",
     },
     {
       title: "Sunday Kids Bible School",
       timezone: "Time zone- United Kingdom (GMT)",
       time: "Time- 9:00AM to 10:00PM",
       icon: "book",
-      iconBg: "bg-indigo-500",
+      iconBg: "bg-gradient-to-br from-purple-500 to-indigo-500",
       iconColor: "text-white",
+      cardBg: "bg-gradient-to-br from-purple-50 to-indigo-50",
+      borderColor: "border-purple-200",
     },
     {
       title: "Join Us ",
       subtitle: "Services available on Zoom",
       zoom: "ID: 3563832030",
       icon: "people",
-      iconBg: "bg-blue-200",
+      iconBg: "bg-gradient-to-br from-green-500 to-emerald-500",
       iconColor: "text-white",
+      cardBg: "bg-gradient-to-br from-green-50 to-emerald-50",
+      borderColor: "border-green-200",
     },
   ];
 
   return (
-    <section id="services" className="pt-24 pb-12 sm:pt-28 sm:pb-16 md:pt-32 md:pb-20 bg-gray-50">
+    <section id="services" className="pt-24 pb-12 sm:pt-28 sm:pb-16 md:pt-32 md:pb-20 bg-gradient-to-br from-amber-50 via-white to-yellow-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-12 sm:mb-16">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 mb-4 sm:mb-6">
             Our Services
           </h2>
-          <div className="w-24 h-1 bg-emerald-600 mx-auto mb-6"></div>
+          <div className="w-24 h-1 bg-gradient-to-r from-amber-500 to-yellow-500 mx-auto mb-6 rounded-full shadow-lg"></div>
           <div className="max-w-4xl mx-auto px-4">
             <p className="text-lg sm:text-xl text-gray-600 leading-relaxed mb-4">
               Join with us to experience the God&apos;s presence & to taste the
@@ -73,12 +83,12 @@ export default function SuvarthaServices() {
           {mainServices.map((service, index) => (
             <div
               key={index}
-              className="bg-white rounded-lg sm:rounded-xl md:rounded-2xl p-4 sm:p-6 md:p-8 shadow-lg hover:shadow-xl transition-all duration-300 border-2 border-black"
+              className={`${service.cardBg} rounded-xl sm:rounded-2xl p-6 sm:p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 ${service.borderColor} hover:scale-105 transform`}
             >
               <div className="flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-4">
                 {/* Icon */}
                 <div
-                  className={`${service.iconBg} p-3 sm:p-4 rounded-xl sm:rounded-2xl flex-shrink-0 mx-auto sm:mx-0`}
+                  className={`${service.iconBg} p-4 rounded-2xl flex-shrink-0 mx-auto sm:mx-0 shadow-lg`}
                 >
                   {service.icon === "church" && (
                     <Image
@@ -104,15 +114,15 @@ export default function SuvarthaServices() {
 
                 {/* Content */}
                 <div className="flex-1 text-center sm:text-left">
-                  <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-black mb-2">
+                  <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2">
                     {service.title}
                   </h3>
-                  <p className="text-black mb-3 text-sm sm:text-base">
+                  <p className="text-gray-700 mb-3 text-base font-medium">
                     {service.subtitle}
                   </p>
 
                   {/* Location */}
-                  <div className="flex items-center justify-center sm:justify-start text-black mb-2">
+                  <div className="flex items-center justify-center sm:justify-start text-gray-700 mb-2">
                     <Image
                       width={16}
                       height={16}
@@ -126,7 +136,7 @@ export default function SuvarthaServices() {
                   </div>
 
                   {/* Time */}
-                  <div className="flex items-center justify-center sm:justify-start text-black mb-2">
+                  <div className="flex items-center justify-center sm:justify-start text-gray-700 mb-4">
                     <Image
                       width={16}
                       height={16}
@@ -145,7 +155,7 @@ export default function SuvarthaServices() {
                       onClick={() =>
                         window.open("https://zoom.us/j/3563832030", "_blank")
                       }
-                      className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-medium text-sm transition-colors duration-300 flex items-center space-x-2"
+                      className="bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-white px-6 py-3 rounded-full font-semibold text-sm transition-all duration-300 flex items-center space-x-2 shadow-lg hover:shadow-xl transform hover:scale-105"
                     >
                       <svg
                         className="w-4 h-4"
@@ -171,7 +181,7 @@ export default function SuvarthaServices() {
 
         {/* Children's Ministry Header */}
         <div className="text-center mb-12">
-          <div className="inline-flex items-center bg-emerald-100 text-emerald-800 px-6 py-3 rounded-full">
+          <div className="inline-flex items-center bg-gradient-to-r from-amber-100 to-yellow-100 text-amber-800 px-8 py-4 rounded-full shadow-lg border-2 border-amber-200">
             <svg
               className="w-6 h-6 mr-2"
               fill="none"
@@ -185,7 +195,7 @@ export default function SuvarthaServices() {
                 d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
               />
             </svg>
-            <span className="font-bold text-lg">Children&apos;s Ministry</span>
+            <span className="font-bold text-xl">Children&apos;s Ministry</span>
           </div>
         </div>
 
@@ -194,15 +204,15 @@ export default function SuvarthaServices() {
           {childrenServices.map((service, index) => (
             <div
               key={index}
-              className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 border-2 border-black"
+              className={`${service.cardBg} rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 ${service.borderColor} hover:scale-105 transform`}
             >
               <div className="text-center">
                 {/* Icon */}
                 <div
                   className={`${
                     service.iconBg
-                  } w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-2 ${
-                    service.icon === "people" ? "border-2 border-black" : ""
+                  } w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg ${
+                    service.icon === "people" ? "border-2 border-white" : ""
                   }`}
                 >
                   {service.icon === "heart" && (
@@ -279,7 +289,7 @@ export default function SuvarthaServices() {
                     onClick={() =>
                       window.open("https://zoom.us/j/3563832030", "_blank")
                     }
-                    className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-medium text-sm transition-colors duration-300 flex items-center space-x-2 mx-auto"
+                    className="bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-white px-6 py-3 rounded-full font-semibold text-sm transition-all duration-300 flex items-center space-x-2 mx-auto shadow-lg hover:shadow-xl transform hover:scale-105"
                   >
                     <svg
                       className="w-4 h-4"
