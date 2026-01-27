@@ -148,7 +148,23 @@ export default function SuvarthaFooter() {
                   href="/policies"
                   className="text-white hover:text-amber-200 transition-colors text-lg"
                 >
-                  Policies
+                  Data Protection Policy
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/policies"
+                  className="text-white hover:text-amber-200 transition-colors text-lg"
+                >
+                  Risk Management Policy
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/policies"
+                  className="text-white hover:text-amber-200 transition-colors text-lg"
+                >
+                  Safeguarding Policy
                 </a>
               </li>
             </ul>
