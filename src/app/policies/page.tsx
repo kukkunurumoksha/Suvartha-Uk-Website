@@ -286,11 +286,11 @@ function PoliciesContent() {
         // Immediately blur content when screenshot is detected
         const policyContent = document.querySelector('.policy-content') as HTMLElement;
         if (policyContent) {
-          policyContent.style.filter = 'blur(20px)';
-          policyContent.style.transition = 'filter 0.1s ease';
+          policyContent.style.filter = 'blur(25px)';
+          policyContent.style.transition = 'filter 0.05s ease';
           setTimeout(() => {
             policyContent.style.filter = 'none';
-          }, 1500); // Keep blurred for 1.5 seconds
+          }, 2000); // Keep blurred for 2 seconds
         }
       };
 
@@ -308,9 +308,10 @@ function PoliciesContent() {
         }
       };
 
-      // Mobile screenshot detection methods
+      // Enhanced mobile screenshot detection
       let touchStartTime = 0;
       let touchCount = 0;
+      let lastTouchTime = 0;
 
       // Detect mobile screenshot gestures (Power + Volume Down, etc.)
       const handleTouchStart = (e: TouchEvent) => {
@@ -332,29 +333,50 @@ function PoliciesContent() {
         }
       };
 
-      // Detect when page becomes hidden (screenshot apps, screen recording)
+      // Detect hardware button screenshots (Power + Volume)
+      let volumePressed = false;
+      let powerPressed = false;
+
+      const handleKeyPress = (e: KeyboardEvent) => {
+        // Detect volume and power button combinations
+        if (e.code === 'VolumeDown' || e.code === 'VolumeUp') {
+          volumePressed = true;
+          setTimeout(() => { volumePressed = false; }, 1000);
+        }
+        if (e.code === 'Power') {
+          powerPressed = true;
+          setTimeout(() => { powerPressed = false; }, 1000);
+        }
+        
+        // If both are pressed within timeframe, it's likely a screenshot
+        if (volumePressed && powerPressed) {
+          preventScreenshot();
+        }
+      };
+
+      // Detect when page becomes hidden (screenshot apps, screen recording, hardware screenshots)
       const handleVisibilityChange = () => {
         const policyContent = document.querySelector('.policy-content') as HTMLElement;
         if (document.hidden && policyContent) {
-          // Immediately blur when page loses visibility
-          policyContent.style.filter = 'blur(15px)';
-          policyContent.style.transition = 'filter 0.1s ease';
+          // Immediately blur when page loses visibility (hardware screenshot detection)
+          policyContent.style.filter = 'blur(25px)';
+          policyContent.style.transition = 'filter 0.05s ease';
         } else if (policyContent) {
           // Clear blur when page becomes visible again
           setTimeout(() => {
             policyContent.style.filter = 'none';
-          }, 300);
+          }, 500);
         }
       };
 
-      // Detect window resize (screenshot tools, mobile orientation change)
+      // Detect window resize (screenshot tools, mobile orientation change, long screenshot)
       const handleResize = () => {
         const policyContent = document.querySelector('.policy-content') as HTMLElement;
         if (policyContent) {
-          policyContent.style.filter = 'blur(10px)';
+          policyContent.style.filter = 'blur(20px)';
           setTimeout(() => {
             policyContent.style.filter = 'none';
-          }, 800);
+          }, 1000);
         }
       };
 
@@ -363,45 +385,95 @@ function PoliciesContent() {
         preventScreenshot();
       };
 
-      // Detect focus loss (mobile apps switching)
+      // Detect focus loss (mobile apps switching, hardware screenshot)
       const handleBlur = () => {
         preventScreenshot();
       };
 
-      // Detect when user leaves the page (mobile browser switching)
+      // Detect when user leaves the page (mobile browser switching, screenshot apps)
       const handleBeforeUnload = () => {
         const policyContent = document.querySelector('.policy-content') as HTMLElement;
         if (policyContent) {
-          policyContent.style.filter = 'blur(20px)';
+          policyContent.style.filter = 'blur(25px)';
         }
+      };
+
+      // Detect scroll events that might indicate long screenshot
+      let scrollTimeout: NodeJS.Timeout;
+      const handleScroll = () => {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+          // If user is scrolling rapidly, might be taking long screenshot
+          const policyContent = document.querySelector('.policy-content') as HTMLElement;
+          if (policyContent) {
+            policyContent.style.filter = 'blur(15px)';
+            setTimeout(() => {
+              policyContent.style.filter = 'none';
+            }, 800);
+          }
+        }, 100);
+      };
+
+      // Detect rapid page interactions (long screenshot behavior)
+      let interactionCount = 0;
+      const handleInteraction = () => {
+        interactionCount++;
+        setTimeout(() => { interactionCount--; }, 2000);
+        
+        // If too many interactions in short time, might be long screenshot
+        if (interactionCount > 5) {
+          preventScreenshot();
+          interactionCount = 0;
+        }
+      };
+
+      // Enhanced mobile detection with passive event listeners
+      const handleTouchMove = (e: TouchEvent) => {
+        handleInteraction();
+        
+        // Detect unusual touch patterns
+        if (e.touches.length > 1) {
+          preventScreenshot();
+        }
+      };
+
+      // Detect page freeze (common during screenshot)
+      let lastActivityTime = Date.now();
+      const activityMonitor = setInterval(() => {
+        const now = Date.now();
+        if (now - lastActivityTime > 3000) { // 3 seconds of no activity
+          const policyContent = document.querySelector('.policy-content') as HTMLElement;
+          if (policyContent && document.visibilityState === 'visible') {
+            // Page might be frozen for screenshot
+            policyContent.style.filter = 'blur(20px)';
+            setTimeout(() => {
+              policyContent.style.filter = 'none';
+            }, 1000);
+          }
+        }
+        lastActivityTime = now;
+      }, 1000);
+
+      const updateActivity = () => {
+        lastActivityTime = Date.now();
       };
 
       // Add all screenshot protection listeners for desktop and mobile
       document.addEventListener('keyup', handleKeyUp, true);
       document.addEventListener('keydown', handleScreenshotKeyDown, true);
+      document.addEventListener('keypress', handleKeyPress, true);
       document.addEventListener('touchstart', handleTouchStart, { passive: false });
       document.addEventListener('touchend', handleTouchEnd, { passive: false });
+      document.addEventListener('touchmove', handleTouchMove, { passive: false });
       document.addEventListener('visibilitychange', handleVisibilityChange, true);
+      document.addEventListener('scroll', handleScroll, { passive: true });
+      document.addEventListener('mousemove', updateActivity, { passive: true });
+      document.addEventListener('touchstart', updateActivity, { passive: true });
+      document.addEventListener('click', updateActivity, { passive: true });
       window.addEventListener('resize', handleResize, true);
       window.addEventListener('orientationchange', handleOrientationChange, true);
       window.addEventListener('blur', handleBlur, true);
       window.addEventListener('beforeunload', handleBeforeUnload, true);
-
-      // Mobile-specific: Detect screenshot through clipboard changes
-      let clipboardCheckInterval: NodeJS.Timeout;
-      if (navigator.clipboard) {
-        clipboardCheckInterval = setInterval(async () => {
-          try {
-            const clipboardItems = await navigator.clipboard.read();
-            if (clipboardItems.length > 0) {
-              // Something was added to clipboard, might be a screenshot
-              preventScreenshot();
-            }
-          } catch (e) {
-            // Clipboard access denied - normal behavior
-          }
-        }, 1000);
-      }
 
       // Cleanup function
       return () => {
@@ -410,9 +482,15 @@ function PoliciesContent() {
         document.removeEventListener('keyup', handleKeyDown, true);
         document.removeEventListener('keydown', handleScreenshotKeyDown, true);
         document.removeEventListener('keyup', handleKeyUp, true);
+        document.removeEventListener('keypress', handleKeyPress, true);
         document.removeEventListener('touchstart', handleTouchStart);
         document.removeEventListener('touchend', handleTouchEnd);
+        document.removeEventListener('touchmove', handleTouchMove);
         document.removeEventListener('visibilitychange', handleVisibilityChange, true);
+        document.removeEventListener('scroll', handleScroll);
+        document.removeEventListener('mousemove', updateActivity);
+        document.removeEventListener('touchstart', updateActivity);
+        document.removeEventListener('click', updateActivity);
         window.removeEventListener('resize', handleResize, true);
         window.removeEventListener('orientationchange', handleOrientationChange, true);
         window.removeEventListener('blur', handleBlur, true);
@@ -426,7 +504,8 @@ function PoliciesContent() {
         document.removeEventListener('focus', handleFocus, true);
         
         clearInterval(clearSelection);
-        if (clipboardCheckInterval) clearInterval(clipboardCheckInterval);
+        clearInterval(activityMonitor);
+        if (scrollTimeout) clearTimeout(scrollTimeout);
         
         if (style.parentNode) {
           document.head.removeChild(style);
