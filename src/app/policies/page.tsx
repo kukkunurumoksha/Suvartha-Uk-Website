@@ -345,13 +345,14 @@ function PoliciesContent() {
       const handleTouchStart = (e: TouchEvent) => {
         const now = Date.now();
         
-        // Multiple touches might be screenshot gesture
-        if (e.touches.length >= 2) {
+        // Only trigger for 3+ touches (unusual gesture, likely screenshot)
+        // 2 touches = normal pinch-to-zoom, don't interfere
+        if (e.touches.length >= 3) {
           preventScreenshot();
         }
         
         // Rapid touches might indicate screenshot attempt
-        if (now - lastTouchTime < 100) {
+        if (now - lastTouchTime < 100 && e.touches.length >= 3) {
           preventScreenshot();
         }
         
