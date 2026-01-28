@@ -18,7 +18,7 @@ export default function SuvarthaCarousel() {
     {
       src: '/assets/img/Family.jpeg',
       alt: 'Church Family',
-      title: 'Our Church Family',
+      title: 'Our Family',
       description: 'United in faith, bound by love - our beautiful church family'
     },
     {
@@ -85,17 +85,19 @@ export default function SuvarthaCarousel() {
                 className={`${
                   image.src.includes('Family.jpeg') || image.src.includes('malayalam-verse.jpeg') || image.src.includes('English-verse.jpeg')
                     ? 'object-contain object-center' 
-                    : 'object-cover'
+                    : image.src.includes('hero-background.jpeg')
+                    ? 'object-cover object-bottom'
+                    : 'object-cover object-center'
                 }`}
                 priority={index === 0}
                 unoptimized
               />
               
-              {/* Overlay - much lighter for family photo and verse images */}
+              {/* Overlay - darker for home page to make text more visible */}
               <div className={`absolute inset-0 ${
                 image.src.includes('Family.jpeg') || image.src.includes('malayalam-verse.jpeg') || image.src.includes('English-verse.jpeg')
                   ? 'bg-black bg-opacity-10' 
-                  : 'bg-black bg-opacity-40'
+                  : 'bg-black bg-opacity-50'
               }`}></div>
               
               {/* Content */}
@@ -104,32 +106,41 @@ export default function SuvarthaCarousel() {
                   ? 'items-end pb-32' 
                   : 'items-center'
               } justify-center`}>
-                <div className="text-center text-white px-4 max-w-4xl">
+                <div className={`text-center text-white px-4 max-w-4xl transition-all duration-1000 ease-out ${
+                  index === currentSlide ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                }`}>
                   <h1 className={`${
                     image.src.includes('Family.jpeg') || image.src.includes('malayalam-verse.jpeg') || image.src.includes('English-verse.jpeg')
                       ? 'text-2xl md:text-3xl lg:text-4xl font-medium'
                       : 'text-4xl md:text-5xl lg:text-6xl font-bold'
-                  } mb-6 text-shadow-lg`}>
+                  } mb-6 text-shadow-lg transform transition-all duration-1200 delay-300 ease-out ${
+                    index === currentSlide ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+                  }`}>
                     {image.title}
                   </h1>
+                  
                   {!image.src.includes('Family.jpeg') && !image.src.includes('malayalam-verse.jpeg') && !image.src.includes('English-verse.jpeg') && (
-                    <p className="text-xl md:text-2xl lg:text-3xl text-shadow-md opacity-90 mb-8">
+                    <p className={`text-xl md:text-2xl lg:text-3xl text-shadow-md opacity-90 mb-8 transform transition-all duration-1200 delay-500 ease-out ${
+                      index === currentSlide ? 'translate-y-0 opacity-90' : 'translate-y-4 opacity-0'
+                    }`}>
                       {image.description}
                     </p>
                   )}
                   
                   {/* Call to action buttons for first slide */}
                   {index === currentSlide && index === 0 && (
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
+                    <div className={`flex flex-col sm:flex-row gap-4 justify-center mt-8 transform transition-all duration-1200 delay-700 ease-out ${
+                      index === currentSlide ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+                    }`}>
                       <a
                         href="#services"
-                        className="bg-amber-600 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-amber-700 transition-colors duration-300 shadow-lg"
+                        className="bg-amber-600 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-amber-700 transition-colors duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
                       >
                         Our Services
                       </a>
                       <a
                         href="#contact"
-                        className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-white hover:text-amber-600 transition-all duration-300 shadow-lg"
+                        className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-white hover:text-amber-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
                       >
                         Join Our Prayer
                       </a>
