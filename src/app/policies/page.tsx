@@ -1,13 +1,14 @@
 "use client";
 
 import { useEffect, useState, Suspense } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import SuvarthaHeader from '../../components/suvartha/SuvarthaHeader';
 import SuvarthaFooter from '../../components/suvartha/SuvarthaFooter';
 
 function PoliciesContent() {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const [selectedPolicy, setSelectedPolicy] = useState<string | null>(null);
   const [policyImages, setPolicyImages] = useState<{[key: string]: string[]}>({});
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -392,6 +393,8 @@ function PoliciesContent() {
   const closePolicy = () => {
     setSelectedPolicy(null);
     setCurrentImageIndex(0);
+    // Navigate to policies overview page using Next.js router
+    router.push('/policies');
   };
 
   const nextImage = () => {
