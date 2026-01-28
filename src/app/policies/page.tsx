@@ -35,7 +35,7 @@ function PoliciesContent() {
       }
     }
 
-    // Load policy images
+    // Load policy images with correct file paths
     setPolicyImages({
       'data-protection': [
         '/policy-images/Data protection/page-1.jpg',
@@ -52,22 +52,68 @@ function PoliciesContent() {
         '/policy-images/Data protection/page-12.jpg'
       ],
       'risk-management': [
-        '/policy-images/risk-management/page-1.png',
-        '/policy-images/risk-management/page-2.png',
-        // Add more pages as needed when uploaded
+        '/policy-images/Internal risk management/Internal risk management policy and procedures_page-0001.jpg',
+        '/policy-images/Internal risk management/Internal risk management policy and procedures_page-0002.jpg',
+        '/policy-images/Internal risk management/Internal risk management policy and procedures_page-0003.jpg',
+        '/policy-images/Internal risk management/Internal risk management policy and procedures_page-0004.jpg',
+        '/policy-images/Internal risk management/Internal risk management policy and procedures_page-0005.jpg',
+        '/policy-images/Internal risk management/Internal risk management policy and procedures_page-0006.jpg'
       ],
       'safeguarding': [
-        '/policy-images/safeguarding/page-1.png',
-        '/policy-images/safeguarding/page-2.png',
-        // Add more pages as needed when uploaded
+        '/policy-images/safeguarding/Safeguarding Policy and Procedures_page-0001.jpg',
+        '/policy-images/safeguarding/Safeguarding Policy and Procedures_page-0002.jpg',
+        '/policy-images/safeguarding/Safeguarding Policy and Procedures_page-0003.jpg',
+        '/policy-images/safeguarding/Safeguarding Policy and Procedures_page-0004.jpg',
+        '/policy-images/safeguarding/Safeguarding Policy and Procedures_page-0005.jpg',
+        '/policy-images/safeguarding/Safeguarding Policy and Procedures_page-0006.jpg',
+        '/policy-images/safeguarding/Safeguarding Policy and Procedures_page-0007.jpg',
+        '/policy-images/safeguarding/Safeguarding Policy and Procedures_page-0008.jpg',
+        '/policy-images/safeguarding/Safeguarding Policy and Procedures_page-0009.jpg',
+        '/policy-images/safeguarding/Safeguarding Policy and Procedures_page-0010.jpg',
+        '/policy-images/safeguarding/Safeguarding Policy and Procedures_page-0011.jpg',
+        '/policy-images/safeguarding/Safeguarding Policy and Procedures_page-0012.jpg',
+        '/policy-images/safeguarding/Safeguarding Policy and Procedures_page-0013.jpg',
+        '/policy-images/safeguarding/Safeguarding Policy and Procedures_page-0014.jpg',
+        '/policy-images/safeguarding/Safeguarding Policy and Procedures_page-0015.jpg',
+        '/policy-images/safeguarding/Safeguarding Policy and Procedures_page-0016.jpg',
+        '/policy-images/safeguarding/Safeguarding Policy and Procedures_page-0017.jpg',
+        '/policy-images/safeguarding/Safeguarding Policy and Procedures_page-0018.jpg',
+        '/policy-images/safeguarding/Safeguarding Policy and Procedures_page-0019.jpg',
+        '/policy-images/safeguarding/Safeguarding Policy and Procedures_page-0020.jpg',
+        '/policy-images/safeguarding/Safeguarding Policy and Procedures_page-0021.jpg',
+        '/policy-images/safeguarding/Safeguarding Policy and Procedures_page-0022.jpg',
+        '/policy-images/safeguarding/Safeguarding Policy and Procedures_page-0023.jpg',
+        '/policy-images/safeguarding/Safeguarding Policy and Procedures_page-0024.jpg',
+        '/policy-images/safeguarding/Safeguarding Policy and Procedures_page-0025.jpg',
+        '/policy-images/safeguarding/Safeguarding Policy and Procedures_page-0026.jpg',
+        '/policy-images/safeguarding/Safeguarding Policy and Procedures_page-0027.jpg',
+        '/policy-images/safeguarding/Safeguarding Policy and Procedures_page-0028.jpg',
+        '/policy-images/safeguarding/Safeguarding Policy and Procedures_page-0029.jpg',
+        '/policy-images/safeguarding/Safeguarding Policy and Procedures_page-0030.jpg',
+        '/policy-images/safeguarding/Safeguarding Policy and Procedures_page-0031.jpg',
+        '/policy-images/safeguarding/Safeguarding Policy and Procedures_page-0032.jpg',
+        '/policy-images/safeguarding/Safeguarding Policy and Procedures_page-0033.jpg',
+        '/policy-images/safeguarding/Safeguarding Policy and Procedures_page-0034.jpg',
+        '/policy-images/safeguarding/Safeguarding Policy and Procedures_page-0035.jpg',
+        '/policy-images/safeguarding/Safeguarding Policy and Procedures_page-0036.jpg',
+        '/policy-images/safeguarding/Safeguarding Policy and Procedures_page-0037.jpg',
+        '/policy-images/safeguarding/Safeguarding Policy and Procedures_page-0038.jpg',
+        '/policy-images/safeguarding/Safeguarding Policy and Procedures_page-0039.jpg',
+        '/policy-images/safeguarding/Safeguarding Policy and Procedures_page-0040.jpg',
+        '/policy-images/safeguarding/Safeguarding Policy and Procedures_page-0041.jpg',
+        '/policy-images/safeguarding/Safeguarding Policy and Procedures_page-0042.jpg',
+        '/policy-images/safeguarding/Safeguarding Policy and Procedures_page-0043.jpg',
+        '/policy-images/safeguarding/Safeguarding Policy and Procedures_page-0044.jpg',
+        '/policy-images/safeguarding/Safeguarding Policy and Procedures_page-0045.jpg',
+        '/policy-images/safeguarding/Safeguarding Policy and Procedures_page-0046.jpg'
       ]
     });
 
-    // Set policy availability - only data-protection has images uploaded
+    // Set policy availability - all policies now have images uploaded
     setPolicyFiles({
-      'data-protection': true,
-      'risk-management': false, // Will be enabled when images are uploaded
-      'safeguarding': false     // Will be enabled when images are uploaded
+      'data-protection': true,  // 12 pages
+      'risk-management': true,  // 6 pages  
+      'safeguarding': true      // 46 pages
     });
 
     // Maximum security protection when policy is displayed
@@ -612,7 +658,7 @@ function PoliciesContent() {
                       }`}
                       disabled={!policyFiles['risk-management']}
                     >
-                      {policyFiles['risk-management'] ? 'View Policy Document' : 'Coming Soon - Upload in Progress'}
+                      {policyFiles['risk-management'] ? 'View Policy Document (6 pages)' : 'Document Not Available'}
                     </button>
                   </div>
                 </div>
@@ -657,7 +703,7 @@ function PoliciesContent() {
                       }`}
                       disabled={!policyFiles['safeguarding']}
                     >
-                      {policyFiles['safeguarding'] ? 'View Policy Document' : 'Coming Soon - Upload in Progress'}
+                      {policyFiles['safeguarding'] ? 'View Policy Document (46 pages)' : 'Document Not Available'}
                     </button>
                   </div>
                 </div>
