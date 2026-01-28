@@ -21,9 +21,16 @@ function PoliciesContent() {
     // Check if a specific policy is requested via URL parameter
     const policyParam = searchParams.get('policy');
     const pdfParam = searchParams.get('pdf'); // Keep backward compatibility
+    const directParam = searchParams.get('direct'); // Check if direct access is requested
     
     if (policyParam) {
-      setSelectedPolicy(policyParam);
+      if (directParam === 'true') {
+        // Direct access - immediately open the policy viewer
+        setSelectedPolicy(policyParam);
+      } else {
+        // Regular access - just set the policy but don't open viewer
+        // This allows the overview page to show first
+      }
     } else if (pdfParam) {
       // Map PDF names to policy keys for backward compatibility
       if (pdfParam.includes('Data Protection')) {

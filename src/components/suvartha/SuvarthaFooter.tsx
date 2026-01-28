@@ -145,7 +145,7 @@ export default function SuvarthaFooter() {
               </li>
               <li>
                 <a
-                  href="/policies?policy=data-protection"
+                  href="/policies?policy=data-protection&direct=true"
                   className="text-white hover:text-amber-200 transition-colors text-lg"
                 >
                   Data Protection Policy
@@ -153,7 +153,7 @@ export default function SuvarthaFooter() {
               </li>
               <li>
                 <a
-                  href="/policies?policy=risk-management"
+                  href="/policies?policy=risk-management&direct=true"
                   className="text-white hover:text-amber-200 transition-colors text-lg"
                 >
                   Risk Management Policy
@@ -161,7 +161,7 @@ export default function SuvarthaFooter() {
               </li>
               <li>
                 <a
-                  href="/policies?policy=safeguarding"
+                  href="/policies?policy=safeguarding&direct=true"
                   className="text-white hover:text-amber-200 transition-colors text-lg"
                 >
                   Safeguarding Policy
