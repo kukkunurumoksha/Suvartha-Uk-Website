@@ -307,22 +307,60 @@ function PoliciesContent() {
         }
       };
 
-      // Mobile screenshot detection - Focus on what actually works
+      // Mobile screenshot detection - Multiple approaches for better coverage
       
-      // 1. Page visibility change (most reliable for mobile screenshots)
+      // 1. Page visibility change (primary method for hardware screenshots)
+      let visibilityChangeCount = 0;
       const handleVisibilityChange = () => {
         if (document.hidden) {
-          // Page became hidden - could be screenshot, screen recording, or app switch
+          visibilityChangeCount++;
+          preventScreenshot();
+          
+          // Reset counter after delay
+          setTimeout(() => {
+            visibilityChangeCount = Math.max(0, visibilityChangeCount - 1);
+          }, 2000);
+        }
+      };
+
+      // 2. Document state changes (alternative detection)
+      const handleDocumentStateChange = () => {
+        if (document.visibilityState === 'hidden') {
           preventScreenshot();
         }
       };
 
-      // 2. Window blur (when user switches away from browser)
+      // 3. Window blur (when user switches away from browser)
+      let blurCount = 0;
       const handleBlur = () => {
+        blurCount++;
         preventScreenshot();
+        
+        // Reset counter
+        setTimeout(() => {
+          blurCount = Math.max(0, blurCount - 1);
+        }, 1500);
       };
 
-      // 3. Before page unload (when leaving page)
+      // 4. Page focus loss detection
+      let focusLost = false;
+      const handleFocusOut = () => {
+        focusLost = true;
+        preventScreenshot();
+        
+        setTimeout(() => {
+          focusLost = false;
+        }, 2000);
+      };
+
+      // 5. Page focus regain (after potential screenshot)
+      const handleFocusIn = () => {
+        if (focusLost) {
+          preventScreenshot();
+        }
+      };
+
+      // 6. Before page unload (when leaving page)
       const handleBeforeUnload = () => {
         const policyContent = document.querySelector('.policy-content') as HTMLElement;
         if (policyContent) {
@@ -330,23 +368,22 @@ function PoliciesContent() {
         }
       };
 
-      // 4. Orientation change (often triggers during screenshot)
+      // 7. Orientation change (often triggers during screenshot)
       const handleOrientationChange = () => {
         preventScreenshot();
       };
 
-      // 5. Window resize (screenshot tools, mobile browser changes)
+      // 8. Window resize (screenshot tools, mobile browser changes)
       const handleResize = () => {
         preventScreenshot();
       };
 
-      // 6. Touch interactions that might indicate screenshot gestures
+      // 9. Touch interactions (3+ fingers only to avoid zoom interference)
       let lastTouchTime = 0;
       const handleTouchStart = (e: TouchEvent) => {
         const now = Date.now();
         
         // Only trigger for 3+ touches (unusual gesture, likely screenshot)
-        // 2 touches = normal pinch-to-zoom, don't interfere
         if (e.touches.length >= 3) {
           preventScreenshot();
         }
@@ -359,66 +396,73 @@ function PoliciesContent() {
         lastTouchTime = now;
       };
 
-      // 7. Detect when page loses focus (most effective for mobile)
-      let focusLost = false;
-      const handleFocusOut = () => {
-        focusLost = true;
-        preventScreenshot();
-        
-        // Reset after delay
-        setTimeout(() => {
-          focusLost = false;
-        }, 2000);
-      };
-
-      // 8. Detect when page regains focus after being hidden
-      const handleFocusIn = () => {
-        if (focusLost) {
-          preventScreenshot();
-        }
-      };
-
-      // 9. Continuous monitoring for mobile screenshot detection
-      const continuousMonitor = setInterval(() => {
-        // Check if page is hidden but still active (screenshot scenario)
-        if (document.hidden && document.hasFocus && document.hasFocus()) {
-          preventScreenshot();
-        }
-        
-        // Check for unusual page state
-        if (document.visibilityState === 'hidden' && !document.hidden) {
-          preventScreenshot();
-        }
-      }, 500); // Check every 500ms
-
-      // 10. Detect rapid scroll (long screenshot)
+      // 10. Long screenshot detection via scroll
       let scrollCount = 0;
       const handleScroll = () => {
         scrollCount++;
         
-        // Reset counter after delay
         setTimeout(() => {
           scrollCount = Math.max(0, scrollCount - 1);
         }, 1000);
         
-        // If too much scrolling, might be long screenshot
         if (scrollCount > 3) {
           preventScreenshot();
           scrollCount = 0;
         }
       };
 
-      // 11. Enhanced context menu prevention
+      // 11. Context menu prevention
       const handleContextMenuPrevention = (e: Event) => {
         e.preventDefault();
         preventScreenshot();
         return false;
       };
 
-      // Add all screenshot protection listeners - simplified and more effective
+      // 12. Enhanced mobile detection with user agent check
+      const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      
+      // 13. Aggressive mobile monitoring
+      let mobileMonitorInterval: NodeJS.Timeout;
+      if (isMobile) {
+        mobileMonitorInterval = setInterval(() => {
+          // Check for rapid state changes that indicate screenshot
+          if (document.hidden && document.hasFocus && document.hasFocus()) {
+            preventScreenshot();
+          }
+          
+          // Check for unusual document states
+          if (document.visibilityState !== 'visible' && !document.hidden) {
+            preventScreenshot();
+          }
+          
+          // Monitor for frozen page (screenshot in progress)
+          const now = Date.now();
+          if (window.performance && window.performance.now) {
+            const perfNow = window.performance.now();
+            if (Math.abs(now - perfNow - window.performance.timeOrigin) > 100) {
+              preventScreenshot();
+            }
+          }
+        }, 200); // Check every 200ms on mobile
+      }
+
+      // 14. Detect page freeze during screenshot
+      let lastFrameTime = Date.now();
+      const frameMonitor = () => {
+        const now = Date.now();
+        if (now - lastFrameTime > 500) { // Page frozen for 500ms
+          preventScreenshot();
+        }
+        lastFrameTime = now;
+        requestAnimationFrame(frameMonitor);
+      };
+      requestAnimationFrame(frameMonitor);
+
+      // Add all screenshot protection listeners - enhanced for mobile
       document.addEventListener('keyup', handleKeyUp, true);
       document.addEventListener('keydown', handleScreenshotKeyDown, true);
       document.addEventListener('visibilitychange', handleVisibilityChange, true);
+      document.addEventListener('visibilitychange', handleDocumentStateChange, true);
       document.addEventListener('touchstart', handleTouchStart, { passive: false });
       document.addEventListener('scroll', handleScroll, { passive: true });
       document.addEventListener('contextmenu', handleContextMenuPrevention, true);
@@ -428,6 +472,15 @@ function PoliciesContent() {
       window.addEventListener('resize', handleResize, true);
       window.addEventListener('orientationchange', handleOrientationChange, true);
       window.addEventListener('beforeunload', handleBeforeUnload, true);
+      
+      // Additional mobile-specific listeners
+      if (isMobile) {
+        window.addEventListener('pagehide', preventScreenshot, true);
+        window.addEventListener('pageshow', preventScreenshot, true);
+        document.addEventListener('webkitvisibilitychange', handleVisibilityChange, true);
+        document.addEventListener('mozvisibilitychange', handleVisibilityChange, true);
+        document.addEventListener('msvisibilitychange', handleVisibilityChange, true);
+      }
 
       // Cleanup function
       return () => {
@@ -454,7 +507,7 @@ function PoliciesContent() {
         document.removeEventListener('focus', handleFocus, true);
         
         clearInterval(clearSelection);
-        clearInterval(continuousMonitor);
+        if (mobileMonitorInterval) clearInterval(mobileMonitorInterval);
         
         if (style.parentNode) {
           document.head.removeChild(style);
