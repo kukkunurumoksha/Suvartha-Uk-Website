@@ -393,8 +393,8 @@ function PoliciesContent() {
   const closePolicy = () => {
     setSelectedPolicy(null);
     setCurrentImageIndex(0);
-    // Navigate back to home page where the footer links are
-    router.push('/#contact');
+    // Go back to the previous page (where user came from)
+    window.history.back();
   };
 
   const nextImage = () => {
@@ -425,7 +425,7 @@ function PoliciesContent() {
             <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
-            Back to Home
+            Back
           </button>
           
           <div className="flex items-center space-x-2 sm:space-x-4 flex-wrap">
