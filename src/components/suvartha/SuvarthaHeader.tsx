@@ -40,7 +40,7 @@ export default function SuvarthaHeader() {
   return (
     <header
       className={`shadow-lg sticky top-0 z-50 transition-all duration-300 ${
-        isScrolled ? "bg-white text-amber-800" : "bg-amber-800 text-white"
+        isScrolled ? "bg-white text-gray-800" : "bg-gray-800 text-white"
       }`}
     >
       <div className="container mx-auto px-4">
@@ -62,7 +62,7 @@ export default function SuvarthaHeader() {
               </h1>
               <p
                 className={`text-sm font-bold transition-colors duration-300 leading-tight ${
-                  isScrolled ? "text-amber-700" : "text-yellow-100"
+                  isScrolled ? "text-amber-600" : "text-amber-200"
                 }`}
                 style={{
                   textShadow: isScrolled ? '1px 1px 2px rgba(0,0,0,0.3)' : '3px 3px 6px rgba(0,0,0,0.9), 1px 1px 2px rgba(0,0,0,0.8)',
@@ -72,7 +72,7 @@ export default function SuvarthaHeader() {
                 }}
               >
                 <span>Year of Transformation </span>
-                <span className={isScrolled ? 'text-amber-600' : 'text-yellow-100'} style={{
+                <span className={isScrolled ? 'text-amber-700' : 'text-amber-300'} style={{
                   fontWeight: '800',
                   fontSize: '1.1em',
                   textShadow: isScrolled ? '1px 1px 2px rgba(0,0,0,0.3)' : '3px 3px 6px rgba(0,0,0,0.9), 1px 1px 2px rgba(0,0,0,0.8)'
@@ -86,75 +86,75 @@ export default function SuvarthaHeader() {
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex space-x-2">
             <Link
-              href="#home"
+              href="/"
               className={`transition-all duration-300 text-base font-semibold px-6 py-2 rounded-lg ${
                 activeSection === "home"
                   ? isScrolled
                     ? "bg-amber-600 text-white"
-                    : "bg-white text-black"
+                    : "bg-white text-gray-800"
                   : isScrolled
-                  ? "text-black hover:bg-amber-100 hover:text-amber-700"
-                  : "text-white hover:bg-white/20"
+                  ? "text-gray-800 hover:bg-gray-100 hover:text-amber-600"
+                  : "text-gray-300 hover:bg-white/20 hover:text-white"
               }`}
             >
               Home
             </Link>
-            <Link
+            <a
               href="#services"
               className={`transition-all duration-300 text-base font-semibold px-6 py-2 rounded-lg ${
                 activeSection === "services"
                   ? isScrolled
                     ? "bg-amber-600 text-white"
-                    : "bg-white text-black"
+                    : "bg-white text-gray-800"
                   : isScrolled
-                  ? "text-black hover:bg-amber-100 hover:text-amber-700"
-                  : "text-white hover:bg-white/20"
+                  ? "text-gray-800 hover:bg-gray-100 hover:text-amber-600"
+                  : "text-gray-300 hover:bg-white/20 hover:text-white"
               }`}
             >
               Services
-            </Link>
-            <Link
+            </a>
+            <a
               href="#testimonials"
               className={`transition-all duration-300 text-base font-semibold px-6 py-2 rounded-lg ${
                 activeSection === "testimonials"
                   ? isScrolled
                     ? "bg-amber-600 text-white"
-                    : "bg-white text-black"
+                    : "bg-white text-gray-800"
                   : isScrolled
-                  ? "text-black hover:bg-amber-100 hover:text-amber-700"
-                  : "text-white hover:bg-white/20"
+                  ? "text-gray-800 hover:bg-gray-100 hover:text-amber-600"
+                  : "text-gray-300 hover:bg-white/20 hover:text-white"
               }`}
             >
               Testimonials
-            </Link>
-            <Link
+            </a>
+            <a
               href="#partnership"
               className={`transition-all duration-300 text-base font-semibold px-6 py-2 rounded-lg ${
                 activeSection === "partnership"
                   ? isScrolled
                     ? "bg-amber-600 text-white"
-                    : "bg-white text-black"
+                    : "bg-white text-gray-800"
                   : isScrolled
-                  ? "text-black hover:bg-amber-100 hover:text-amber-700"
-                  : "text-white hover:bg-white/20"
+                  ? "text-gray-800 hover:bg-gray-100 hover:text-amber-600"
+                  : "text-gray-300 hover:bg-white/20 hover:text-white"
               }`}
             >
               Partnership
-            </Link>
-            <Link
+            </a>
+            <a
               href="#contact"
               className={`transition-all duration-300 text-base font-semibold px-6 py-2 rounded-lg ${
                 activeSection === "contact"
                   ? isScrolled
                     ? "bg-amber-600 text-white"
-                    : "bg-white text-black"
+                    : "bg-white text-gray-800"
                   : isScrolled
-                  ? "text-black hover:bg-amber-100 hover:text-amber-700"
-                  : "text-white hover:bg-white/20"
+                  ? "text-gray-800 hover:bg-gray-100 hover:text-amber-600"
+                  : "text-gray-300 hover:bg-white/20 hover:text-white"
               }`}
             >
               Contact
-            </Link>
+            </a>
           </nav>
 
           {/* Mobile Menu Button */}
@@ -183,80 +183,80 @@ export default function SuvarthaHeader() {
           <nav className="lg:hidden pb-4">
             <div className="flex flex-col space-y-2">
               <Link
-                href="#home"
+                href="/"
                 onClick={() => setIsMenuOpen(false)}
                 className={`transition-all duration-300 py-2 text-sm px-3 rounded-lg ${
                   activeSection === "home"
                     ? isScrolled
                       ? "bg-amber-600 text-white font-bold"
-                      : "bg-white text-black font-bold"
+                      : "bg-white text-gray-800 font-bold"
                     : isScrolled
-                    ? "text-black font-bold hover:text-amber-600"
-                    : "text-white font-medium hover:text-amber-200"
+                    ? "text-gray-800 font-bold hover:text-amber-600"
+                    : "text-gray-300 font-medium hover:text-white"
                 }`}
               >
                 Home
               </Link>
-              <Link
+              <a
                 href="#services"
                 onClick={() => setIsMenuOpen(false)}
                 className={`transition-all duration-300 py-2 text-sm px-3 rounded-lg ${
                   activeSection === "services"
                     ? isScrolled
                       ? "bg-amber-600 text-white font-bold"
-                      : "bg-white text-black font-bold"
+                      : "bg-white text-gray-800 font-bold"
                     : isScrolled
-                    ? "text-black font-bold hover:text-amber-600"
-                    : "text-white font-medium hover:text-amber-200"
+                    ? "text-gray-800 font-bold hover:text-amber-600"
+                    : "text-gray-300 font-medium hover:text-white"
                 }`}
               >
                 Services
-              </Link>
-              <Link
+              </a>
+              <a
                 href="#testimonials"
                 onClick={() => setIsMenuOpen(false)}
                 className={`transition-all duration-300 py-2 text-sm px-3 rounded-lg ${
                   activeSection === "testimonials"
                     ? isScrolled
                       ? "bg-amber-600 text-white font-bold"
-                      : "bg-white text-black font-bold"
+                      : "bg-white text-gray-800 font-bold"
                     : isScrolled
-                    ? "text-black font-bold hover:text-amber-600"
-                    : "text-white font-medium hover:text-amber-200"
+                    ? "text-gray-800 font-bold hover:text-amber-600"
+                    : "text-gray-300 font-medium hover:text-white"
                 }`}
               >
                 Testimonials
-              </Link>
-              <Link
+              </a>
+              <a
                 href="#partnership"
                 onClick={() => setIsMenuOpen(false)}
                 className={`transition-all duration-300 py-2 text-sm px-3 rounded-lg ${
                   activeSection === "partnership"
                     ? isScrolled
                       ? "bg-amber-600 text-white font-bold"
-                      : "bg-white text-black font-bold"
+                      : "bg-white text-gray-800 font-bold"
                     : isScrolled
-                    ? "text-black font-bold hover:text-amber-600"
-                    : "text-white font-medium hover:text-amber-200"
+                    ? "text-gray-800 font-bold hover:text-amber-600"
+                    : "text-gray-300 font-medium hover:text-white"
                 }`}
               >
                 Partnership
-              </Link>
-              <Link
+              </a>
+              <a
                 href="#contact"
                 onClick={() => setIsMenuOpen(false)}
                 className={`transition-all duration-300 py-2 text-sm px-3 rounded-lg ${
                   activeSection === "contact"
                     ? isScrolled
                       ? "bg-amber-600 text-white font-bold"
-                      : "bg-white text-black font-bold"
+                      : "bg-white text-gray-800 font-bold"
                     : isScrolled
-                    ? "text-black font-bold hover:text-amber-600"
-                    : "text-white font-medium hover:text-amber-200"
+                    ? "text-gray-800 font-bold hover:text-amber-600"
+                    : "text-gray-300 font-medium hover:text-white"
                 }`}
               >
                 Contact
-              </Link>
+              </a>
             </div>
           </nav>
         )}

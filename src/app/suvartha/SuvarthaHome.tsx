@@ -2,6 +2,7 @@
 
 import SuvarthaHeader from '@/components/suvartha/SuvarthaHeader';
 import SuvarthaHero from '@/components/suvartha/SuvarthaHero';
+import SuvarthaCarousel from '@/components/suvartha/SuvarthaCarousel';
 import SuvarthaServices from '@/components/suvartha/SuvarthaServices';
 import SuvarthaTestimonials from '@/components/suvartha/SuvarthaTestimonials';
 import SuvarthaPartnership from '@/components/suvartha/SuvarthaPartnership';
@@ -12,7 +13,7 @@ export default function SuvarthaHome() {
   return (
     <div className="min-h-screen w-full">
       <SuvarthaHeader />
-      <SuvarthaHero />
+      <SuvarthaCarousel />
       <SuvarthaServices />
       <SuvarthaTestimonials />
       <SuvarthaPartnership />

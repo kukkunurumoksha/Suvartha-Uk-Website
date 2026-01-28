@@ -1,6 +1,6 @@
 export default function SuvarthaFooter() {
   return (
-    <footer className="bg-amber-800 text-white py-12 sm:py-16">
+    <footer className="bg-gray-800 text-white py-12 sm:py-16">
       <div className="container mx-auto px-6 sm:px-8 lg:px-12">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-10 lg:gap-12 mb-8 sm:mb-12">
@@ -106,7 +106,7 @@ export default function SuvarthaFooter() {
               <li>
                 <a
                   href="#home"
-                  className="text-white hover:text-amber-200 transition-colors text-lg"
+                  className="text-gray-300 hover:text-amber-400 transition-colors text-lg"
                 >
                   Home
                 </a>
@@ -114,7 +114,7 @@ export default function SuvarthaFooter() {
               <li>
                 <a
                   href="#services"
-                  className="text-white hover:text-amber-200 transition-colors text-lg"
+                  className="text-gray-300 hover:text-amber-400 transition-colors text-lg"
                 >
                   Services
                 </a>
@@ -122,7 +122,7 @@ export default function SuvarthaFooter() {
               <li>
                 <a
                   href="#testimonials"
-                  className="text-white hover:text-amber-200 transition-colors text-lg"
+                  className="text-gray-300 hover:text-amber-400 transition-colors text-lg"
                 >
                   Testimonials
                 </a>
@@ -130,7 +130,7 @@ export default function SuvarthaFooter() {
               <li>
                 <a
                   href="#partnership"
-                  className="text-white hover:text-amber-200 transition-colors text-lg"
+                  className="text-gray-300 hover:text-amber-400 transition-colors text-lg"
                 >
                   Partnership
                 </a>
@@ -138,7 +138,7 @@ export default function SuvarthaFooter() {
               <li>
                 <a
                   href="#contact"
-                  className="text-white hover:text-amber-200 transition-colors text-lg"
+                  className="text-gray-300 hover:text-amber-400 transition-colors text-lg"
                 >
                   Contact
                 </a>
@@ -146,7 +146,7 @@ export default function SuvarthaFooter() {
               <li>
                 <a
                   href="/policies?policy=data-protection&direct=true"
-                  className="text-white hover:text-amber-200 transition-colors text-lg"
+                  className="text-gray-300 hover:text-amber-400 transition-colors text-lg"
                 >
                   Data Protection Policy
                 </a>
@@ -154,7 +154,7 @@ export default function SuvarthaFooter() {
               <li>
                 <a
                   href="/policies?policy=risk-management&direct=true"
-                  className="text-white hover:text-amber-200 transition-colors text-lg"
+                  className="text-gray-300 hover:text-amber-400 transition-colors text-lg"
                 >
                   Risk Management Policy
                 </a>
@@ -162,7 +162,7 @@ export default function SuvarthaFooter() {
               <li>
                 <a
                   href="/policies?policy=safeguarding&direct=true"
-                  className="text-white hover:text-amber-200 transition-colors text-lg"
+                  className="text-gray-300 hover:text-amber-400 transition-colors text-lg"
                 >
                   Safeguarding Policy
                 </a>
@@ -190,7 +190,7 @@ export default function SuvarthaFooter() {
                     />
                   </svg>
                 </div>
-                <span className="text-white text-lg">+44 7427527524</span>
+                <span className="text-gray-300 text-lg">+44 7427527524</span>
               </div>
               <div className="flex items-start space-x-3">
                 <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
@@ -208,7 +208,7 @@ export default function SuvarthaFooter() {
                     />
                   </svg>
                 </div>
-                <span className="text-white text-lg break-all">
+                <span className="text-gray-300 text-lg break-all">
                   suvarthaministriesuk@gmail.com
                 </span>
               </div>
@@ -234,7 +234,7 @@ export default function SuvarthaFooter() {
                     />
                   </svg>
                 </div>
-                <div className="text-white text-lg">
+                <div className="text-gray-300 text-lg">
                   <div>Pegasus House, 17 Burleys Way</div>
                   <div>Leicester, LE1 3BH, United Kingdom</div>
                 </div>
@@ -244,21 +244,21 @@ export default function SuvarthaFooter() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-amber-700 pt-8">
+        <div className="border-t border-gray-700 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-white mb-4 md:mb-0 text-sm sm:text-base">
+            <p className="text-gray-400 mb-4 md:mb-0 text-sm sm:text-base">
               © 2026 Suvartha Ministries UK. All rights reserved.
             </p>
             <div className="flex space-x-8">
               <a
                 href="#"
-                className="text-white hover:text-amber-200 transition-colors text-sm sm:text-base"
+                className="text-gray-400 hover:text-amber-400 transition-colors text-sm sm:text-base"
               >
                 Privacy Policy
               </a>
               <a
                 href="#"
-                className="text-white hover:text-amber-200 transition-colors text-sm sm:text-base"
+                className="text-gray-400 hover:text-amber-400 transition-colors text-sm sm:text-base"
               >
                 Terms of Service
               </a>
