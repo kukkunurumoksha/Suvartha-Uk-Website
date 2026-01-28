@@ -1,21 +1,20 @@
 "use client";
 
 import { useEffect, useState, Suspense } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import SuvarthaHeader from '../../components/suvartha/SuvarthaHeader';
 import SuvarthaFooter from '../../components/suvartha/SuvarthaFooter';
 
 function PoliciesContent() {
   const searchParams = useSearchParams();
-  const router = useRouter();
   const [selectedPolicy, setSelectedPolicy] = useState<string | null>(null);
   const [policyImages, setPolicyImages] = useState<{[key: string]: string[]}>({});
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [policyFiles, setPolicyFiles] = useState({
     'data-protection': true,
-    'risk-management': false,
-    'safeguarding': false
+    'risk-management': true,
+    'safeguarding': true
   });
 
   useEffect(() => {
@@ -124,413 +123,305 @@ function PoliciesContent() {
       'safeguarding': true      // 46 pages
     });
 
-    // Maximum security protection when policy is displayed
+    // COMPREHENSIVE mobile screenshot protection
     if (selectedPolicy) {
-      // Disable right-click completely
-      const handleContextMenu = (e: MouseEvent) => {
+      let isProtectionActive = false;
+      let touchStartTime = 0;
+      let volumeKeyPressed = false;
+      let powerKeyPressed = false;
+      let lastVisibilityChange = 0;
+      let screenshotAttemptCount = 0;
+
+      const addWatermarkProtection = () => {
+        setTimeout(() => {
+          const policyContent = document.querySelector('.policy-content') as HTMLElement;
+          if (policyContent && !policyContent.querySelector('.screenshot-protection')) {
+            const watermarkOverlay = document.createElement('div');
+            watermarkOverlay.className = 'screenshot-protection';
+            watermarkOverlay.style.cssText = `
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              pointer-events: none;
+              z-index: 1000;
+              background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 60px,
+                rgba(255, 193, 7, 0.3) 60px,
+                rgba(255, 193, 7, 0.3) 120px
+              ), repeating-linear-gradient(
+                -45deg,
+                transparent,
+                transparent 60px,
+                rgba(255, 193, 7, 0.25) 60px,
+                rgba(255, 193, 7, 0.25) 120px
+              );
+            `;
+            
+            // Add multiple watermark texts that make screenshots useless
+            const watermarkTexts = [
+              { text: 'SUVARTHA MINISTRIES UK', top: '10%', left: '5%', size: '28px', opacity: '0.5' },
+              { text: 'CONFIDENTIAL DOCUMENT', top: '25%', left: '55%', size: '32px', opacity: '0.6' },
+              { text: 'AUTHORIZED USE ONLY', top: '40%', left: '15%', size: '26px', opacity: '0.5' },
+              { text: '© 2026 SUVARTHA UK', top: '55%', left: '65%', size: '22px', opacity: '0.4' },
+              { text: 'PROTECTED CONTENT', top: '70%', left: '25%', size: '28px', opacity: '0.5' },
+              { text: 'CHURCH POLICY', top: '85%', left: '5%', size: '24px', opacity: '0.45' },
+              { text: 'NOT FOR DISTRIBUTION', top: '15%', left: '75%', size: '24px', opacity: '0.4' },
+              { text: 'CONFIDENTIAL', top: '60%', left: '5%', size: '22px', opacity: '0.4' },
+              { text: 'SCREENSHOT PROTECTED', top: '30%', left: '25%', size: '26px', opacity: '0.5' },
+              { text: 'AUTHORIZED VIEWING ONLY', top: '75%', left: '45%', size: '24px', opacity: '0.45' }
+            ];
+            
+            watermarkTexts.forEach((item) => {
+              const textElement = document.createElement('div');
+              textElement.textContent = item.text;
+              textElement.style.cssText = `
+                position: absolute;
+                font-size: ${item.size};
+                font-weight: bold;
+                color: rgba(255, 193, 7, ${item.opacity});
+                transform: rotate(45deg);
+                white-space: nowrap;
+                top: ${item.top};
+                left: ${item.left};
+                text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+                font-family: Arial, sans-serif;
+              `;
+              watermarkOverlay.appendChild(textElement);
+            });
+            
+            policyContent.appendChild(watermarkOverlay);
+          }
+        }, 300);
+      };
+
+      const blurContent = (duration = 5000) => {
+        const policyContent = document.querySelector('.policy-content') as HTMLElement;
+        if (policyContent && !isProtectionActive) {
+          isProtectionActive = true;
+          policyContent.style.filter = 'blur(50px)';
+          policyContent.style.transition = 'filter 0.1s ease-out';
+          
+          setTimeout(() => {
+            if (policyContent) {
+              policyContent.style.filter = 'none';
+              policyContent.style.transition = 'filter 0.5s ease-in';
+            }
+            isProtectionActive = false;
+          }, duration);
+        }
+      };
+
+      // Enhanced keyboard detection
+      const handleKeyDown = (e: KeyboardEvent) => {
+        // Volume keys detection (some browsers support this)
+        if (e.code === 'VolumeUp' || e.code === 'VolumeDown' || e.key === 'VolumeUp' || e.key === 'VolumeDown') {
+          volumeKeyPressed = true;
+          setTimeout(() => { volumeKeyPressed = false; }, 2000);
+        }
+        
+        // Power button detection (limited support)
+        if (e.code === 'Power' || e.key === 'Power') {
+          powerKeyPressed = true;
+          setTimeout(() => { powerKeyPressed = false; }, 2000);
+        }
+
+        // Traditional screenshot keys
+        if (e.key === 'PrintScreen' || e.key === 'F12' || 
+            (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+            (e.ctrlKey && e.shiftKey && e.key === 'C') ||
+            (e.ctrlKey && e.key === 'u')) {
+          e.preventDefault();
+          blurContent(4000);
+          return false;
+        }
+
+        // Check for simultaneous volume + power
+        if (volumeKeyPressed && powerKeyPressed) {
+          e.preventDefault();
+          blurContent(6000);
+          screenshotAttemptCount++;
+          return false;
+        }
+      };
+
+      // Enhanced visibility change detection for mobile screenshots
+      const handleVisibilityChange = () => {
+        const now = Date.now();
+        const timeSinceLastChange = now - lastVisibilityChange;
+        lastVisibilityChange = now;
+
+        // Mobile screenshot often causes brief visibility changes
+        if (document.hidden) {
+          // Page became hidden - possible screenshot
+          setTimeout(() => {
+            if (!document.hidden && timeSinceLastChange < 1000) {
+              // Page became visible again quickly - likely screenshot
+              blurContent(4000);
+              screenshotAttemptCount++;
+            }
+          }, 100);
+        }
+      };
+
+      // Touch pattern detection for mobile screenshot gestures
+      const handleTouchStart = (e: TouchEvent) => {
+        touchStartTime = Date.now();
+        
+        // Three finger touch detection (some screenshot methods)
+        if (e.touches.length >= 3) {
+          e.preventDefault();
+          blurContent(3000);
+          return false;
+        }
+
+        // Edge swipe detection (some phones use this for screenshots)
+        if (e.touches.length === 1) {
+          const touch = e.touches[0];
+          const screenWidth = window.innerWidth;
+          const screenHeight = window.innerHeight;
+          
+          // Check if touch starts from screen edges
+          if (touch.clientX < 20 || touch.clientX > screenWidth - 20 ||
+              touch.clientY < 20 || touch.clientY > screenHeight - 20) {
+            // Potential edge gesture
+            setTimeout(() => {
+              const touchDuration = Date.now() - touchStartTime;
+              if (touchDuration < 500) {
+                // Quick edge gesture - possible screenshot
+                blurContent(2000);
+              }
+            }, 500);
+          }
+        }
+      };
+
+      // Enhanced touch end detection
+      const handleTouchEnd = (e: TouchEvent) => {
+        const touchDuration = Date.now() - touchStartTime;
+        
+        // Very quick touch patterns might indicate screenshot attempts
+        if (touchDuration < 200 && e.changedTouches.length > 0) {
+          const touch = e.changedTouches[0];
+          const screenWidth = window.innerWidth;
+          
+          // Quick touch near screen edges
+          if (touch.clientX < 50 || touch.clientX > screenWidth - 50) {
+            blurContent(2000);
+          }
+        }
+      };
+
+      // Page focus/blur detection
+      const handleFocus = () => {
+        // Page regained focus - check if it was a screenshot
+        const now = Date.now();
+        if (now - lastVisibilityChange < 2000) {
+          blurContent(3000);
+        }
+      };
+
+      // Context menu prevention
+      const handleContextMenu = (e: Event) => {
         e.preventDefault();
-        e.stopPropagation();
+        blurContent(1000);
         return false;
       };
 
-      // Block ALL keyboard shortcuts and function keys
-      const handleKeyDown = (e: KeyboardEvent) => {
-        // Block ALL function keys
-        if (e.key.startsWith('F') && e.key.length <= 3) {
-          e.preventDefault();
-          e.stopPropagation();
-          return false;
-        }
-        
-        // Block ALL Ctrl combinations
-        if (e.ctrlKey) {
-          e.preventDefault();
-          e.stopPropagation();
-          return false;
-        }
-        
-        // Block ALL Alt combinations
-        if (e.altKey) {
-          e.preventDefault();
-          e.stopPropagation();
-          return false;
-        }
-        
-        // Block specific dangerous keys
+      // Selection prevention
+      const handleSelectStart = (e: Event) => {
+        e.preventDefault();
+        return false;
+      };
+
+      // Drag prevention
+      const handleDragStart = (e: Event) => {
+        e.preventDefault();
+        return false;
+      };
+
+      // Device orientation change detection (some screenshot methods trigger this)
+      const handleOrientationChange = () => {
+        // Brief blur on orientation change as precaution
+        setTimeout(() => {
+          blurContent(1000);
+        }, 100);
+      };
+
+      // Page state change detection
+      const handlePageShow = () => {
+        // Page became visible - possible screenshot return
+        blurContent(2000);
+      };
+
+      addWatermarkProtection();
+
+      // Add all event listeners with capture phase for better detection
+      document.addEventListener('keydown', handleKeyDown, true);
+      document.addEventListener('visibilitychange', handleVisibilityChange, true);
+      document.addEventListener('touchstart', handleTouchStart, { passive: false, capture: true });
+      document.addEventListener('touchend', handleTouchEnd, { passive: false, capture: true });
+      document.addEventListener('focus', handleFocus, true);
+      document.addEventListener('contextmenu', handleContextMenu, true);
+      document.addEventListener('selectstart', handleSelectStart, true);
+      document.addEventListener('dragstart', handleDragStart, true);
+      document.addEventListener('orientationchange', handleOrientationChange, true);
+      document.addEventListener('pageshow', handlePageShow, true);
+
+      // Additional mobile-specific protections
+      window.addEventListener('blur', () => {
+        // Window lost focus - possible screenshot
+        setTimeout(() => {
+          if (document.hasFocus()) {
+            blurContent(2000);
+          }
+        }, 100);
+      }, true);
+
+      // Prevent common screenshot shortcuts
+      const preventShortcuts = (e: KeyboardEvent) => {
+        // Prevent various screenshot and developer shortcuts
         if (
-          e.key === 'PrintScreen' ||
-          e.key === 'Insert' ||
-          e.key === 'Delete' ||
-          (e.shiftKey && e.key === 'Insert') ||
-          e.key === 'Meta' // Windows key
+          (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) ||
+          (e.ctrlKey && e.key === 'u') ||
+          (e.key === 'F12') ||
+          (e.key === 'PrintScreen') ||
+          (e.ctrlKey && e.key === 's') ||
+          (e.ctrlKey && e.key === 'a') ||
+          (e.ctrlKey && e.key === 'c') ||
+          (e.ctrlKey && e.key === 'v') ||
+          (e.ctrlKey && e.key === 'x')
         ) {
           e.preventDefault();
           e.stopPropagation();
+          blurContent(3000);
           return false;
         }
       };
 
-      // Prevent text selection completely
-      const handleSelectStart = (e: Event) => {
-        e.preventDefault();
-        e.stopPropagation();
-        return false;
-      };
-
-      // Block clipboard operations
-      const handleClipboard = (e: ClipboardEvent) => {
-        e.preventDefault();
-        e.stopPropagation();
-        e.clipboardData?.setData('text/plain', '');
-        return false;
-      };
-
-      // Prevent drag operations
-      const handleDragStart = (e: DragEvent) => {
-        e.preventDefault();
-        e.stopPropagation();
-        return false;
-      };
-
-      // Block mouse selection
-      const handleMouseDown = (e: MouseEvent) => {
-        if (e.detail > 1) { // Prevent double/triple click selection
-          e.preventDefault();
-          e.stopPropagation();
-          return false;
-        }
-      };
-
-      // Prevent focus on iframe (blocks some shortcuts)
-      const handleFocus = (e: FocusEvent) => {
-        const target = e.target as HTMLElement;
-        if (target.tagName === 'IFRAME') {
-          target.blur();
-        }
-      };
-
-      // Add all event listeners with capture phase
-      document.addEventListener('contextmenu', handleContextMenu, true);
-      document.addEventListener('keydown', handleKeyDown, true);
-      document.addEventListener('keyup', handleKeyDown, true);
-      document.addEventListener('selectstart', handleSelectStart, true);
-      document.addEventListener('copy', handleClipboard, true);
-      document.addEventListener('cut', handleClipboard, true);
-      document.addEventListener('paste', handleClipboard, true);
-      document.addEventListener('dragstart', handleDragStart, true);
-      document.addEventListener('mousedown', handleMouseDown, true);
-      document.addEventListener('focus', handleFocus, true);
-
-      // Disable text selection globally
-      document.body.style.userSelect = 'none';
-      (document.body.style as any).webkitUserSelect = 'none';
-      (document.body.style as any).mozUserSelect = 'none';
-      (document.body.style as any).msUserSelect = 'none';
-      (document.body.style as any).webkitTouchCallout = 'none';
-
-      // Clear selection periodically (no clipboard access needed)
-      const clearSelection = setInterval(() => {
-        if (window.getSelection) {
-          window.getSelection()?.removeAllRanges();
-        }
-      }, 500); // Every 500ms
-
-      // Add comprehensive CSS protection
-      const style = document.createElement('style');
-      style.textContent = `
-        /* Enhanced protection styles */
-        *, *::before, *::after {
-          user-select: none !important;
-          -webkit-user-select: none !important;
-          -moz-user-select: none !important;
-          -ms-user-select: none !important;
-          -webkit-touch-callout: none !important;
-          -webkit-tap-highlight-color: transparent !important;
-        }
-        
-        /* Disable drag and drop */
-        * {
-          -webkit-user-drag: none !important;
-          -khtml-user-drag: none !important;
-          -moz-user-drag: none !important;
-          -o-user-drag: none !important;
-          user-drag: none !important;
-        }
-        
-        /* Prevent highlighting */
-        ::selection {
-          background: transparent !important;
-        }
-        ::-moz-selection {
-          background: transparent !important;
-        }
-        
-        /* Hide content during print */
-        @media print {
-          * {
-            display: none !important;
-          }
-          body::after {
-            content: "This document cannot be printed. Contact church administration for authorized copies." !important;
-            display: block !important;
-            font-size: 24px !important;
-            text-align: center !important;
-            margin-top: 200px !important;
-          }
-        }
-      `;
-      document.head.appendChild(style);
-
-      // Enhanced screenshot protection for both desktop and mobile
-      const preventScreenshot = () => {
-        // Immediately blur content when screenshot is detected
-        const policyContent = document.querySelector('.policy-content') as HTMLElement;
-        if (policyContent) {
-          policyContent.style.filter = 'blur(30px)';
-          policyContent.style.transition = 'filter 0.01s ease';
-          setTimeout(() => {
-            policyContent.style.filter = 'none';
-          }, 3000); // Keep blurred for 3 seconds
-        }
-      };
-
-      // Detect Print Screen key and other screenshot methods (Desktop)
-      const handleKeyUp = (e: KeyboardEvent) => {
-        if (e.key === 'PrintScreen' || e.key === 'F12') {
-          preventScreenshot();
-        }
-      };
-
-      const handleScreenshotKeyDown = (e: KeyboardEvent) => {
-        if (e.key === 'PrintScreen') {
-          preventScreenshot();
-        }
-      };
-
-      // Mobile screenshot detection - Multiple approaches for better coverage
-      
-      // 1. Page visibility change (primary method for hardware screenshots)
-      let visibilityChangeCount = 0;
-      const handleVisibilityChange = () => {
-        if (document.hidden) {
-          visibilityChangeCount++;
-          preventScreenshot();
-          
-          // Reset counter after delay
-          setTimeout(() => {
-            visibilityChangeCount = Math.max(0, visibilityChangeCount - 1);
-          }, 2000);
-        }
-      };
-
-      // 2. Document state changes (alternative detection)
-      const handleDocumentStateChange = () => {
-        if (document.visibilityState === 'hidden') {
-          preventScreenshot();
-        }
-      };
-
-      // 3. Window blur (when user switches away from browser)
-      let blurCount = 0;
-      const handleBlur = () => {
-        blurCount++;
-        preventScreenshot();
-        
-        // Reset counter
-        setTimeout(() => {
-          blurCount = Math.max(0, blurCount - 1);
-        }, 1500);
-      };
-
-      // 4. Page focus loss detection
-      let focusLost = false;
-      const handleFocusOut = () => {
-        focusLost = true;
-        preventScreenshot();
-        
-        setTimeout(() => {
-          focusLost = false;
-        }, 2000);
-      };
-
-      // 5. Page focus regain (after potential screenshot)
-      const handleFocusIn = () => {
-        if (focusLost) {
-          preventScreenshot();
-        }
-      };
-
-      // 6. Before page unload (when leaving page)
-      const handleBeforeUnload = () => {
-        const policyContent = document.querySelector('.policy-content') as HTMLElement;
-        if (policyContent) {
-          policyContent.style.filter = 'blur(30px)';
-        }
-      };
-
-      // 7. Orientation change (often triggers during screenshot)
-      const handleOrientationChange = () => {
-        preventScreenshot();
-      };
-
-      // 8. Window resize (screenshot tools, mobile browser changes)
-      const handleResize = () => {
-        preventScreenshot();
-      };
-
-      // 9. Touch interactions (3+ fingers only to avoid zoom interference)
-      let lastTouchTime = 0;
-      const handleTouchStart = (e: TouchEvent) => {
-        const now = Date.now();
-        
-        // Only trigger for 3+ touches (unusual gesture, likely screenshot)
-        if (e.touches.length >= 3) {
-          preventScreenshot();
-        }
-        
-        // Rapid touches might indicate screenshot attempt
-        if (now - lastTouchTime < 100 && e.touches.length >= 3) {
-          preventScreenshot();
-        }
-        
-        lastTouchTime = now;
-      };
-
-      // 10. Long screenshot detection via scroll
-      let scrollCount = 0;
-      const handleScroll = () => {
-        scrollCount++;
-        
-        setTimeout(() => {
-          scrollCount = Math.max(0, scrollCount - 1);
-        }, 1000);
-        
-        if (scrollCount > 3) {
-          preventScreenshot();
-          scrollCount = 0;
-        }
-      };
-
-      // 11. Context menu prevention
-      const handleContextMenuPrevention = (e: Event) => {
-        e.preventDefault();
-        preventScreenshot();
-        return false;
-      };
-
-      // 12. Enhanced mobile detection with user agent check
-      const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-      
-      // 13. Aggressive mobile monitoring
-      let mobileMonitorInterval: NodeJS.Timeout;
-      if (isMobile) {
-        mobileMonitorInterval = setInterval(() => {
-          // Check for rapid state changes that indicate screenshot
-          if (document.hidden && document.hasFocus && document.hasFocus()) {
-            preventScreenshot();
-          }
-          
-          // Check for unusual document states
-          if (document.visibilityState !== 'visible' && !document.hidden) {
-            preventScreenshot();
-          }
-          
-          // Monitor for frozen page (screenshot in progress)
-          const now = Date.now();
-          if (window.performance && window.performance.now) {
-            const perfNow = window.performance.now();
-            if (Math.abs(now - perfNow - window.performance.timeOrigin) > 100) {
-              preventScreenshot();
-            }
-          }
-        }, 200); // Check every 200ms on mobile
-      }
-
-      // 14. Detect page freeze during screenshot
-      let lastFrameTime = Date.now();
-      const frameMonitor = () => {
-        const now = Date.now();
-        if (now - lastFrameTime > 500) { // Page frozen for 500ms
-          preventScreenshot();
-        }
-        lastFrameTime = now;
-        requestAnimationFrame(frameMonitor);
-      };
-      requestAnimationFrame(frameMonitor);
-
-      // Add all screenshot protection listeners - enhanced for mobile
-      document.addEventListener('keyup', handleKeyUp, true);
-      document.addEventListener('keydown', handleScreenshotKeyDown, true);
-      document.addEventListener('visibilitychange', handleVisibilityChange, true);
-      document.addEventListener('visibilitychange', handleDocumentStateChange, true);
-      document.addEventListener('touchstart', handleTouchStart, { passive: false });
-      document.addEventListener('scroll', handleScroll, { passive: true });
-      document.addEventListener('contextmenu', handleContextMenuPrevention, true);
-      window.addEventListener('blur', handleBlur, true);
-      window.addEventListener('focus', handleFocusIn, true);
-      window.addEventListener('focusout', handleFocusOut, true);
-      window.addEventListener('resize', handleResize, true);
-      window.addEventListener('orientationchange', handleOrientationChange, true);
-      window.addEventListener('beforeunload', handleBeforeUnload, true);
-      
-      // Additional mobile-specific listeners
-      if (isMobile) {
-        window.addEventListener('pagehide', preventScreenshot, true);
-        window.addEventListener('pageshow', preventScreenshot, true);
-        document.addEventListener('webkitvisibilitychange', handleVisibilityChange, true);
-        document.addEventListener('mozvisibilitychange', handleVisibilityChange, true);
-        document.addEventListener('msvisibilitychange', handleVisibilityChange, true);
-      }
+      document.addEventListener('keydown', preventShortcuts, true);
 
       // Cleanup function
       return () => {
-        document.removeEventListener('contextmenu', handleContextMenu, true);
         document.removeEventListener('keydown', handleKeyDown, true);
-        document.removeEventListener('keyup', handleKeyDown, true);
-        document.removeEventListener('keydown', handleScreenshotKeyDown, true);
-        document.removeEventListener('keyup', handleKeyUp, true);
         document.removeEventListener('visibilitychange', handleVisibilityChange, true);
-        document.removeEventListener('touchstart', handleTouchStart);
-        document.removeEventListener('contextmenu', handleContextMenuPrevention, true);
-        window.removeEventListener('blur', handleBlur, true);
-        window.removeEventListener('focus', handleFocusIn, true);
-        window.removeEventListener('focusout', handleFocusOut, true);
-        window.removeEventListener('resize', handleResize, true);
-        window.removeEventListener('orientationchange', handleOrientationChange, true);
-        window.removeEventListener('beforeunload', handleBeforeUnload, true);
-        document.removeEventListener('selectstart', handleSelectStart, true);
-        document.removeEventListener('copy', handleClipboard, true);
-        document.removeEventListener('cut', handleClipboard, true);
-        document.removeEventListener('paste', handleClipboard, true);
-        document.removeEventListener('dragstart', handleDragStart, true);
-        document.removeEventListener('mousedown', handleMouseDown, true);
+        document.removeEventListener('touchstart', handleTouchStart, true);
+        document.removeEventListener('touchend', handleTouchEnd, true);
         document.removeEventListener('focus', handleFocus, true);
+        document.removeEventListener('contextmenu', handleContextMenu, true);
+        document.removeEventListener('selectstart', handleSelectStart, true);
+        document.removeEventListener('dragstart', handleDragStart, true);
+        document.removeEventListener('orientationchange', handleOrientationChange, true);
+        document.removeEventListener('pageshow', handlePageShow, true);
+        document.removeEventListener('keydown', preventShortcuts, true);
         
-        clearInterval(clearSelection);
-        if (mobileMonitorInterval) clearInterval(mobileMonitorInterval);
-        
-        if (style.parentNode) {
-          document.head.removeChild(style);
-        }
-        
-        // Reset body styles
-        document.body.style.userSelect = '';
-        document.body.style.visibility = '';
-        (document.body.style as any).webkitUserSelect = '';
-        (document.body.style as any).mozUserSelect = '';
-        (document.body.style as any).msUserSelect = '';
-        (document.body.style as any).webkitTouchCallout = '';
-        
-        // Reset policy content styles
-        const policyContent = document.querySelector('.policy-content') as HTMLElement;
-        if (policyContent) {
-          policyContent.style.filter = '';
-          policyContent.style.visibility = '';
-          policyContent.style.transition = '';
-        }
+        window.removeEventListener('blur', () => {}, true);
       };
     }
-  }, [selectedPolicy]);
+  }, [selectedPolicy, searchParams]);
 
   const openPolicy = (policyKey: string) => {
     setSelectedPolicy(policyKey);
@@ -659,25 +550,6 @@ function PoliciesContent() {
                 unoptimized
                 priority
               />
-              
-              {/* Responsive watermark overlay */}
-              <div 
-                className="absolute inset-0 pointer-events-none rounded-sm"
-                style={{
-                  background: `repeating-linear-gradient(
-                    45deg,
-                    transparent,
-                    transparent 60px,
-                    rgba(255, 193, 7, 0.02) 60px,
-                    rgba(255, 193, 7, 0.02) 120px
-                  )`
-                }}
-              >
-                {/* Responsive watermark text */}
-                <div className="absolute bottom-2 right-2 text-xs sm:text-sm font-light opacity-5 text-amber-600 whitespace-nowrap">
-                  © 2026 Suvartha Ministries UK
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -715,23 +587,6 @@ function PoliciesContent() {
               position: 'relative'
             } as React.CSSProperties}
           >
-            {/* Watermark */}
-            <div 
-              style={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%) rotate(-45deg)',
-                fontSize: '48px',
-                color: 'rgba(0, 0, 0, 0.05)',
-                pointerEvents: 'none',
-                zIndex: 1,
-                whiteSpace: 'nowrap'
-              }}
-            >
-              CONFIDENTIAL - SUVARTHA MINISTRIES UK
-            </div>
-            
             {/* Policy 1 - Data Protection */}
             <section className="mb-8 relative z-10">
               <h2 className="text-2xl font-bold text-gray-800 mb-4 flex items-center">
@@ -749,7 +604,6 @@ function PoliciesContent() {
                   <li>Procedures for data access and correction requests</li>
                 </ul>
                 
-                {/* PDF Viewer for this policy */}
                 <div className="mt-6 bg-gray-50 rounded-lg p-4">
                   <h3 className="text-lg font-semibold text-gray-800 mb-3 flex items-center">
                     <svg className="w-5 h-5 text-red-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
@@ -759,7 +613,7 @@ function PoliciesContent() {
                   </h3>
                   <div className="bg-white rounded border-2 border-dashed border-gray-300 p-6 text-center">
                     <p className="text-gray-600 mb-4">
-                      📄 <strong>Data Protection Policy and Procedure.pdf</strong>
+                      📄 <strong>Data Protection Policy and Procedure</strong>
                     </p>
                     <button 
                       onClick={() => openPolicy('data-protection')}
@@ -794,7 +648,6 @@ function PoliciesContent() {
                   <li>Regular review and updating of risk management practices</li>
                 </ul>
                 
-                {/* PDF Viewer for this policy */}
                 <div className="mt-6 bg-gray-50 rounded-lg p-4">
                   <h3 className="text-lg font-semibold text-gray-800 mb-3 flex items-center">
                     <svg className="w-5 h-5 text-red-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
@@ -804,7 +657,7 @@ function PoliciesContent() {
                   </h3>
                   <div className="bg-white rounded border-2 border-dashed border-gray-300 p-6 text-center">
                     <p className="text-gray-600 mb-4">
-                      📄 <strong>Internal risk management policy and procedures.pdf</strong>
+                      📄 <strong>Internal risk management policy and procedures</strong>
                     </p>
                     <button 
                       onClick={() => openPolicy('risk-management')}
@@ -839,7 +692,6 @@ function PoliciesContent() {
                   <li>Reporting procedures for safeguarding concerns</li>
                 </ul>
                 
-                {/* PDF Viewer for this policy */}
                 <div className="mt-6 bg-gray-50 rounded-lg p-4">
                   <h3 className="text-lg font-semibold text-gray-800 mb-3 flex items-center">
                     <svg className="w-5 h-5 text-red-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
@@ -849,7 +701,7 @@ function PoliciesContent() {
                   </h3>
                   <div className="bg-white rounded border-2 border-dashed border-gray-300 p-6 text-center">
                     <p className="text-gray-600 mb-4">
-                      📄 <strong>Safeguarding Policy and Procedures.pdf</strong>
+                      📄 <strong>Safeguarding Policy and Procedures</strong>
                     </p>
                     <button 
                       onClick={() => openPolicy('safeguarding')}
