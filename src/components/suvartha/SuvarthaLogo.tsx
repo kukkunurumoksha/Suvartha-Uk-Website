@@ -1,5 +1,7 @@
 "use client";
 
+import Image from 'next/image';
+
 interface SuvarthaLogoProps {
   size?: 'sm' | 'md' | 'lg' | 'xl';
   variant?: 'light' | 'dark' | 'color';
@@ -20,13 +22,6 @@ export default function SuvarthaLogo({
     xl: 'w-24 h-24'
   };
 
-  const sizePixels = {
-    sm: 32,
-    md: 48,
-    lg: 64,
-    xl: 96
-  };
-
   const textSizeClasses = {
     sm: 'text-sm',
     md: 'text-lg',
@@ -34,122 +29,46 @@ export default function SuvarthaLogo({
     xl: 'text-2xl'
   };
 
-  const getColors = () => {
+  const getTextColors = () => {
     switch (variant) {
       case 'light':
-        return {
-          primary: '#ffffff',
-          accent: '#f3f4f6',
-          secondary: '#e5e7eb',
-          text: 'text-white'
-        };
+        return 'text-white';
       case 'dark':
-        return {
-          primary: '#1f2937',
-          accent: '#374151',
-          secondary: '#4b5563',
-          text: 'text-gray-900'
-        };
+        return 'text-gray-900';
       default: // color
-        return {
-          primary: '#065f46',
-          accent: '#10b981',
-          secondary: '#047857',
-          text: 'text-emerald-800'
-        };
+        return 'text-gray-800';
     }
   };
 
-  const colors = getColors();
+  const textColor = getTextColors();
 
   return (
     <div className={`flex items-center space-x-3 ${className}`}>
-      <div className={`${sizeClasses[size]} flex items-center justify-center relative`}>
-        <svg
-          width={sizePixels[size]}
-          height={sizePixels[size]}
-          viewBox="0 0 100 100"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className={sizeClasses[size]}
-        >
-          {/* Outer Circle */}
-          <circle cx="50" cy="50" r="48" fill={colors.primary} stroke={colors.accent} strokeWidth="2"/>
-          
-          {/* Inner Decorative Circle */}
-          <circle cx="50" cy="50" r="38" fill="none" stroke={colors.secondary} strokeWidth="1" strokeDasharray="3,2"/>
-          
-          {/* Cross Symbol */}
-          <g transform="translate(50,50)">
-            {/* Vertical bar of cross */}
-            <rect x="-2" y="-20" width="4" height="40" fill={colors.accent} rx="2"/>
-            {/* Horizontal bar of cross */}
-            <rect x="-12" y="-2" width="24" height="4" fill={colors.accent} rx="2"/>
-          </g>
-          
-          {/* Decorative Elements - Rays */}
-          <g transform="translate(50,50)">
-            {[0, 45, 90, 135, 180, 225, 270, 315].map((angle, index) => (
-              <g key={index} transform={`rotate(${angle})`}>
-                <rect
-                  x="-0.5"
-                  y="-32"
-                  width="1"
-                  height="6"
-                  fill={colors.secondary}
-                  rx="0.5"
-                />
-              </g>
-            ))}
-          </g>
-          
-          {/* Text Arc - "SUVARTHA" */}
-          <defs>
-            <path
-              id={`textCircle-${size}`}
-              d="M 50,50 m -25,0 a 25,25 0 1,1 50,0 a 25,25 0 1,1 -50,0"
-            />
-          </defs>
-          <text
-            fontSize="6"
-            fill={colors.accent}
-            fontFamily="serif"
-            fontWeight="bold"
-          >
-            <textPath href={`#textCircle-${size}`} startOffset="25%">
-              SUVARTHA MINISTRIES
-            </textPath>
-          </text>
-          
-          {/* Bottom Text - "EST 1925" */}
-          <text
-            x="50"
-            y="85"
-            textAnchor="middle"
-            fontSize="4"
-            fill={colors.secondary}
-            fontFamily="serif"
-            fontWeight="600"
-          >
-            EST 1925
-          </text>
-        </svg>
+      <div className={`${sizeClasses[size]} flex items-center justify-center relative rounded-full overflow-hidden bg-white shadow-sm`}>
+        <Image
+          src="/assets/img/logo.jpeg"
+          alt="Suvartha Ministries UK Logo"
+          width={size === 'sm' ? 32 : size === 'md' ? 48 : size === 'lg' ? 64 : 96}
+          height={size === 'sm' ? 32 : size === 'md' ? 48 : size === 'lg' ? 64 : 96}
+          className="object-cover rounded-full"
+          unoptimized
+        />
       </div>
       
       {showText && (
         <div>
-          <h1 className={`${textSizeClasses[size]} font-bold ${colors.text} font-serif`}>
+          <h1 className={`${textSizeClasses[size]} font-bold ${textColor} font-serif`}>
             Suvartha Ministries UK
           </h1>
           {size !== 'sm' && (
-            <p className={`text-sm font-bold ${colors.text} leading-tight`} style={{
+            <p className={`text-sm font-bold ${textColor} leading-tight`} style={{
               textShadow: variant === 'light' ? '3px 3px 6px rgba(0,0,0,0.9), 1px 1px 2px rgba(0,0,0,0.8)' : '1px 1px 2px rgba(0,0,0,0.3)',
               fontWeight: '700',
               letterSpacing: '0.5px',
               marginTop: '2px'
             }}>
               <span>Year of Transformation </span>
-              <span className={variant === 'light' ? 'text-yellow-100' : 'text-amber-600'} style={{
+              <span className={variant === 'light' ? 'text-amber-300' : 'text-amber-600'} style={{
                 fontWeight: '800',
                 fontSize: '1.1em',
                 textShadow: variant === 'light' ? '3px 3px 6px rgba(0,0,0,0.9), 1px 1px 2px rgba(0,0,0,0.8)' : '1px 1px 2px rgba(0,0,0,0.3)'
