@@ -1,48 +1,40 @@
 "use client";
 
 import { useEffect, useState, Suspense } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import SuvarthaHeader from '../../components/suvartha/SuvarthaHeader';
 import SuvarthaFooter from '../../components/suvartha/SuvarthaFooter';
 
 function PoliciesContent() {
   const searchParams = useSearchParams();
-  const router = useRouter();
-  const [selectedPolicy, setSelectedPolicy] = useState<string | null>(null);
   const [policyImages, setPolicyImages] = useState<{[key: string]: string[]}>({});
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [policyFiles, setPolicyFiles] = useState({
     'data-protection': true,
-    'risk-management': false,
-    'safeguarding': false
+    'risk-management': true,
+    'safeguarding': true
   });
 
-  useEffect(() => {
-    // Check if a specific policy is requested via URL parameter
+  // Initialize selectedPolicy based on URL parameters immediately
+  const getInitialPolicy = () => {
     const policyParam = searchParams.get('policy');
-    const pdfParam = searchParams.get('pdf'); // Keep backward compatibility
-    const directParam = searchParams.get('direct'); // Check if direct access is requested
+    const pdfParam = searchParams.get('pdf');
+    const directParam = searchParams.get('direct');
     
-    if (policyParam) {
-      if (directParam === 'true') {
-        // Direct access - immediately open the policy viewer
-        setSelectedPolicy(policyParam);
-      } else {
-        // Regular access - just set the policy but don't open viewer
-        // This allows the overview page to show first
-      }
+    if (policyParam && directParam === 'true') {
+      return policyParam;
     } else if (pdfParam) {
-      // Map PDF names to policy keys for backward compatibility
-      if (pdfParam.includes('Data Protection')) {
-        setSelectedPolicy('data-protection');
-      } else if (pdfParam.includes('risk management')) {
-        setSelectedPolicy('risk-management');
-      } else if (pdfParam.includes('Safeguarding')) {
-        setSelectedPolicy('safeguarding');
-      }
+      if (pdfParam.includes('Data Protection')) return 'data-protection';
+      if (pdfParam.includes('risk management')) return 'risk-management';
+      if (pdfParam.includes('Safeguarding')) return 'safeguarding';
     }
+    return null;
+  };
 
+  const [selectedPolicy, setSelectedPolicy] = useState<string | null>(getInitialPolicy);
+
+  useEffect(() => {
     // Load policy images with correct file paths
     setPolicyImages({
       'data-protection': [
